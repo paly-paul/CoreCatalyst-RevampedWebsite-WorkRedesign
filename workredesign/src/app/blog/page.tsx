@@ -1,5 +1,6 @@
 import Link from "next/link";
 import CTABanner from "../_components/cta-banner";
+import FeaturedPost from "./_components/featured-post";
 
 const posts = [
   {
@@ -39,8 +40,11 @@ export default function Blog() {
         </div>
       </section>
 
+      <FeaturedPost />
+
       <section className="py-20 sm:py-32 bg-white">
         <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
+          <h2 className="display-md text-slate-900 mb-12">More articles</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
               <Link
