@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import CTABanner from "../_components/cta-banner";
+import StepNavigation from "./_components/step-navigation";
+import DownstreamSection from "./_components/downstream-section";
+import TrustSection from "./_components/trust-section";
 
 const steps = [
   {
@@ -50,6 +53,8 @@ export default function HowItWorks() {
         </div>
       </section>
 
+      <StepNavigation />
+
       {/* Steps */}
       <section className="py-20 sm:py-32 bg-white">
         <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
@@ -83,6 +88,10 @@ export default function HowItWorks() {
           </div>
         </div>
       </section>
+
+      <DownstreamSection />
+
+      <TrustSection />
 
       <CTABanner
         headline="See the reconciliation engine run on your own data"

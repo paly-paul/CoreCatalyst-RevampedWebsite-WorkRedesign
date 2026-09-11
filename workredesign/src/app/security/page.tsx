@@ -1,4 +1,6 @@
 import CTABanner from "../_components/cta-banner";
+import TrustClaimsSection from "./_components/trust-claims-section";
+import DeploymentSection from "./_components/deployment-section";
 
 const certs = [
   {
@@ -90,8 +92,12 @@ export default function Security() {
         </div>
       </section>
 
+      <TrustClaimsSection />
+
+      <DeploymentSection />
+
       <section className="py-20 sm:py-32 bg-white">
-        <div className="max-w-[1200xl] mx-auto px-6 sm:px-8">
+        <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
           <div className="bg-cyan-50 rounded-xl p-8 border-2 border-cyan-200 text-center">
             <p className="text-lg text-slate-700 mb-4">
               <strong>Your data is never used for model training.</strong> Your
