@@ -1,16 +1,28 @@
+import HeroSection from "./_components/hero-section";
+import LogoBar from "./_components/logo-bar";
+import ProblemSection from "./_components/problem-section";
+import StepsSection from "./_components/steps-section";
+import CTABanner from "./_components/cta-banner";
+
 export default function Home() {
   return (
     <div className="pt-[68px]">
-      <section className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 px-6 sm:px-8 py-20 sm:py-32">
-        <div className="max-w-[1200px] mx-auto">
-          <h1 className="display-xl text-slate-900 mb-4">
-            WorkRedesign - Skills Intelligence Platform
-          </h1>
-          <p className="body-lg text-slate-600 max-w-2xl">
-            Turn Skills Data Into Strategic Workforce Decisions
-          </p>
-        </div>
-      </section>
+      <HeroSection />
+      <LogoBar />
+      <ProblemSection />
+      <StepsSection />
+      <CTABanner
+        headline="Start with a 90-day proof of concept"
+        subheadline="See WorkRedesign transform your skills data into board-ready intelligence"
+        primaryCta={{
+          label: "Book a Discovery Call",
+          href: "/engage",
+        }}
+        secondaryCta={{
+          label: "Learn More",
+          href: "/how-it-works",
+        }}
+      />
     </div>
   );
 }
