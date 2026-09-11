@@ -1,9 +1,15 @@
 import CTABanner from "../../_components/cta-banner";
+import ProblemCards from "../_components/problem-cards";
+import OutcomeCards from "../_components/outcome-cards";
+import { managerProblems, managerBenefits } from "../_data";
 
 export default function ManagersSolutions() {
   return (
     <div className="pt-[68px]">
-      <section className="py-20 sm:py-32 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <section
+        data-testid="section-hero"
+        className="py-20 sm:py-32 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
+      >
         <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
           <h1 className="display-lg text-slate-900 mb-6">
             Make Your Team's Skills Work For You
@@ -14,42 +20,19 @@ export default function ManagersSolutions() {
         </div>
       </section>
 
-      <section className="py-20 sm:py-32 bg-white">
-        <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
-          <h2 className="display-md text-slate-900 text-center mb-16">
-            Manager-Level Superpowers
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Team Skills Visibility",
-                description:
-                  "See exactly what your team can do. No more surprises when projects need specific skills.",
-              },
-              {
-                title: "Development Planning",
-                description:
-                  "Identify skill gaps and create targeted development plans. Track progress over time.",
-              },
-              {
-                title: "Smart Team Formation",
-                description:
-                  "Build the right team for every project. Match skills to requirements in seconds.",
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="bg-slate-50 rounded-xl p-8 border border-slate-200"
-              >
-                <h3 className="font-semibold text-slate-900 mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-slate-600">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ProblemCards
+        cards={managerProblems}
+        eyebrow="The Manager's Challenge"
+        title="What You're Dealing With"
+        subtitle="Most managers work blind. The HRIS shows titles, not capabilities. Your people have skills that job descriptions don't capture."
+      />
+
+      <OutcomeCards
+        cards={managerBenefits}
+        eyebrow="The Solution"
+        heading="Manager-Level Superpowers"
+        subheading="WorkRedesign gives you clarity. About your team, right now. About what they can do. About where they can go."
+      />
 
       <CTABanner
         headline="Know your team's skills before the project asks you to"
