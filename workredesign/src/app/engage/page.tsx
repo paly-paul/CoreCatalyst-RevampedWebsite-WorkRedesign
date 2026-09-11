@@ -1,4 +1,6 @@
 import CTABanner from "../_components/cta-banner";
+import FitSection from "./_components/fit-section";
+import BookingSection from "./_components/booking-section";
 
 const phases = [
   {
@@ -84,13 +86,9 @@ export default function Engage() {
         </div>
       </section>
 
-      <CTABanner
-        headline="Let's scope your rollout"
-        primaryCta={{
-          label: "Book a Discovery Call",
-          href: "/contact",
-        }}
-      />
+      <FitSection />
+
+      <BookingSection />
     </div>
   );
 }
