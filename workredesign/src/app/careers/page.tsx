@@ -1,5 +1,6 @@
 import Link from "next/link";
 import CTABanner from "../_components/cta-banner";
+import ProcessSection from "./_components/process-section";
 
 const jobs = [
   {
@@ -87,6 +88,8 @@ export default function Careers() {
           </div>
         </div>
       </section>
+
+      <ProcessSection />
 
       <CTABanner
         headline="Don't see your role? Send a speculative application."

@@ -1,4 +1,8 @@
 import CTABanner from "../_components/cta-banner";
+import MissionSection from "./_components/mission-section";
+import OriginSection from "./_components/origin-section";
+import TeamSection from "./_components/team-section";
+import AdvisorsSection from "./_components/advisors-section";
 
 const values = [
   {
@@ -34,6 +38,10 @@ export default function About() {
         </div>
       </section>
 
+      <MissionSection />
+
+      <OriginSection />
+
       {/* Values */}
       <section className="py-20 sm:py-32 bg-white">
         <div className="max-w-[1200px] mx-auto px-6 sm:px-8">
@@ -55,6 +63,10 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      <TeamSection />
+
+      <AdvisorsSection />
 
       <CTABanner
         headline="Join us in transforming workforce intelligence"
