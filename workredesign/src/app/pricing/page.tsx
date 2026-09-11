@@ -1,4 +1,5 @@
 import CTABanner from "../_components/cta-banner";
+import { ModelExplainer, AlwaysIncluded, FAQ } from "./_components/pricing-sections";
 
 const plans = [
   {
@@ -91,6 +92,12 @@ export default function Pricing() {
           </div>
         </div>
       </section>
+
+      <ModelExplainer />
+
+      <AlwaysIncluded />
+
+      <FAQ />
 
       <CTABanner
         headline="Not sure which plan fits? Let's talk."
