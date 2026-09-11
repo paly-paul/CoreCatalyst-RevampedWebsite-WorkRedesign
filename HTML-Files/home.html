@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorkRedesign - Skills Intelligence Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      /* ── WorkRedesign brand gradient ─────────────────────────────── */
+      --color-brand-gradient: linear-gradient(135deg, #22b8cf 0%, #3b5bdb 50%, #7950f2 100%);
+      --color-violet:         #7950f2;
+      --color-violet-soft:    rgba(121,80,242,.08);
+      --color-violet-border:  rgba(121,80,242,.20);
+      /* ── Brand accent ─────────────────────────────────────────── */
+      --color-accent:      #22b8cf;
+      --color-accent-dark: #0e9ab5;
+      --color-accent-soft: rgba(34,184,207,.08);
+      --color-accent-border: rgba(34,184,207,.20);
+
+      /* ── Dark nav / hero contrast ─────────────────────────────── */
+      --color-navy:  #0f172a;
+      --color-navy2: #1e293b;
+
+      /* ── Semantic colours (kept for gradients / decorative use) ── */
+      --blue:   #3b5bdb;
+      --violet: #7950f2;
+      --green:  #40c057;
+      --cyan:   #22b8cf;
+      --red:    #fa5252;
+      --orange: #fd7e14;
+
+      /* ── Gradients (decorative only — NOT on primary buttons) ──── */
+      --grad-primary:      linear-gradient(135deg, #3b5bdb 0%, #7950f2 100%);
+      --grad-hero:         linear-gradient(145deg, #eef2ff 0%, #f5f3ff 45%, #faf5ff 100%);
+      --grad-blue-soft:    linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+      --grad-violet-soft:  linear-gradient(135deg, #f3f0ff 0%, #ede9fe 100%);
+      --grad-green-soft:   linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      --grad-cyan-soft:    linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+
+      /* ── Text ─────────────────────────────────────────────────── */
+      --text-primary:   #0f172a;
+      --text-secondary: #475569;
+      --text-muted:     #94a3b8;
+
+      /* ── Surfaces ─────────────────────────────────────────────── */
+      --surface:     #ffffff;
+      --surface-2:   #f8fafc;
+      --surface-warm:#f5f0eb;   /* warm stone — use for alt sections */
+      --border:      #e2e8f0;
+      --border-strong:#cbd5e1;
+
+      /* ── Radii ────────────────────────────────────────────────── */
+      --radius-sm:  8px;
+      --radius-md:  12px;
+      --radius-lg:  16px;
+      --radius-xl:  24px;
+      --radius-2xl: 32px;
+
+      /* ── Shadows ──────────────────────────────────────────────── */
+      --shadow-sm:   0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow-md:   0 4px 12px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
+      --shadow-lg:   0 12px 32px rgba(0,0,0,.10), 0 4px 12px rgba(0,0,0,.06);
+      --shadow-cyan: 0 8px 24px rgba(34,184,207,.25);
+      --shadow-blue: 0 8px 24px rgba(59,91,219,.20); /* kept for compat */
+
+      /* ── Layout ───────────────────────────────────────────────── */
+      --nav-h:       68px;
+      --max-w:       1200px;
+      --section-pad: 96px;
+    }
+
+    /* ============================================================
+       RESET + BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      background: var(--surface);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    body.menu-open { overflow: hidden; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* ============================================================
+       TYPOGRAPHY
+    ============================================================ */
+    h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2; }
+    .display-xl { font-size: clamp(36px, 5vw, 64px); font-weight: 800; letter-spacing: -0.02em; }
+    .display-lg { font-size: clamp(30px, 4vw, 52px); font-weight: 700; letter-spacing: -0.02em; }
+    .display-md { font-size: clamp(24px, 3vw, 40px); font-weight: 700; letter-spacing: -0.01em; }
+    .display-sm { font-size: clamp(20px, 2.5vw, 30px); font-weight: 600; }
+    .body-lg { font-size: 18px; line-height: 1.7; }
+    .body-md { font-size: 16px; line-height: 1.65; }
+    .body-sm { font-size: 14px; line-height: 1.6; }
+    .label-sm { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* ============================================================
+       UTILITIES
+    ============================================================ */
+    .container { width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+    .text-gradient {
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .accent-text {
+      color: var(--color-accent);
+    }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-accent); color: #fff;
+      padding: 10px 20px; border-radius: 10px;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 15px;
+      transition: background .2s, transform .2s, box-shadow .2s; white-space: nowrap;
+      min-height: 44px;
+    }
+    .btn-primary:hover { background: var(--color-accent-dark); transform: translateY(-1px); box-shadow: var(--shadow-cyan); }
+
+    .btn-ghost-sm {
+      display: inline-flex; align-items: center;
+      color: var(--text-secondary); padding: 10px 16px; border-radius: 10px;
+      font-weight: 500; font-size: 15px; transition: background .2s, color .2s;
+      min-height: 44px;
+    }
+    .btn-ghost-sm:hover { background: var(--surface-2); color: var(--text-primary); }
+
+    .btn-primary-lg {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--color-accent); color: #fff;
+      padding: 16px 32px; border-radius: 14px;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 17px;
+      transition: background .2s, transform .2s, box-shadow .2s;
+      box-shadow: var(--shadow-cyan); white-space: nowrap; min-height: 54px;
+    }
+    .btn-primary-lg:hover { background: var(--color-accent-dark); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(34,184,207,.35); }
+
+    .btn-text-lg {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--color-accent); font-weight: 600; font-size: 16px;
+      transition: gap .2s; padding: 8px 4px; min-height: 44px;
+    }
+    .btn-text-lg:hover { gap: 10px; }
+
+    .btn-outline-lg {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 2px solid rgba(255,255,255,.5); color: #fff;
+      padding: 14px 28px; border-radius: 14px;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 16px;
+      transition: background .2s, border-color .2s; min-height: 54px;
+    }
+    .btn-outline-lg:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.8); }
+
+    .btn-ghost-lg {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--color-accent); border: 2px solid var(--border);
+      padding: 14px 28px; border-radius: 14px;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 16px;
+      transition: border-color .2s, background .2s; min-height: 54px;
+    }
+    .btn-ghost-lg:hover { border-color: var(--color-accent); background: var(--color-accent-soft); }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h);
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+    .nav.scrolled {
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 16px rgba(0,0,0,.07);
+    }
+    .nav-inner {
+      display: flex; align-items: center; gap: 8px;
+      height: var(--nav-h); max-width: var(--max-w);
+      margin: 0 auto; padding: 0 24px;
+    }
+        .nav-logo {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 20px;
+      letter-spacing: -0.02em; margin-right: 8px;
+      white-space: nowrap; display: flex; align-items: center; gap: 0;
+      text-decoration: none;
+    }
+    .nav-logo-work {
+      color: var(--color-navy, #0f172a);
+    }
+    .nav-logo-redesign {
+      background: var(--color-brand-gradient, linear-gradient(135deg, #3b5bdb, #7950f2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 4px; flex: 1;
+    }
+    .nav-links a {
+      padding: 8px 12px; border-radius: 8px; font-size: 15px; font-weight: 500;
+      color: var(--text-secondary); transition: background .2s, color .2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover, .nav-links a.active { background: var(--surface-2); color: var(--text-primary); }
+    .nav-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+
+    /* Hamburger button */
+    .nav-hamburger {
+      display: none;
+      align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 8px;
+      color: var(--text-primary); margin-left: auto;
+      transition: background .2s;
+    }
+    .nav-hamburger:hover { background: var(--surface-2); }
+    .nav-hamburger svg { width: 22px; height: 22px; }
+
+    /* Mobile menu overlay */
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(255,255,255,.98);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      flex-direction: column;
+      padding: calc(var(--nav-h) + 24px) 24px 40px;
+      overflow-y: auto;
+    }
+    .mobile-menu.is-open { display: flex; }
+    .mobile-menu-links {
+      display: flex; flex-direction: column; gap: 4px; flex: 1;
+    }
+    .mobile-menu-links a {
+      padding: 14px 16px; border-radius: 12px;
+      font-size: 18px; font-weight: 500; color: var(--text-secondary);
+      transition: background .2s, color .2s; border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu-links a:hover { background: var(--surface-2); color: var(--text-primary); }
+    .mobile-menu-ctas {
+      display: flex; flex-direction: column; gap: 12px; margin-top: 32px;
+    }
+    .mobile-menu-ctas .btn-primary-lg { justify-content: center; width: 100%; }
+    .mobile-menu-ctas .btn-ghost-lg { justify-content: center; width: 100%; }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      padding-top: calc(var(--nav-h) + 80px);
+      padding-bottom: 80px;
+      background: var(--grad-hero);
+      overflow: hidden; position: relative;
+    }
+    .hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-accent-soft); border: 1px solid var(--color-accent-border);
+      color: var(--color-accent); padding: 6px 14px; border-radius: 100px;
+      font-size: 13px; font-weight: 600; margin-bottom: 20px;
+      letter-spacing: 0.03em;
+    }
+    .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); display: block; }
+    .hero-headline { margin-bottom: 16px; }
+    .hero-sub {
+      color: var(--text-secondary); max-width: 520px;
+      margin-bottom: 12px;
+    }
+    .hero-sub-ai {
+      color: var(--text-secondary); max-width: 520px;
+      margin-bottom: 28px; font-size: 16px; line-height: 1.65;
+      padding: 14px 16px; border-left: 3px solid var(--violet);
+      background: rgba(121,80,242,.05); border-radius: 0 8px 8px 0;
+    }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .hero-ctas .btn-text-lg { font-size: 15px; }
+
+    .hero-visual {
+      position: relative; border-radius: var(--radius-xl);
+      overflow: hidden; box-shadow: var(--shadow-lg);
+    }
+    .hero-visual img {
+      width: 100%; height: 420px; object-fit: cover;
+    }
+    .hero-visual-badge {
+      position: absolute; bottom: 20px; left: 20px; right: 20px;
+      background: rgba(255,255,255,.95); backdrop-filter: blur(8px);
+      border-radius: 12px; padding: 14px 16px;
+      display: flex; gap: 12px; align-items: center;
+      box-shadow: var(--shadow-md);
+    }
+    .hero-badge-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--color-accent);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: #fff;
+    }
+    .hero-badge-icon svg { width: 18px; height: 18px; }
+    .hero-badge-pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); flex-shrink: 0;
+      box-shadow: 0 0 0 0 rgba(64,192,87,.4);
+      animation: pulse-ring 2s ease-out infinite;
+    }
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(64,192,87,.4); }
+      70%  { box-shadow: 0 0 0 8px rgba(64,192,87,0); }
+      100% { box-shadow: 0 0 0 0 rgba(64,192,87,0); }
+    }
+    .hero-badge-text strong { display: block; font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .hero-badge-text span { font-size: 12px; color: var(--text-secondary); }
+
+    /* ============================================================
+       LOGO BAR
+    ============================================================ */
+    .logo-bar-section {
+      padding: 40px 0; background: var(--surface); border-bottom: 1px solid var(--border);
+    }
+    .logo-bar-label {
+      text-align: center; color: var(--text-muted); font-size: 13px;
+      font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .logo-bar {
+      display: flex; align-items: center; gap: 40px;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; padding: 4px 24px;
+    }
+    .logo-bar::-webkit-scrollbar { display: none; }
+    .logo-item {
+      display: flex; align-items: center; gap: 8px;
+      white-space: nowrap; flex-shrink: 0;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px;
+      color: var(--text-muted); opacity: .7; transition: opacity .2s;
+    }
+    .logo-item:hover { opacity: 1; }
+    .logo-item-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); opacity: .6; }
+
+    /* ============================================================
+       SECTION COMMON
+    ============================================================ */
+    .section { padding: var(--section-pad) 0; }
+    .section-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-accent-soft); border: 1px solid var(--color-accent-border);
+      color: var(--color-accent); padding: 5px 12px; border-radius: 100px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .section-header { text-align: center; max-width: 720px; margin: 0 auto 56px; }
+    .section-header p { color: var(--text-secondary); margin-top: 14px; }
+
+    /* ============================================================
+       PROBLEM SECTION
+    ============================================================ */
+    .problem-section { background: var(--surface-2); }
+    .problem-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+    .problem-left {}
+    .problem-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+    .problem-stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 24px;
+    }
+    .problem-big-stat {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800;
+      font-size: 56px; line-height: 1; letter-spacing: -0.03em;
+      background: var(--grad-primary);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 8px;
+    }
+    .problem-stat-label { font-size: 14px; color: var(--text-secondary); line-height: 1.4; }
+    .problem-right { padding-top: 8px; }
+    .problem-right p { color: var(--text-secondary); margin-bottom: 20px; line-height: 1.75; font-size: 17px; }
+    .problem-right p:last-child { margin-bottom: 0; }
+
+    /* ============================================================
+       HOW IT WORKS
+    ============================================================ */
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .step-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px;
+      position: relative; transition: box-shadow .2s, transform .2s;
+    }
+    .step-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .step-num {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--color-accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px;
+      margin-bottom: 16px;
+      border-radius: 50%;
+      transition: background .2s, box-shadow .2s;
+    }
+    .step-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .step-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ============================================================
+       FEATURES BENTO
+    ============================================================ */
+    .features-bento {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .feat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); padding: 32px;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .feat-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); border-color: var(--color-accent-border); }
+    .feat-card.full { grid-column: 1 / -1; }
+    .feat-card.wide { grid-column: span 2; }
+    .feat-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+    .feat-card > p { color: var(--text-secondary); font-size: 15px; line-height: 1.65; margin-bottom: 20px; }
+    .feat-list { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+    .feat-list li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 14px; color: var(--text-secondary); list-style: none;
+    }
+    .feat-list li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); margin-top: 7px; flex-shrink: 0; }
+
+    /* Full-width output card inner grid */
+    .output-card-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 32px; align-items: start;
+    }
+    .output-card-left h3 { font-size: 22px; margin-bottom: 12px; }
+    .output-card-left p { color: var(--text-secondary); font-size: 15px; line-height: 1.65; }
+    .output-items {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .output-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px;
+    }
+    .output-item-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    .output-item-text strong { display: block; font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .output-item-text span { font-size: 13px; color: var(--text-secondary); }
+
+    /* ============================================================
+       TRUST SIGNALS
+    ============================================================ */
+    .trust-section { background: var(--surface-2); }
+    .trust-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .trust-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .trust-card-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; background: var(--grad-blue-soft);
+    }
+    .trust-card h3 { font-size: 16px; font-weight: 700; }
+    .trust-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ============================================================
+       STATS BAND
+    ============================================================ */
+    .stats-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; text-align: center;
+    }
+    .stat-item {
+      padding: 48px 24px;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800;
+      font-size: 44px; line-height: 1; letter-spacing: -0.03em;
+      background: var(--grad-primary);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 8px;
+    }
+    .stat-label { font-size: 14px; color: var(--text-secondary); max-width: 160px; margin: 0 auto; }
+
+    /* ============================================================
+       PERSONA TABS
+    ============================================================ */
+    .persona-section { background: var(--surface-2); }
+    .persona-tabs { display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+    .persona-tab {
+      padding: 10px 20px; border-radius: 10px; font-size: 15px; font-weight: 600;
+      color: var(--text-secondary); background: var(--surface);
+      border: 2px solid var(--border);
+      transition: all .2s; cursor: pointer; min-height: 44px;
+    }
+    .persona-tab.active {
+      background: var(--grad-primary); color: #fff;
+      border-color: transparent;
+    }
+    .persona-tab:hover:not(.active) { border-color: var(--color-accent); color: var(--color-accent); }
+
+    .persona-panel { display: none; }
+    .persona-panel.active { display: block; }
+    .persona-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: start;
+    }
+    .persona-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(59,91,219,.06); border: 1px solid rgba(59,91,219,.12);
+      color: var(--color-accent); padding: 6px 14px; border-radius: 100px;
+      font-size: 13px; font-weight: 600; margin-bottom: 20px;
+    }
+    .persona-quote {
+      font-size: 18px; font-style: italic; color: var(--text-secondary);
+      border-left: 3px solid var(--violet); padding-left: 16px;
+      margin-bottom: 24px; line-height: 1.65;
+    }
+    .persona-content h3 { font-size: 22px; margin-bottom: 16px; }
+    .persona-outcomes h4 { font-size: 14px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+    .outcome-list { display: flex; flex-direction: column; gap: 10px; }
+    .outcome-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 14px;
+    }
+    .outcome-check {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(64,192,87,.12); color: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; flex-shrink: 0; margin-top: 1px;
+    }
+    .outcome-item span { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+
+    .persona-visual { position: relative; }
+    .persona-img {
+      width: 100%; height: 380px; object-fit: cover;
+      border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);
+    }
+    .persona-anxiety {
+      position: absolute; bottom: -20px; left: 20px; right: 20px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px;
+      box-shadow: var(--shadow-md);
+    }
+    .persona-anxiety-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+    .persona-anxiety p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; font-style: italic; }
+    .persona-customise {
+      margin-top: 20px; padding: 14px 16px;
+      background: rgba(121,80,242,.05); border: 1px solid rgba(121,80,242,.12);
+      border-radius: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.5;
+    }
+    .persona-customise strong { color: var(--violet); }
+
+    /* ============================================================
+       COMPARISON TABLE
+    ============================================================ */
+    .compare-section { background: var(--surface); }
+    .compare-headline { margin-bottom: 12px; }
+    .compare-sub { color: var(--text-secondary); max-width: 760px; margin: 0 auto 48px; text-align: center; font-size: 16px; line-height: 1.65; }
+    .compare-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .compare-table {
+      width: 100%; min-width: 560px; border-collapse: collapse;
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .compare-table thead th {
+      padding: 16px 20px; text-align: left;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px;
+      background: var(--surface-2);
+    }
+    .compare-table thead th:first-child { color: var(--text-primary); }
+    .compare-table thead th.col-competitor { color: var(--text-muted); }
+    .compare-table thead th.col-core {
+      color: #fff;
+      background: var(--grad-primary);
+    }
+    .compare-table tbody tr { border-top: 1px solid var(--border); }
+    .compare-table tbody tr:nth-child(even) td { background: var(--surface-2); }
+    .compare-table tbody td {
+      padding: 14px 20px; font-size: 14px; color: var(--text-secondary);
+    }
+    .compare-table tbody td:first-child { font-weight: 600; color: var(--text-primary); }
+    .compare-table tbody td.col-core { background: rgba(59,91,219,.04); }
+    .check-yes { color: var(--green); font-size: 18px; }
+    .check-no { color: var(--border-strong); font-size: 18px; }
+    .check-partial { color: var(--orange); font-size: 15px; font-weight: 700; }
+
+    /* ============================================================
+       TESTIMONIAL
+    ============================================================ */
+    .testimonial-section { background: var(--surface-2); }
+    .testimonial-card {
+      max-width: 720px; margin: 0 auto;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-2xl); padding: 48px;
+      text-align: center; box-shadow: var(--shadow-md);
+    }
+    .testimonial-stars { font-size: 22px; margin-bottom: 24px; letter-spacing: 2px; }
+    .testimonial-quote {
+      font-size: 20px; line-height: 1.65; color: var(--text-primary);
+      font-style: italic; margin-bottom: 32px;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 16px; justify-content: center; }
+    .author-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      overflow: hidden; flex-shrink: 0;
+    }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-name { font-weight: 700; font-size: 16px; }
+    .author-title { font-size: 14px; color: var(--text-secondary); margin-top: 2px; }
+
+    /* ============================================================
+       FINAL CTA SECTION
+    ============================================================ */
+    .cta-section {
+      background: var(--grad-hero);
+      border-top: 1px solid var(--border);
+    }
+    .cta-inner { text-align: center; max-width: 680px; margin: 0 auto; }
+    .cta-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-accent-soft); border: 1px solid var(--color-accent-border);
+      color: var(--color-accent); padding: 6px 14px; border-radius: 100px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 24px;
+    }
+    .cta-inner h2 { margin-bottom: 16px; }
+    .cta-inner p { color: var(--text-secondary); font-size: 17px; line-height: 1.65; margin-bottom: 36px; }
+    .cta-buttons { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+    .cta-note { margin-top: 20px; font-size: 13px; color: var(--text-muted); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--surface); border-top: 1px solid var(--border);
+      padding: 64px 0 0;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+    .footer-brand-logo {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 20px;
+      background: var(--grad-primary);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 12px; display: block;
+    }
+    .footer-brand p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; max-width: 280px; }
+    .footer-col-title { font-size: 13px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 14px; color: var(--text-secondary); transition: color .2s; }
+    .footer-links a:hover { color: var(--color-accent); }
+    .footer-bottom {
+      border-top: 1px solid var(--border); padding: 24px 0;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 13px; color: var(--text-muted); }
+    .footer-bottom-links { display: flex; gap: 20px; }
+    .footer-bottom-links a { font-size: 13px; color: var(--text-muted); transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--text-secondary); }
+
+    /* ============================================================
+       RESPONSIVE - 1000px
+    ============================================================ */
+    @media (max-width: 1000px) {
+      :root { --section-pad: 64px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { max-width: 540px; margin: 0 auto; }
+      .problem-inner { grid-template-columns: 1fr; gap: 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
+      .trust-grid { grid-template-columns: repeat(2, 1fr); }
+      .output-card-inner { grid-template-columns: 1fr; }
+      .output-items { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ============================================================
+       RESPONSIVE - 768px (hamburger trigger)
+    ============================================================ */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-actions { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+
+    /* ============================================================
+       RESPONSIVE - 680px
+    ============================================================ */
+    @media (max-width: 680px) {
+      :root { --section-pad: 48px; }
+
+      /* Hero */
+      .hero { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 48px; }
+      .hero-ctas { flex-direction: column; gap: 10px; align-items: flex-start; }
+      .hero-visual img { height: 260px; }
+
+      /* Steps */
+      .steps-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+      /* Features */
+      .features-bento { grid-template-columns: 1fr; }
+      .feat-card.wide { grid-column: span 1; }
+      .feat-card.full { grid-column: span 1; }
+
+      /* Wide card inner */
+      .wide-card-inner { grid-template-columns: 1fr; gap: 20px; }
+
+      /* Trust */
+      .trust-grid { grid-template-columns: 1fr; }
+
+      /* Stats */
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-item { padding: 32px 16px; border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+      .stat-num { font-size: 36px; }
+
+      /* Persona */
+      .persona-inner { grid-template-columns: 1fr; gap: 32px; }
+      .persona-visual { order: -1; }
+      .persona-img { height: 240px; }
+      .persona-anxiety { position: relative; left: auto; right: auto; bottom: auto; margin-top: 12px; }
+
+      /* Compare */
+      .compare-table thead th, .compare-table tbody td { padding: 12px 14px; font-size: 13px; }
+
+      /* Testimonial */
+      .testimonial-card { padding: 32px 24px; }
+      .testimonial-quote { font-size: 17px; }
+
+      /* Footer */
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+
+      /* Output */
+      .output-items { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       RESPONSIVE - 480px
+    ============================================================ */
+    @media (max-width: 480px) {
+      :root { --section-pad: 44px; }
+      .container { padding: 0 16px; }
+      .nav-inner { padding: 0 16px; }
+
+      .display-xl { font-size: 30px; }
+      .display-lg { font-size: 26px; }
+      .display-md { font-size: 22px; }
+
+      .problem-big-stat { font-size: 42px; }
+      .problem-stats { grid-template-columns: 1fr; gap: 16px; }
+
+      .steps-grid { grid-template-columns: 1fr; }
+
+      .hero-visual img { height: 220px; }
+
+      .btn-primary-lg { padding: 14px 24px; font-size: 15px; width: 100%; justify-content: center; }
+      .btn-ghost-lg { width: 100%; justify-content: center; }
+      .cta-buttons { flex-direction: column; }
+      .cta-buttons .btn-primary-lg, .cta-buttons .btn-ghost-lg { width: 100%; justify-content: center; }
+
+      .hero-badge-text strong { font-size: 13px; }
+      .persona-tabs { flex-direction: column; }
+      .persona-tab { width: 100%; text-align: left; }
+
+      .testimonial-card { padding: 24px 16px; }
+      .footer-bottom-links { flex-wrap: wrap; gap: 12px; }
+    }
+
+    /* ============================================================
+       ICON PILL SYSTEM
+    ============================================================ */
+    .icon-pill {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: var(--color-accent-soft);
+      border: 1px solid var(--color-accent-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent);
+      margin-bottom: 20px;
+      flex-shrink: 0;
+      transition: background .2s, box-shadow .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+
+    /* Small variant for output items and trust cards */
+    .icon-pill-sm {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: var(--color-accent-soft);
+      border: 1px solid var(--color-accent-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent);
+      flex-shrink: 0;
+      transition: background .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Card hover: lift + accent glow */
+    .feat-card:hover .icon-pill,
+    .trust-card:hover .icon-pill,
+    .trust-card:hover .icon-pill-sm {
+      background: var(--color-accent);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+    .step-card:hover .step-num {
+      background: var(--color-accent-dark);
+      box-shadow: 0 4px 12px rgba(34,184,207,.30);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="home.html" class="nav-logo" aria-label="WorkRedesign home"><span class="nav-logo-work">work</span><span class="nav-logo-redesign">redesign</span></a>
+
+      <div class="nav-links" role="menubar">
+        <a href="home.html" class="active" role="menuitem">Home</a>
+        <a href="howitworks.html" role="menuitem">How It Works</a>
+        <a href="solutions.html" role="menuitem">Solutions</a>
+        <a href="pricing.html" role="menuitem">Pricing</a>
+        <a href="about.html" role="menuitem">About</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="signin.html" class="btn-ghost-sm">Sign in</a>
+        <a href="engage.html" class="btn-primary">Book a Discovery Call</a>
+      </div>
+
+      <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" onclick="toggleMobileMenu(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <nav class="mobile-menu-links">
+      <a href="home.html" onclick="closeMobileMenu()">Home</a>
+      <a href="howitworks.html" onclick="closeMobileMenu()">How It Works</a>
+      <a href="solutions.html" onclick="closeMobileMenu()">Solutions</a>
+      <a href="pricing.html" onclick="closeMobileMenu()">Pricing</a>
+      <a href="about.html" onclick="closeMobileMenu()">About</a>
+    </nav>
+    <div class="mobile-menu-ctas">
+      <a href="engage.html" class="btn-primary-lg" onclick="closeMobileMenu()">Book a Discovery Call</a>
+      <a href="howitworks.html" class="btn-ghost-lg" onclick="closeMobileMenu()">See How It Works</a>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero" aria-labelledby="hero-headline">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span></span>
+            Skills Intelligence Platform - B2B
+          </div>
+          <h1 class="display-xl hero-headline" id="hero-headline">
+            Know what your people<br>
+            <span class="text-gradient">can actually do.</span>
+          </h1>
+          <p class="body-lg hero-sub">
+            Skills intelligence that is human-engineered, not just AI-generated - trustworthy enough to act on at board level.
+          </p>
+          <p class="hero-sub-ai">
+            AI is already redesigning the work. WorkRedesign helps you redesign your workforce to match - with validated skills data, redefined job descriptions, career lattices, and an automation charter built from a single governed pipeline.
+          </p>
+          <div class="hero-ctas">
+            <a href="engage.html" class="btn-primary-lg">Start a 90-Day Proof of Concept</a>
+            <a href="howitworks.html" class="btn-text-lg">See How It Works &#8594;</a>
+          </div>
+          <p style="margin-top:14px;font-size:13px;color:var(--text-muted);">
+            <a href="engage.html" style="color:var(--blue);font-weight:500;">Talk to the Team</a> - no sales pitch, just an honest conversation.
+          </p>
+        </div>
+
+        <div class="hero-visual">
+          <img
+            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=560&fit=crop&crop=center"
+            alt="Diverse team collaborating around a table in a modern boardroom"
+            width="800" height="560"
+            loading="eager"
+          />
+          <div class="hero-visual-badge">
+            <div class="hero-badge-pulse"></div>
+            <div class="hero-badge-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+            </div>
+            <div class="hero-badge-text">
+              <strong>Board-Ready Intelligence Export</strong>
+              <span>From raw HRIS data to strategic workforce insight</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LOGO BAR
+  ============================================================ -->
+  <section class="logo-bar-section" aria-label="Trusted by organisations">
+    <div class="container">
+      <p class="logo-bar-label">Trusted by forward-thinking organisations</p>
+      <div class="logo-bar">
+        <div class="logo-item"><div class="logo-item-dot"></div>Global Finance Co</div>
+        <div class="logo-item"><div class="logo-item-dot"></div>Healthcare Alliance</div>
+        <div class="logo-item"><div class="logo-item-dot"></div>TechScale Group</div>
+        <div class="logo-item"><div class="logo-item-dot"></div>Infrastructure Corp</div>
+        <div class="logo-item"><div class="logo-item-dot"></div>Public Sector Hub</div>
+        <div class="logo-item"><div class="logo-item-dot"></div>Cloud Ventures</div>
+        <div class="logo-item"><div class="logo-item-dot"></div>Retail Networks</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROBLEM
+  ============================================================ -->
+  <section class="section problem-section" aria-labelledby="problem-headline">
+    <div class="container">
+      <div class="problem-inner">
+        <div class="problem-left">
+          <div class="section-eyebrow">The Challenge</div>
+          <h2 class="display-lg" id="problem-headline">Your HRIS has data. Your business needs intelligence.</h2>
+
+          <div class="problem-stats">
+            <div class="problem-stat-card">
+              <div class="problem-big-stat">73%</div>
+              <div class="problem-stat-label">of organisations say their skills data is incomplete or out of date</div>
+            </div>
+            <div class="problem-stat-card">
+              <div class="problem-big-stat">4.2x</div>
+              <div class="problem-stat-label">more likely to succeed in AI transformation with accurate skills maps</div>
+            </div>
+            <div class="problem-stat-card">
+              <div class="problem-big-stat">68%</div>
+              <div class="problem-stat-label">of CHRO decisions are based on gut instinct, not verified data</div>
+            </div>
+            <div class="problem-stat-card">
+              <div class="problem-big-stat">12mo</div>
+              <div class="problem-stat-label">average time to rebuild workforce capability data from scratch</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="problem-right">
+          <p class="body-lg">
+            Most organisations have invested in HRIS systems, learning platforms, and talent tools. But when the CHRO stands in front of the board and asks "what can our people actually do?" - no system can give a confident, auditable answer.
+          </p>
+          <p>
+            Skills data exists in fragments: some in your HRIS, some in your LMS, some in the heads of managers who have never been asked to formalise what they know. Reconciling that data takes months of manual effort, and even then, nobody trusts the output enough to make strategic decisions from it.
+          </p>
+          <p>
+            And even when organisations invest in cleaning their data - across Finance systems, Procurement platforms, logistics tools, and their HRIS -, they hit a second wall: the data sits in a dashboard. Nobody has translated it into the redefined job descriptions, career lattices, and automation charters that the business actually needs. Skills intelligence without the downstream outputs is still just a data project.
+          </p>
+          <a href="howitworks.html" class="btn-text-lg" style="margin-top:8px;">See how we solve this &#8594;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOW IT WORKS
+  ============================================================ -->
+  <section class="section" aria-labelledby="steps-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">How It Works</div>
+        <h2 class="display-lg" id="steps-headline">From fragmented data to board-ready intelligence</h2>
+        <p class="body-md">A structured six-step process that turns your existing workforce data into validated, actionable skills intelligence - with human oversight at every stage.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Data Ingestion</h3>
+          <p>We connect to your existing HRIS, LMS, and talent systems - no rip and replace. Your data stays in your environment.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>AI-Assisted Mapping</h3>
+          <p>Our AI engine extracts and structures skills signals from unstructured data across every source you connect.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Human-Validated Reconciliation</h3>
+          <p>Managers and employees validate AI-generated profiles through a structured adjudication process, with a full evidence trail and bias monitoring built in.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <h3>Governed Skills Record</h3>
+          <p>Every skill claim is provenance-tracked - who validated it, when, with what evidence. A record you can defend in front of your board.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">5</div>
+          <h3>Strategic Intelligence Layer</h3>
+          <p>Workforce gap analysis, mobility classification, and role-based views - built on verified data, not assumptions.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">6</div>
+          <h3>Business Outputs</h3>
+          <p>Redefined job descriptions. Career lattices. Automation charter. All generated from your verified skills record and ready to use.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FEATURES BENTO
+  ============================================================ -->
+  <section class="section problem-section" aria-labelledby="features-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">The Platform</div>
+        <h2 class="display-lg" id="features-headline">Four pillars. One governed pipeline.</h2>
+        <p class="body-md">WorkRedesign is built around a single principle: skills data is only as valuable as the decisions you can make with it.</p>
+      </div>
+
+      <div class="features-bento">
+        <!-- Pillar 1 -->
+        <div class="feat-card">
+          <div class="icon-pill" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+          <h3>Skills Mapping and Reconciliation</h3>
+          <p>Our AI extracts skills signals from across your systems, but every profile is put through a human-validated reconciliation process before it enters the record. The result is a skills inventory your organisation can trust.</p>
+          <ul class="feat-list">
+            <li>Multi-source data ingestion (HRIS, LMS, performance data)</li>
+            <li>AI extraction with manager adjudication workflow</li>
+            <li>Bias-monitored dispute governance</li>
+            <li>Provenance-tracked skill records</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="feat-card">
+          <div class="icon-pill" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Workforce Intelligence</h3>
+          <p>From your verified skills record, we build the strategic views your leadership team actually needs - gap analysis, mobility pathways, and automation impact modelling.</p>
+          <ul class="feat-list">
+            <li>Role-gap analysis across the full organisation</li>
+            <li>Internal mobility classification and career lattices</li>
+            <li>Automation charter identifying AI-exposed roles</li>
+            <li>Org Passport - a portable workforce capability view across Finance, Procurement, Logistics, HR, Operations, and frontline functions</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="feat-card">
+          <div class="icon-pill" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+          <h3>Governance and Trust</h3>
+          <p>Every skill claim in WorkRedesign has an audit trail. You know who validated it, when, with what evidence - and the system flags when evidence is stale or disputed.</p>
+          <ul class="feat-list">
+            <li>Full adjudication audit trail</li>
+            <li>Configurable validation workflows per role type</li>
+            <li>GDPR-aligned data architecture</li>
+            <li>Board-ready export with sourcing transparency</li>
+          </ul>
+        </div>
+
+        <!-- Full-width Pillar 4: Business-Ready Outputs -->
+        <div class="feat-card full">
+          <div class="output-card-inner">
+            <div class="output-card-left">
+              <div class="icon-pill" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+              <h3>Business-Ready Outputs</h3>
+              <p>
+                Intelligence without action is just analysis. WorkRedesign closes the loop by generating the actual business documents your organisation needs - built directly from your verified skills record, not from templates.
+              </p>
+              <p style="margin-top:12px;color:var(--text-secondary);font-size:14px;">
+                Every output is generated from your verified data and reviewed in collaboration with your team. This is not a generic document generator - it is a co-produced deliverable that reflects your actual workforce.
+              </p>
+            </div>
+            <div class="output-items">
+              <div class="output-item">
+                <div class="output-item-icon"><div class="icon-pill-sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div></div>
+                <div class="output-item-text">
+                  <strong>Redefined Job Descriptions</strong>
+                  <span>Skills-based, AI-era job descriptions that reflect what roles actually require</span>
+                </div>
+              </div>
+              <div class="output-item">
+                <div class="output-item-icon"><div class="icon-pill-sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></div></div>
+                <div class="output-item-text">
+                  <strong>Career Lattices</strong>
+                  <span>Horizontal and vertical mobility maps showing realistic next steps for every employee</span>
+                </div>
+              </div>
+              <div class="output-item">
+                <div class="output-item-icon"><div class="icon-pill-sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div></div>
+                <div class="output-item-text">
+                  <strong>Automation Charter</strong>
+                  <span>A governed framework identifying which tasks are AI-automatable and what that means for each role</span>
+                </div>
+              </div>
+              <div class="output-item">
+                <div class="output-item-icon"><div class="icon-pill-sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div></div>
+                <div class="output-item-text">
+                  <strong>Board-Ready Export</strong>
+                  <span>A formatted intelligence report structured for executive and board-level audiences</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TRUST SIGNALS
+  ============================================================ -->
+  <section class="section trust-section" aria-labelledby="trust-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Why Organisations Trust WorkRedesign</div>
+        <h2 class="display-md" id="trust-headline">Built for decisions that matter</h2>
+        <p class="body-md">Skills intelligence only has value when the people receiving it trust it enough to act on it.</p>
+      </div>
+
+      <div class="trust-grid">
+        <div class="trust-card">
+          <div class="trust-card-icon"><div class="icon-pill" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div></div>
+          <h3>HRIS-Agnostic Integration</h3>
+          <p>Works alongside Workday, SAP SuccessFactors, Oracle HCM, and any other system you have. No rip and replace - no disruption to your existing infrastructure.</p>
+        </div>
+        <div class="trust-card">
+          <div class="trust-card-icon"><div class="icon-pill" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+          <h3>Auditable at Every Step</h3>
+          <p>Every skill claim carries its provenance. Who validated it, when, and with what evidence. Your CHRO can stand in front of the board and defend any number in the report.</p>
+        </div>
+        <div class="trust-card">
+          <div class="trust-card-icon"><div class="icon-pill" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div></div>
+          <h3>Manager-in-the-Loop Adjudication</h3>
+          <p>AI generates the first pass. Managers validate with evidence. Disputes go through a governed process. The final record reflects human judgement, not just machine inference.</p>
+        </div>
+        <div class="trust-card">
+          <div class="trust-card-icon"><div class="icon-pill" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div></div>
+          <h3>GDPR and Enterprise Security</h3>
+          <p>Designed for enterprise compliance from day one. Data stays in your environment. Access controls, audit logs, and data residency options are standard - not add-ons.</p>
+        </div>
+        <div class="trust-card">
+          <div class="trust-card-icon"><div class="icon-pill" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div></div>
+          <h3>Human-in-the-Loop by Design</h3>
+          <p>AI enables the process; humans govern it. WorkRedesign is not a black box. Every output has an explanation, every decision has an owner, and every record can be challenged.</p>
+        </div>
+        <div class="trust-card">
+          <div class="trust-card-icon"><div class="icon-pill" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div></div>
+          <h3>90-Day Proof of Concept</h3>
+          <p>We do not ask you to commit to a multi-year platform before you have seen results. Our structured POC delivers a validated skills map for a defined part of your organisation in 90 days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       STATS BAND
+  ============================================================ -->
+  <section class="stats-section" aria-label="Platform outcomes">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-num">90</div>
+          <div class="stat-label">days to a validated skills map in your first business unit</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3x</div>
+          <div class="stat-label">faster internal mobility decisions with verified skills data</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">40%</div>
+          <div class="stat-label">reduction in external hiring costs reported by pilot organisations</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">of skill records auditable with full provenance trail</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PERSONA TABS
+  ============================================================ -->
+  <section class="section persona-section" aria-labelledby="persona-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Who It Is For</div>
+        <h2 class="display-lg" id="persona-headline">The intelligence your leaders have been asking for</h2>
+        <p class="body-md">WorkRedesign addresses the specific questions that keep HR and business leaders awake - with answers grounded in evidence. It covers every population: Finance, Procurement, HR, Logistics, Operations, Customer Service, and frontline roles - not just knowledge workers.</p>
+      </div>
+
+      <div class="persona-tabs" role="tablist" aria-label="Persona selector">
+        <button class="persona-tab active" role="tab" aria-selected="true" aria-controls="panel-chro" onclick="switchPersona('chro', this)">CHRO</button>
+        <button class="persona-tab" role="tab" aria-selected="false" aria-controls="panel-managers" onclick="switchPersona('managers', this)">Line Managers</button>
+        <button class="persona-tab" role="tab" aria-selected="false" aria-controls="panel-hrops" onclick="switchPersona('hrops', this)">HR Operations</button>
+      </div>
+
+      <!-- CHRO Panel -->
+      <div class="persona-panel active" id="panel-chro" role="tabpanel">
+        <div class="persona-inner">
+          <div class="persona-content">
+            <div class="persona-badge">Chief Human Resources Officer</div>
+            <div class="persona-quote">
+              "I need to walk into the board meeting with a workforce capability report that I can actually defend - not a slide deck built on gut feel. And I need it to cover everyone: Finance, Procurement, Logistics, our frontline - not just the knowledge workers."
+            </div>
+            <h3>From fragmented data to board-level confidence</h3>
+            <div class="persona-outcomes">
+              <h4>What You Get</h4>
+              <div class="outcome-list">
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>A validated, organisation-wide skills map your board can trust - built on evidence, not self-assessment alone</span>
+                </div>
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>Redefined job descriptions that reflect what your roles actually require in an AI-era workforce</span>
+                </div>
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>Career lattices showing realistic internal mobility pathways across your organisation</span>
+                </div>
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>An automation charter identifying AI-exposed roles and the reskilling pathways attached to them</span>
+                </div>
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>A board-ready intelligence export formatted for executive audiences, with full sourcing transparency</span>
+                </div>
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>Confidence in your workforce planning decisions when AI transformation is moving the ground beneath you</span>
+                </div>
+              </div>
+            </div>
+            <div class="persona-customise">
+              <strong>Tailored to your organisation:</strong> Every CHRO has a different starting point. We configure the reconciliation process, the adjudication workflows, and the output formats to match your existing governance structure - not a generic playbook.
+            </div>
+          </div>
+          <div class="persona-visual">
+            <img
+              class="persona-img"
+              src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=480&fit=crop&crop=faces"
+              alt="Senior HR leader in a professional boardroom setting"
+              width="600" height="480"
+              loading="lazy"
+            />
+            <div class="persona-anxiety">
+              <div class="persona-anxiety-label">The real concern</div>
+              <p>"We are not here to tell you who to let go. We are showing you what your people can do next."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Managers Panel -->
+      <div class="persona-panel" id="panel-managers" role="tabpanel">
+        <div class="persona-inner">
+          <div class="persona-content">
+            <div class="persona-badge">Line Managers</div>
+            <div class="persona-quote">
+              "I know what my team can do, but I have never had a structured way to say it - or prove it when it comes to promotion decisions."
+            </div>
+            <h3>Give managers a voice in how skills are recorded</h3>
+            <div class="persona-outcomes">
+              <h4>What You Get</h4>
+              <div class="outcome-list">
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>A structured adjudication workflow that captures your knowledge of your team's capabilities - with evidence attached</span>
+                </div>
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>Visibility of skills gaps in your team before they become a delivery problem</span>
+                </div>
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>Ability to identify internal candidates for roles before going to external recruitment</span>
+                </div>
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>Career development conversations backed by data, not just annual review cycles</span>
+                </div>
+              </div>
+            </div>
+            <div class="persona-customise">
+              <strong>Designed for adoption:</strong> The manager interface is built to take minutes, not hours. We configure it to fit your existing review rhythm so it becomes part of how you manage, not an extra task.
+            </div>
+          </div>
+          <div class="persona-visual">
+            <img
+              class="persona-img"
+              src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=600&h=480&fit=crop&crop=faces"
+              alt="Manager in a team meeting discussing performance and skills"
+              width="600" height="480"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- HR Ops Panel -->
+      <div class="persona-panel" id="panel-hrops" role="tabpanel">
+        <div class="persona-inner">
+          <div class="persona-content">
+            <div class="persona-badge">HR Operations</div>
+            <div class="persona-quote">
+              "We spend months pulling data from six different systems. By the time we have a clean picture, it is already out of date."
+            </div>
+            <h3>Replace manual data wrangling with a governed pipeline</h3>
+            <div class="persona-outcomes">
+              <h4>What You Get</h4>
+              <div class="outcome-list">
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>Automated ingestion from your existing HRIS, LMS, and performance systems - no manual exports</span>
+                </div>
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>A single, governed skills record that replaces multiple spreadsheet-based tracking systems</span>
+                </div>
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>Configurable validation workflows that match your existing HR governance processes</span>
+                </div>
+                <div class="outcome-item">
+                  <div class="outcome-check">&#10003;</div>
+                  <span>Audit-ready reporting that satisfies both internal compliance and external regulatory requirements</span>
+                </div>
+              </div>
+            </div>
+            <div class="persona-customise">
+              <strong>Works with what you have:</strong> We do not require you to replace or upgrade your HRIS. WorkRedesign sits alongside your existing stack and connects to it - keeping you in control of your data architecture.
+            </div>
+          </div>
+          <div class="persona-visual">
+            <img
+              class="persona-img"
+              src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&h=480&fit=crop&crop=faces"
+              alt="HR professional reviewing data analytics on a laptop"
+              width="600" height="480"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- ROLE FAMILIES STRIP -->
+  <section style="background:var(--surface-2);padding:28px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)" aria-label="Supported role families">
+    <div class="container" style="text-align:center">
+      <p style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;">Skills validation across every function - from C-suite to frontline</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+        <span style="font-size:13px;font-weight:600;padding:6px 16px;background:var(--surface);border:1px solid var(--border);border-radius:99px;">&#128200; Finance &amp; Accounting</span>
+        <span style="font-size:13px;font-weight:600;padding:6px 16px;background:var(--surface);border:1px solid var(--border);border-radius:99px;">&#128230; Procurement &amp; SCM</span>
+        <span style="font-size:13px;font-weight:600;padding:6px 16px;background:var(--surface);border:1px solid var(--border);border-radius:99px;">&#128101; HR &amp; People Ops</span>
+        <span style="font-size:13px;font-weight:600;padding:6px 16px;background:var(--surface);border:1px solid var(--border);border-radius:99px;">&#128666; Logistics &amp; Operations</span>
+        <span style="font-size:13px;font-weight:600;padding:6px 16px;background:var(--surface);border:1px solid var(--border);border-radius:99px;">&#128222; Customer Service</span>
+        <span style="font-size:13px;font-weight:600;padding:6px 16px;background:var(--surface);border:1px solid var(--border);border-radius:99px;">&#127970; Warehouse &amp; Frontline</span>
+        <span style="font-size:13px;font-weight:600;padding:6px 16px;background:var(--surface);border:1px solid var(--border);border-radius:99px;">&#9874;&#65039; Technical &amp; Engineering</span>
+        <span style="font-size:13px;font-weight:600;padding:6px 16px;background:var(--surface);border:1px solid var(--border);border-radius:99px;">&#128083; Legal &amp; Compliance</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COMPARISON TABLE
+  ============================================================ -->
+  <section class="section compare-section" aria-labelledby="compare-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">How We Compare</div>
+        <h2 class="display-md compare-headline" id="compare-headline">Not just another skills tag tool</h2>
+        <p class="compare-sub">
+          Other tools integrate skills tags into your HRIS. WorkRedesign validates them, governs them, and translates them into the job redesign your organisation actually needs.
+        </p>
+      </div>
+
+      <div class="compare-scroll">
+        <table class="compare-table" role="table">
+          <thead>
+            <tr>
+              <th scope="col">Capability</th>
+              <th scope="col" class="col-competitor">Skills tag tools</th>
+              <th scope="col" class="col-core">WorkRedesign</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Skill data generation</td>
+              <td class="col-competitor"><span class="check-yes">&#10003;</span></td>
+              <td class="col-core"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>HRIS integration</td>
+              <td class="col-competitor"><span class="check-yes">&#10003;</span></td>
+              <td class="col-core"><span class="check-yes">&#10003;</span> HRIS-agnostic</td>
+            </tr>
+            <tr>
+              <td>Manager adjudication with evidence trail</td>
+              <td class="col-competitor"><span class="check-no">&#10007;</span></td>
+              <td class="col-core"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Bias-monitored dispute governance</td>
+              <td class="col-competitor"><span class="check-no">&#10007;</span></td>
+              <td class="col-core"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Provenance-tracked skill records</td>
+              <td class="col-competitor"><span class="check-no">&#10007;</span></td>
+              <td class="col-core"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Redefined job descriptions</td>
+              <td class="col-competitor"><span class="check-no">&#10007;</span></td>
+              <td class="col-core"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Career lattices (horizontal and vertical)</td>
+              <td class="col-competitor"><span class="check-no">&#10007;</span></td>
+              <td class="col-core"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Automation charter</td>
+              <td class="col-competitor"><span class="check-no">&#10007;</span></td>
+              <td class="col-core"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Board-ready formatted export</td>
+              <td class="col-competitor"><span class="check-no">&#10007;</span></td>
+              <td class="col-core"><span class="check-yes">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>90-day proof of concept engagement model</td>
+              <td class="col-competitor"><span class="check-no">&#10007;</span></td>
+              <td class="col-core"><span class="check-yes">&#10003;</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TESTIMONIAL
+  ============================================================ -->
+  <section class="section testimonial-section" aria-label="Customer testimonial">
+    <div class="container">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</div>
+        <blockquote class="testimonial-quote">
+          "For the first time, I walked into the ExCo with a workforce capability report I was genuinely confident in. The reconciliation process surfaced skills we did not know we had - and gave us a credible basis for our AI readiness conversation."
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img
+              src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=96&h=96&fit=crop&crop=faces"
+              alt="Michelle Roberts, CHRO"
+              width="52" height="52"
+            />
+          </div>
+          <div>
+            <div class="author-name">Michelle Roberts</div>
+            <div class="author-title">Chief People Officer - Global Financial Services and Operations Group</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FINAL CTA
+  ============================================================ -->
+  <section class="section cta-section" aria-labelledby="cta-headline">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-eyebrow">90-Day Proof of Concept</div>
+        <h2 class="display-lg" id="cta-headline">Start with a 90-day proof of concept</h2>
+        <p>
+          We do not ask you to commit to a platform before you have seen results. Our structured POC delivers a validated skills map, career lattices, and an automation charter for a defined part of your organisation - in 90 days. Enough to take to the board. Enough to know if this is right for you.
+        </p>
+        <div class="cta-buttons">
+          <a href="engage.html" class="btn-primary-lg">Book a Discovery Call</a>
+          <a href="engage.html" class="btn-ghost-lg">Talk to the Team</a>
+        </div>
+        <p class="cta-note">No commitment required. We start with an honest conversation about your situation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-brand-logo">WorkRedesign</span>
+          <p>Skills intelligence that is human-engineered, not just AI-generated - trustworthy enough to act on at board level.</p>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Platform</div>
+          <div class="footer-links">
+            <a href="howitworks.html">How It Works</a>
+            <a href="solutions.html">Solutions</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="security.html">Security</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Company</div>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="blog.html">Blog</a>
+            <a href="careers.html">Careers</a>
+            <a href="engage.html">How We Engage</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Resources</div>
+          <div class="footer-links">
+            <a href="blog.html">Insights</a>
+            <a href="security.html">Security and Compliance</a>
+            <a href="engage.html">Book a Discovery Call</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&#169; 2026 WorkRedesign. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="cookies.html">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // ---- Hamburger menu ----
+    function toggleMobileMenu(btn) {
+      var menu = document.getElementById('mobileMenu');
+      var isOpen = menu.classList.contains('is-open');
+      if (isOpen) {
+        menu.classList.remove('is-open');
+        document.body.classList.remove('menu-open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      } else {
+        menu.classList.add('is-open');
+        document.body.classList.add('menu-open');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+      }
+    }
+
+    function closeMobileMenu() {
+      var menu = document.getElementById('mobileMenu');
+      var btn = document.querySelector('.nav-hamburger');
+      menu.classList.remove('is-open');
+      document.body.classList.remove('menu-open');
+      if (btn) {
+        btn.setAttribute('aria-expanded', 'false');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      }
+    }
+
+    // Close on ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeMobileMenu();
+    });
+
+    // ---- Persona tabs ----
+    function switchPersona(id, btn) {
+      // Deactivate all tabs + panels
+      document.querySelectorAll('.persona-tab').forEach(function(t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      document.querySelectorAll('.persona-panel').forEach(function(p) {
+        p.classList.remove('active');
+      });
+
+      // Activate selected
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      var panel = document.getElementById('panel-' + id);
+      if (panel) panel.classList.add('active');
+    }
+
+    // ---- Nav scroll glassmorphism ----
+    (function() {
+      var nav = document.querySelector('.nav');
+      function onScroll() {
+        if (window.scrollY > 24) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll(); // run once on load
+    })();
+  </script>
+</body>
+</html>

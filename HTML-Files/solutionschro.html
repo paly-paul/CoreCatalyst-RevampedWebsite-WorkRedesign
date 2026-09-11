@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorkRedesign for CHROs - Skills Intelligence for Board-Level Decisions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      /* ── WorkRedesign brand gradient ─────────────────────────────── */
+      --color-brand-gradient: linear-gradient(135deg, #22b8cf 0%, #3b5bdb 50%, #7950f2 100%);
+      --color-violet:         #7950f2;
+      --color-violet-soft:    rgba(121,80,242,.08);
+      --color-violet-border:  rgba(121,80,242,.20);
+      /* ── WorkRedesign accent tokens ──────────────────────────────── */
+      --color-accent:       #22b8cf;
+      --color-accent-dark:  #0e9ab5;
+      --color-accent-soft:  rgba(34,184,207,.08);
+      --color-accent-border:rgba(34,184,207,.20);
+      --color-navy:         #0f172a;
+      --shadow-cyan:        0 8px 24px rgba(34,184,207,.25);
+      --surface-warm:       #f5f0eb;
+      --blue: #3b5bdb;
+      --violet: #7950f2;
+      --green: #40c057;
+      --cyan: #22b8cf;
+      --red: #fa5252;
+      --orange: #fd7e14;
+
+      --grad-primary: linear-gradient(135deg, #3b5bdb 0%, #7950f2 100%);
+      --grad-hero: linear-gradient(145deg, #eef2ff 0%, #f5f3ff 45%, #faf5ff 100%);
+      --grad-blue-soft: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-2xl: 32px;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
+      --shadow-lg: 0 12px 32px rgba(0,0,0,.10), 0 4px 12px rgba(0,0,0,.06);
+      --shadow-blue: 0 8px 24px var(--color-accent-border);
+
+      --nav-h: 68px;
+      --max-w: 1200px;
+      --section-pad: 96px;
+    }
+
+    /* ============================================================
+       RESET + BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      background: var(--surface);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    body.menu-open { overflow: hidden; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* ============================================================
+       TYPOGRAPHY
+    ============================================================ */
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2; }
+    .display-xl { font-size: clamp(32px, 5vw, 60px); font-weight: 800; letter-spacing: -0.02em; }
+    .display-lg { font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -0.02em; }
+    .display-md { font-size: clamp(22px, 3vw, 36px); font-weight: 700; letter-spacing: -0.01em; }
+    .display-sm { font-size: clamp(18px, 2.5vw, 26px); font-weight: 600; }
+
+    /* ============================================================
+       UTILITIES
+    ============================================================ */
+    .container { width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+    .text-gradient {
+      background: var(--grad-primary);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-accent); color: #fff;
+      padding: 10px 20px; border-radius: 10px;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 15px;
+      transition: opacity .2s, transform .2s; white-space: nowrap; min-height: 44px;
+    }
+    .btn-primary:hover { background: var(--color-accent-dark); transform: translateY(-1px); }
+
+    .btn-ghost-sm {
+      display: inline-flex; align-items: center;
+      color: var(--text-secondary); padding: 10px 16px; border-radius: 10px;
+      font-weight: 500; font-size: 15px; transition: background .2s, color .2s; min-height: 44px;
+    }
+    .btn-ghost-sm:hover { background: var(--surface-2); color: var(--text-primary); }
+
+    .btn-primary-lg {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--color-accent); color: #fff;
+      padding: 16px 32px; border-radius: 14px;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 17px;
+      box-shadow: var(--shadow-cyan); white-space: nowrap; min-height: 54px;
+      transition: opacity .2s, transform .2s, box-shadow .2s;
+    }
+    .btn-primary-lg:hover { background: var(--color-accent-dark); transform: translateY(-2px); }
+
+    .btn-ghost-lg {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--color-accent); border: 2px solid var(--border);
+      padding: 14px 28px; border-radius: 14px;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 16px;
+      transition: border-color .2s, background .2s; min-height: 54px;
+    }
+    .btn-ghost-lg:hover { border-color: var(--color-accent); background: var(--color-accent-soft); }
+
+    .btn-text-lg {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--color-accent); font-weight: 600; font-size: 16px;
+      transition: gap .2s; padding: 8px 4px; min-height: 44px;
+    }
+    .btn-text-lg:hover { gap: 10px; }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h);
+      background: transparent;
+      border-bottom: 1px solid transparent;
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+    .nav.scrolled {
+      background: rgba(255,255,255,.94) !important;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border, #e2e8f0) !important;
+      box-shadow: 0 2px 16px rgba(0,0,0,.07);
+    }
+    .nav-inner {
+      display: flex; align-items: center; gap: 8px;
+      height: var(--nav-h); max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+    }
+        .nav-logo {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 20px;
+      letter-spacing: -0.02em; margin-right: 8px;
+      white-space: nowrap; display: flex; align-items: center; gap: 0;
+      text-decoration: none;
+    }
+    .nav-logo-work {
+      color: var(--color-navy, #0f172a);
+    }
+    .nav-logo-redesign {
+      background: var(--color-brand-gradient, linear-gradient(135deg, #3b5bdb, #7950f2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; }
+    .nav-links a {
+      padding: 8px 12px; border-radius: 8px; font-size: 15px; font-weight: 500;
+      color: var(--text-secondary); transition: background .2s, color .2s; white-space: nowrap;
+    }
+    .nav-links a:hover, .nav-links a.active { background: var(--surface-2); color: var(--text-primary); }
+    .nav-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+
+    .nav-hamburger {
+      display: none; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 8px;
+      color: var(--text-primary); margin-left: auto; transition: background .2s;
+    }
+    .nav-hamburger:hover { background: var(--surface-2); }
+    .nav-hamburger svg { width: 22px; height: 22px; }
+
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(255,255,255,.98); backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px); flex-direction: column;
+      padding: calc(var(--nav-h) + 24px) 24px 40px; overflow-y: auto;
+    }
+    .mobile-menu.is-open { display: flex; }
+    .mobile-menu-links { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .mobile-menu-links a {
+      padding: 14px 16px; border-radius: 12px; font-size: 18px; font-weight: 500;
+      color: var(--text-secondary); transition: background .2s, color .2s;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu-links a:hover { background: var(--surface-2); color: var(--text-primary); }
+    .mobile-menu-ctas { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
+    .mobile-menu-ctas .btn-primary-lg { justify-content: center; width: 100%; }
+    .mobile-menu-ctas .btn-ghost-lg { justify-content: center; width: 100%; }
+
+    /* ============================================================
+       SECTION COMMON
+    ============================================================ */
+    .section { padding: var(--section-pad) 0; }
+    .section-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-accent-soft); border: 1px solid var(--color-accent-border);
+      color: var(--color-accent); padding: 5px 12px; border-radius: 100px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .section-header { text-align: center; max-width: 720px; margin: 0 auto 56px; }
+    .section-header p { color: var(--text-secondary); margin-top: 14px; font-size: 17px; line-height: 1.65; }
+
+    /* ============================================================
+       PAGE HERO - CHRO
+    ============================================================ */
+    .page-hero {
+      padding-top: calc(var(--nav-h) + 80px);
+      padding-bottom: 80px;
+      background: var(--grad-hero);
+    }
+    .page-hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .persona-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-accent-soft); border: 1px solid var(--color-accent-border);
+      color: var(--color-accent); padding: 6px 14px; border-radius: 100px;
+      font-size: 13px; font-weight: 600; margin-bottom: 20px; letter-spacing: 0.03em;
+    }
+    .persona-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); display: block; }
+    .page-hero h1 { margin-bottom: 20px; }
+
+    .anxiety-frame {
+      margin: 20px 0 28px;
+      padding: 18px 20px; border-left: 3px solid var(--violet);
+      background: rgba(121,80,242,.05); border-radius: 0 10px 10px 0;
+    }
+    .anxiety-frame p {
+      font-size: 17px; font-style: italic; color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .anxiety-frame .anxiety-reframe {
+      margin-top: 10px; font-size: 15px; font-style: normal;
+      color: var(--violet); font-weight: 600;
+    }
+
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+    .page-hero-visual { position: relative; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+    .page-hero-visual img { width: 100%; height: 460px; object-fit: cover; }
+    .hero-stat-badge {
+      position: absolute; top: 20px; right: 20px;
+      background: rgba(255,255,255,.96); backdrop-filter: blur(8px);
+      border-radius: 12px; padding: 14px 18px; box-shadow: var(--shadow-md);
+      text-align: center; min-width: 120px;
+    }
+    .hero-stat-num {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 32px;
+      background: var(--grad-primary);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      line-height: 1; margin-bottom: 4px;
+    }
+    .hero-stat-label { font-size: 12px; color: var(--text-secondary); line-height: 1.3; }
+
+    /* ============================================================
+       ANXIETY SECTION
+    ============================================================ */
+    .anxiety-section { background: var(--surface-2); }
+    .anxiety-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .anxiety-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px;
+    }
+    .anxiety-question {
+      font-size: 16px; font-weight: 600; color: var(--text-primary);
+      margin-bottom: 12px; line-height: 1.4;
+      font-style: italic;
+    }
+    .anxiety-answer {
+      font-size: 14px; color: var(--text-secondary); line-height: 1.65;
+    }
+    .anxiety-card-icon { font-size: 24px; margin-bottom: 14px; }
+
+    /* ============================================================
+       OUTCOMES SECTION
+    ============================================================ */
+    .outcomes-section { background: var(--surface); }
+    .outcomes-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .outcome-card {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); padding: 32px;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .outcome-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .outcome-card-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin-bottom: 18px;
+      background: var(--color-accent-soft);
+    }
+    .outcome-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+    .outcome-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.65; }
+    .outcome-detail {
+      margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .outcome-detail-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 13px; color: var(--text-secondary);
+    }
+    .outcome-detail-item::before {
+      content: ""; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--blue); margin-top: 6px; flex-shrink: 0;
+    }
+
+    /* ============================================================
+       OUTPUT DELIVERABLES
+    ============================================================ */
+    .deliverables-section { background: var(--surface-2); }
+    .deliverables-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .deliverable-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px;
+      display: flex; gap: 18px; align-items: flex-start;
+      transition: box-shadow .2s;
+    }
+    .deliverable-card:hover { box-shadow: var(--shadow-md); }
+    .deliverable-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+      background: var(--color-accent-soft);
+    }
+    .deliverable-content h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+    .deliverable-content p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    .deliverable-tag {
+      display: inline-flex; margin-top: 10px;
+      background: rgba(64,192,87,.10); color: var(--green);
+      border: 1px solid rgba(64,192,87,.20);
+      padding: 3px 10px; border-radius: 100px;
+      font-size: 12px; font-weight: 600;
+    }
+
+    /* ============================================================
+       PROCESS TIMELINE
+    ============================================================ */
+    .process-section { background: var(--surface); }
+    .process-steps { display: flex; flex-direction: column; gap: 0; }
+    .process-step {
+      display: grid; grid-template-columns: 80px 1fr;
+      gap: 24px; padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .process-step:last-child { border-bottom: none; }
+    .process-step-num {
+      display: flex; flex-direction: column; align-items: center; gap: 8px; padding-top: 4px;
+    }
+    .step-circle {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--grad-primary); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px;
+      flex-shrink: 0;
+    }
+    .step-line {
+      width: 2px; flex: 1; background: var(--border); margin-top: 4px;
+    }
+    .process-step:last-child .step-line { display: none; }
+    .process-step-content { padding-bottom: 8px; }
+    .process-step-label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .process-step-content h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+    .process-step-content p { font-size: 15px; color: var(--text-secondary); line-height: 1.65; }
+    .process-step-note {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 10px; padding: 6px 12px; border-radius: 8px;
+      background: var(--color-accent-soft); border: 1px solid var(--color-accent-border);
+      font-size: 13px; color: var(--color-accent); font-weight: 500;
+    }
+
+    /* ============================================================
+       TESTIMONIAL
+    ============================================================ */
+    .testimonial-section { background: var(--surface-2); }
+    .testimonial-card {
+      max-width: 760px; margin: 0 auto;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-2xl); padding: 48px;
+      box-shadow: var(--shadow-md);
+    }
+    .testimonial-stars { font-size: 22px; margin-bottom: 24px; }
+    .testimonial-quote {
+      font-size: 20px; line-height: 1.65; color: var(--text-primary);
+      font-style: italic; margin-bottom: 32px;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 16px; }
+    .author-avatar { width: 52px; height: 52px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-name { font-weight: 700; font-size: 16px; }
+    .author-title { font-size: 14px; color: var(--text-secondary); margin-top: 2px; }
+
+    /* ============================================================
+       FAQ
+    ============================================================ */
+    .faq-section { background: var(--surface); }
+    .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden;
+    }
+    .faq-question {
+      width: 100%; padding: 20px 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      font-size: 16px; font-weight: 600; color: var(--text-primary);
+      text-align: left; background: none; min-height: 44px;
+      transition: background .2s;
+    }
+    .faq-question:hover { background: var(--color-accent-soft); }
+    .faq-chevron { font-size: 14px; color: var(--text-muted); transition: transform .2s; flex-shrink: 0; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-answer { display: none; padding: 0 24px 20px; font-size: 15px; color: var(--text-secondary); line-height: 1.7; border-top: 1px solid var(--border); padding-top: 16px; }
+    .faq-item.open .faq-answer { display: block; }
+
+    /* ============================================================
+       FINAL CTA
+    ============================================================ */
+    .cta-section { background: var(--grad-hero); border-top: 1px solid var(--border); }
+    .cta-inner { text-align: center; max-width: 680px; margin: 0 auto; }
+    .cta-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-accent-soft); border: 1px solid var(--color-accent-border);
+      color: var(--color-accent); padding: 6px 14px; border-radius: 100px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 24px;
+    }
+    .cta-inner h2 { margin-bottom: 16px; }
+    .cta-inner p { color: var(--text-secondary); font-size: 17px; line-height: 1.65; margin-bottom: 36px; }
+    .cta-buttons { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+    .cta-note { margin-top: 20px; font-size: 13px; color: var(--text-muted); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer { background: var(--surface); border-top: 1px solid var(--border); padding: 64px 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand-logo {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 20px;
+      background: var(--grad-primary);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 12px; display: block;
+    }
+    .footer-brand p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; max-width: 280px; }
+    .footer-col-title { font-size: 13px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 14px; color: var(--text-secondary); transition: color .2s; }
+    .footer-links a:hover { color: var(--color-accent); }
+    .footer-bottom {
+      border-top: 1px solid var(--border); padding: 24px 0;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 13px; color: var(--text-muted); }
+    .footer-bottom-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-bottom-links a { font-size: 13px; color: var(--text-muted); transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--text-secondary); }
+
+    /* ============================================================
+       RESPONSIVE — 1000px
+    ============================================================ */
+    @media (max-width: 1000px) {
+      :root { --section-pad: 64px; }
+      .page-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .page-hero-visual { max-width: 540px; margin: 0 auto; }
+      .anxiety-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-actions { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+
+    /* ============================================================
+       RESPONSIVE — 680px
+    ============================================================ */
+    @media (max-width: 680px) {
+      :root { --section-pad: 48px; }
+      .page-hero { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 48px; }
+      .page-hero-visual img { height: 260px; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; }
+      .anxiety-grid { grid-template-columns: 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .deliverables-grid { grid-template-columns: 1fr; }
+      .process-step { grid-template-columns: 56px 1fr; gap: 16px; }
+      .testimonial-card { padding: 32px 24px; }
+      .testimonial-quote { font-size: 17px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ============================================================
+       RESPONSIVE — 480px
+    ============================================================ */
+    @media (max-width: 480px) {
+      :root { --section-pad: 44px; }
+      .container { padding: 0 16px; }
+      .nav-inner { padding: 0 16px; }
+      .display-xl { font-size: 28px; }
+      .display-lg { font-size: 24px; }
+      .btn-primary-lg { padding: 14px 24px; font-size: 15px; width: 100%; justify-content: center; }
+      .btn-ghost-lg { width: 100%; justify-content: center; }
+      .cta-buttons { flex-direction: column; }
+      .cta-buttons .btn-primary-lg, .cta-buttons .btn-ghost-lg { width: 100%; justify-content: center; }
+      .process-step { grid-template-columns: 1fr; }
+      .process-step-num { flex-direction: row; }
+      .step-line { display: none; }
+      .testimonial-card { padding: 24px 16px; }
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (solution pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .oi-icon, .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .oi-icon svg, .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="home.html" class="nav-logo" aria-label="WorkRedesign home"><span class="nav-logo-work">work</span><span class="nav-logo-redesign">redesign</span></a>
+      <div class="nav-links" role="menubar">
+        <a href="home.html" role="menuitem">Home</a>
+        <a href="howitworks.html" role="menuitem">How It Works</a>
+        <a href="solutionschro.html" class="active" role="menuitem">Solutions</a>
+        <a href="pricing.html" role="menuitem">Pricing</a>
+        <a href="about.html" role="menuitem">About</a>
+      </div>
+      <div class="nav-actions">
+        <a href="signin.html" class="btn-ghost-sm">Sign in</a>
+        <a href="engage.html" class="btn-primary">Book a Discovery Call</a>
+      </div>
+      <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" onclick="toggleMobileMenu(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <nav class="mobile-menu-links">
+      <a href="home.html" onclick="closeMobileMenu()">Home</a>
+      <a href="howitworks.html" onclick="closeMobileMenu()">How It Works</a>
+      <a href="solutionschro.html" onclick="closeMobileMenu()">Solutions</a>
+      <a href="pricing.html" onclick="closeMobileMenu()">Pricing</a>
+      <a href="about.html" onclick="closeMobileMenu()">About</a>
+    </nav>
+    <div class="mobile-menu-ctas">
+      <a href="engage.html" class="btn-primary-lg" onclick="closeMobileMenu()">Book a Discovery Call</a>
+      <a href="howitworks.html" class="btn-ghost-lg" onclick="closeMobileMenu()">See How It Works</a>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAGE HERO
+  ============================================================ -->
+  <section class="page-hero" aria-labelledby="chro-headline">
+    <div class="container">
+      <div class="page-hero-inner">
+        <div class="page-hero-content">
+          <div class="persona-eyebrow"><span></span> For CHROs and People Leaders</div>
+          <h1 class="display-xl" id="chro-headline">
+            The workforce intelligence your board has been
+            <span class="text-gradient">waiting for.</span>
+          </h1>
+
+          <div class="anxiety-frame">
+            <p>"We know AI is changing what our workforce needs to do. But I cannot tell you, with confidence, what our people can actually do right now."</p>
+            <p class="anxiety-reframe">We are not here to tell you who to let go. We are showing you what your people can do next.</p>
+          </div>
+
+          <div class="hero-ctas">
+            <a href="engage.html" class="btn-primary-lg">Book a Discovery Call</a>
+            <a href="howitworks.html" class="btn-text-lg">See How It Works &#8594;</a>
+          </div>
+          <p style="margin-top:14px;font-size:13px;color:var(--text-muted);">
+            <a href="engage.html" style="color:var(--blue);font-weight:500;">Talk to the Team</a> - we start with an honest conversation about your situation.
+          </p>
+        </div>
+
+        <div class="page-hero-visual">
+          <img
+            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop&crop=faces"
+            alt="Senior HR leader presenting workforce strategy to executive team"
+            width="800" height="600"
+            loading="eager"
+          />
+          <div class="hero-stat-badge">
+            <div class="hero-stat-num">90</div>
+            <div class="hero-stat-label">days to board-ready intelligence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       THE ANXIETY — CHRO QUESTIONS WE ANSWER
+  ============================================================ -->
+  <section class="section anxiety-section" aria-labelledby="anxiety-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">The Real Questions</div>
+        <h2 class="display-md" id="anxiety-headline">The questions CHROs are asking right now</h2>
+        <p>Every CHRO we speak to is grappling with the same set of challenges. WorkRedesign is built to answer them - with evidence, not assumption.</p>
+      </div>
+
+      <div class="anxiety-grid">
+        <div class="anxiety-card">
+          <div class="anxiety-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <p class="anxiety-question">"How exposed is our workforce to AI automation - really?"</p>
+          <p class="anxiety-answer">We build an automation charter from your verified skills record, identifying which tasks are genuinely AI-automatable by role - not a generic industry overlay. In a typical 500-person organisation, we find that accounts payable clerks, procurement coordinators, logistics administrators, and HR generalists often carry more task-level AI exposure than senior technical specialists. Knowing this by function, not just by headcount, is what makes the conversation board-ready.</p>
+        </div>
+        <div class="anxiety-card">
+          <div class="anxiety-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg></div>
+          <p class="anxiety-question">"Can I trust the skills data I have well enough to act on it?"</p>
+          <p class="anxiety-answer">Probably not yet. Most organisations have skills data that is self-reported, system-inferred, or simply old. WorkRedesign puts every skill claim through a human-validated reconciliation process before it enters the record - so you can act on it.</p>
+        </div>
+        <div class="anxiety-card">
+          <div class="anxiety-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <p class="anxiety-question">"How do I show the board we are ready for the AI era?"</p>
+          <p class="anxiety-answer">We produce a board-ready intelligence export built from your verified workforce data. Formatted for executive audiences. Sourced transparently. Something you can actually present with confidence.</p>
+        </div>
+        <div class="anxiety-card">
+          <div class="anxiety-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+          <p class="anxiety-question">"Where do we find the talent we need - inside or outside?"</p>
+          <p class="anxiety-answer">Career lattices built from your verified skills map show exactly what internal mobility is possible - horizontal, vertical, and cross-functional. A procurement coordinator with unrecognised contract management skills may be the strongest internal candidate for a category manager role. A warehouse operative already doing daily route planning may be the next logistics coordinator. An AP specialist with supplier negotiation experience may already be functioning as a junior procurement analyst. Most organisations have more internal depth than their HRIS shows. We make it visible.</p>
+        </div>
+        <div class="anxiety-card">
+          <div class="anxiety-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/></svg></div>
+          <p class="anxiety-question">"Our job descriptions are years out of date. Where do we start?"</p>
+          <p class="anxiety-answer">Redefined job descriptions are one of the four core outputs of the WorkRedesign process. They are generated directly from your verified skills record - skills-based, AI-era ready, and grounded in what the role actually requires today. This includes professional roles in Finance, HR, and Procurement, as well as operational and frontline roles in Logistics, Customer Service, and Warehouse functions where skills-based clarity matters just as much for deployment and development decisions.</p>
+        </div>
+        <div class="anxiety-card">
+          <div class="anxiety-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <p class="anxiety-question">"If I invest in this, how do I know it will stick?"</p>
+          <p class="anxiety-answer">We start with a 90-day proof of concept scoped to one business unit. You see real outputs - a validated skills map, career lattices, an automation charter - before you decide whether to scale. No platform commitment before you have seen results.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       OUTCOMES
+  ============================================================ -->
+  <section class="section outcomes-section" aria-labelledby="outcomes-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">What You Get</div>
+        <h2 class="display-lg" id="outcomes-headline">Intelligence you can act on. At every level.</h2>
+        <p>WorkRedesign does not produce a data export. It produces the strategic outputs your organisation needs to make decisions about its workforce - validated, governed, and ready to present.</p>
+      </div>
+
+      <div class="outcomes-grid">
+        <div class="outcome-card">
+          <div class="outcome-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg></div>
+          <h3>A Validated Skills Map</h3>
+          <p>A complete, organisation-wide picture of what your people can actually do - built through a structured reconciliation process with human validation at every step.</p>
+          <div class="outcome-detail">
+            <div class="outcome-detail-item">Multi-source ingestion from HRIS, LMS, and performance data</div>
+            <div class="outcome-detail-item">Manager adjudication with evidence trail</div>
+            <div class="outcome-detail-item">Bias-monitored dispute governance</div>
+            <div class="outcome-detail-item">Provenance-tracked skill records - auditable at any time</div>
+          </div>
+        </div>
+
+        <div class="outcome-card">
+          <div class="outcome-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/></svg></div>
+          <h3>Redefined Job Descriptions</h3>
+          <p>Skills-based job descriptions that reflect what your roles actually require in an AI era - not a generic template, but a co-produced deliverable built from your verified workforce data.</p>
+          <div class="outcome-detail">
+            <div class="outcome-detail-item">Generated from your verified skills record, not industry templates</div>
+            <div class="outcome-detail-item">AI-era capability language built in</div>
+            <div class="outcome-detail-item">Reviewed and co-produced with your team</div>
+            <div class="outcome-detail-item">Ready to use in recruitment, promotion, and grading decisions</div>
+          </div>
+        </div>
+
+        <div class="outcome-card">
+          <div class="outcome-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+          <h3>Career Lattices</h3>
+          <p>Visible internal mobility pathways - horizontal, vertical, and cross-functional - built from the skills your people actually have, not the job titles they hold.</p>
+          <div class="outcome-detail">
+            <div class="outcome-detail-item">Every employee can see realistic next steps</div>
+            <div class="outcome-detail-item">Managers can identify internal candidates before going external</div>
+            <div class="outcome-detail-item">Reduces attrition by making internal growth tangible</div>
+            <div class="outcome-detail-item">Connected to your verified skills record - not static org charts</div>
+          </div>
+        </div>
+
+        <div class="outcome-card">
+          <div class="outcome-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <h3>Automation Charter</h3>
+          <p>A governed framework identifying which tasks in your organisation are AI-automatable, what that means for each role, and what the reskilling pathway looks like - grounded in your actual workforce data.</p>
+          <div class="outcome-detail">
+            <div class="outcome-detail-item">Role-level automation exposure analysis (not industry averages)</div>
+            <div class="outcome-detail-item">Task-level assessment using your verified skills map</div>
+            <div class="outcome-detail-item">Reskilling pathway recommendations per affected role</div>
+            <div class="outcome-detail-item">Board-presentable framing of your AI readiness posture</div>
+          </div>
+        </div>
+
+        <div class="outcome-card">
+          <div class="outcome-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+          <h3>Board-Ready Intelligence Export</h3>
+          <p>A formatted executive intelligence report built from your verified workforce data. Structured for board and ExCo audiences. Sourced transparently. Ready to present.</p>
+          <div class="outcome-detail">
+            <div class="outcome-detail-item">Workforce capability summary with full sourcing transparency</div>
+            <div class="outcome-detail-item">AI readiness assessment grounded in verified data</div>
+            <div class="outcome-detail-item">Talent risk and opportunity framing</div>
+            <div class="outcome-detail-item">Formatted for executive audiences - not a data dump</div>
+          </div>
+        </div>
+
+        <div class="outcome-card">
+          <div class="outcome-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+          <h3>Strategic Workforce Planning Foundation</h3>
+          <p>Once your skills record is validated and governed, it becomes the foundation for all subsequent workforce planning - succession, restructuring, hiring, reskilling.</p>
+          <div class="outcome-detail">
+            <div class="outcome-detail-item">Mobility classification across the full workforce</div>
+            <div class="outcome-detail-item">Gap analysis by role, function, and strategic priority</div>
+            <div class="outcome-detail-item">Succession planning grounded in verified skills, not tenure</div>
+            <div class="outcome-detail-item">Connects to your existing HRIS and planning tools</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       DELIVERABLES
+  ============================================================ -->
+  <section class="section deliverables-section" aria-labelledby="deliverables-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">The Output Set</div>
+        <h2 class="display-md" id="deliverables-headline">What you walk away with after 90 days</h2>
+        <p>The WorkRedesign 90-day proof of concept is scoped to one business unit and delivers tangible outputs your organisation can use immediately.</p>
+      </div>
+
+      <div class="deliverables-grid">
+        <div class="deliverable-card">
+          <div class="deliverable-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <div class="deliverable-content">
+            <h3>Final Reconciled Skills Profile</h3>
+            <p>A validated, provenance-tracked skills record for every employee in scope - with full adjudication history and evidence trail.</p>
+            <span class="deliverable-tag">&#10003; Delivered in 90 days</span>
+          </div>
+        </div>
+        <div class="deliverable-card">
+          <div class="deliverable-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="deliverable-content">
+            <h3>Role-Gap View</h3>
+            <p>A clear picture of where skills gaps exist across roles and functions - and which gaps are strategic priorities versus manageable shortfalls.</p>
+            <span class="deliverable-tag">&#10003; Delivered in 90 days</span>
+          </div>
+        </div>
+        <div class="deliverable-card">
+          <div class="deliverable-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="deliverable-content">
+            <h3>Org Passport</h3>
+            <p>A portable workforce capability view - a single document that summarises what your organisation can do, at the level your board and investors need.</p>
+            <span class="deliverable-tag">&#10003; Delivered in 90 days</span>
+          </div>
+        </div>
+        <div class="deliverable-card">
+          <div class="deliverable-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/></svg></div>
+          <div class="deliverable-content">
+            <h3>Redefined Job Descriptions</h3>
+            <p>Skills-based, AI-era job descriptions for every role in scope - co-produced with your team and ready to use in hiring and grading decisions.</p>
+            <span class="deliverable-tag">&#10003; Delivered in 90 days</span>
+          </div>
+        </div>
+        <div class="deliverable-card">
+          <div class="deliverable-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+          <div class="deliverable-content">
+            <h3>Career Lattices</h3>
+            <p>Internal mobility maps for every employee in scope - horizontal, vertical, and cross-functional pathways grounded in verified skills, not job titles.</p>
+            <span class="deliverable-tag">&#10003; Delivered in 90 days</span>
+          </div>
+        </div>
+        <div class="deliverable-card">
+          <div class="deliverable-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <div class="deliverable-content">
+            <h3>Automation Charter</h3>
+            <p>A governed framework for the roles in scope, identifying automation exposure and reskilling pathways - ready to present to your board.</p>
+            <span class="deliverable-tag">&#10003; Delivered in 90 days</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROCESS
+  ============================================================ -->
+  <section class="section process-section" aria-labelledby="process-headline">
+    <div class="container">
+      <div class="section-header" style="max-width:640px;">
+        <div class="section-eyebrow">How We Work Together</div>
+        <h2 class="display-lg" id="process-headline">From discovery to board-ready in 90 days</h2>
+        <p>A structured engagement with clear milestones and no surprises. You see what we are building at every step.</p>
+      </div>
+
+      <div class="process-steps" style="max-width:760px;margin:0 auto;">
+        <div class="process-step">
+          <div class="process-step-num">
+            <div class="step-circle">1</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="process-step-content">
+            <div class="process-step-label">Week 1-2</div>
+            <h3>Discovery Call and Scoping</h3>
+            <p>We start with an honest conversation about your situation - where your data is, what decisions you need to make, and what a useful 90-day scope looks like. No sales pitch. No commitment.</p>
+            <span class="process-step-note">&#128197; Typically 2-3 sessions with your CHRO and HR ops lead</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-num">
+            <div class="step-circle">2</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="process-step-content">
+            <div class="process-step-label">Week 3-4</div>
+            <h3>Data Ingestion and Initial Mapping</h3>
+            <p>We connect to your existing systems and run the initial AI-assisted skills extraction. You see the first-pass output and tell us what it gets right and wrong before we move to validation.</p>
+            <span class="process-step-note">&#128272; Secure connection to your HRIS and LMS - no data leaves your environment</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-num">
+            <div class="step-circle">3</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="process-step-content">
+            <div class="process-step-label">Week 5-10</div>
+            <h3>Human-Validated Reconciliation</h3>
+            <p>Managers adjudicate AI-generated profiles through a structured workflow. Disputes go through a governed process. The result is a skills record built on evidence, not assumption - and one that managers trust because they shaped it.</p>
+            <span class="process-step-note">&#9881;&#65039; We configure the workflow to match your existing governance processes</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-num">
+            <div class="step-circle">4</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="process-step-content">
+            <div class="process-step-label">Week 11-12</div>
+            <h3>Outputs and Board-Ready Export</h3>
+            <p>We generate the full output set - validated skills profiles, job descriptions, career lattices, automation charter, and the board-ready intelligence export. You review, we refine, and you walk away with something you can present with confidence.</p>
+            <span class="process-step-note">&#128200; Board-ready export formatted for your specific audience and governance structure</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TESTIMONIAL
+  ============================================================ -->
+  <section class="section testimonial-section" aria-label="Customer testimonial">
+    <div class="container">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</div>
+        <blockquote class="testimonial-quote">
+          "The reconciliation process was the thing that surprised me most. Managers actually engaged with it - because they felt like their knowledge was being captured, not overridden by an algorithm. The skills map we came out with was something I would never have trusted from a purely AI-generated process. That is what made the board presentation land."
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=96&h=96&fit=crop&crop=faces"
+              alt="Sarah Chen, CHRO"
+              width="52" height="52"
+            />
+          </div>
+          <div>
+            <div class="author-name">Sarah Chen</div>
+            <div class="author-title">Chief People Officer - Global Insurance Group</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FAQ
+  ============================================================ -->
+  <section class="section faq-section" aria-labelledby="faq-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Common Questions</div>
+        <h2 class="display-md" id="faq-headline">What CHROs ask before they start</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+            What if our HRIS data is in poor shape?
+            <span class="faq-chevron">&#9660;</span>
+          </button>
+          <div class="faq-answer">Most of our clients start with messy data - that is precisely why they come to us. The reconciliation process is designed to work with incomplete or inconsistent source data. We surface what is there, fill gaps through manager adjudication, and build a clean, verified record from whatever starting point you have.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+            Will this disrupt our existing HR processes?
+            <span class="faq-chevron">&#9660;</span>
+          </button>
+          <div class="faq-answer">No. WorkRedesign connects to your existing systems and runs alongside them. We configure the adjudication workflow to fit into your existing review rhythm - not to add a new process on top. Managers typically spend 20-30 minutes per employee in the validation phase, structured across your existing performance or review cycle.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+            How do you handle sensitive data and GDPR?
+            <span class="faq-chevron">&#9660;</span>
+          </button>
+          <div class="faq-answer">Data security and compliance are built into the architecture, not bolted on. Your data stays in your environment. We connect to it securely but do not move it to our systems. Audit logs, access controls, and data residency options are standard. We are happy to walk your legal and security teams through the architecture before you commit to anything.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+            What does the 90-day POC actually commit us to?
+            <span class="faq-chevron">&#9660;</span>
+          </button>
+          <div class="faq-answer">The POC is a time-boxed, scoped engagement - typically one business unit or function. It has a fixed deliverable set and a clear end date. At the end, you have the outputs and a clear picture of what scaling would look like. There is no obligation to proceed further. Most clients do, but that is their decision to make with evidence in hand.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+            How is this different from the skills tools we already have?
+            <span class="faq-chevron">&#9660;</span>
+          </button>
+          <div class="faq-answer">Most skills tools integrate skills tags into your HRIS. They surface what is already there, more efficiently. WorkRedesign validates the data through a human adjudication process, governs the record with a full audit trail, and translates the verified data into the actual business outputs your organisation needs - redefined job descriptions, career lattices, an automation charter, and a board-ready export. That is a different category of work.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FINAL CTA
+  ============================================================ -->
+  <section class="section cta-section" aria-labelledby="cta-headline">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-eyebrow">90-Day Proof of Concept</div>
+        <h2 class="display-lg" id="cta-headline">Start with a conversation, not a contract.</h2>
+        <p>
+          We work with CHROs who are serious about building a workforce that can navigate the AI era. That starts with an honest conversation about where you are, what you need, and whether a 90-day proof of concept is the right starting point.
+        </p>
+        <div class="cta-buttons">
+          <a href="engage.html" class="btn-primary-lg">Book a Discovery Call</a>
+          <a href="engage.html" class="btn-ghost-lg">Talk to the Team</a>
+        </div>
+        <p class="cta-note">No commitment required. No sales deck. Just a conversation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-brand-logo">WorkRedesign</span>
+          <p>Skills intelligence that is human-engineered, not just AI-generated - trustworthy enough to act on at board level.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Platform</div>
+          <div class="footer-links">
+            <a href="howitworks.html">How It Works</a>
+            <a href="solutionschro.html">Solutions</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="security.html">Security</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Company</div>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="blog.html">Blog</a>
+            <a href="careers.html">Careers</a>
+            <a href="engage.html">How We Engage</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Resources</div>
+          <div class="footer-links">
+            <a href="blog.html">Insights</a>
+            <a href="security.html">Security and Compliance</a>
+            <a href="engage.html">Book a Discovery Call</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&#169; 2026 WorkRedesign. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="cookies.html">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    function toggleMobileMenu(btn) {
+      var menu = document.getElementById('mobileMenu');
+      var isOpen = menu.classList.contains('is-open');
+      if (isOpen) {
+        menu.classList.remove('is-open');
+        document.body.classList.remove('menu-open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      } else {
+        menu.classList.add('is-open');
+        document.body.classList.add('menu-open');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+      }
+    }
+    function closeMobileMenu() {
+      var menu = document.getElementById('mobileMenu');
+      var btn = document.querySelector('.nav-hamburger');
+      menu.classList.remove('is-open');
+      document.body.classList.remove('menu-open');
+      if (btn) {
+        btn.setAttribute('aria-expanded', 'false');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      }
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMobileMenu(); });
+
+    function toggleFaq(btn) {
+      var item = btn.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(el) {
+        el.classList.remove('open');
+        el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    (function() {
+      var nav = document.querySelector('.nav');
+      window.addEventListener('scroll', function() {
+        nav.style.boxShadow = window.scrollY > 20 ? '0 2px 12px rgba(0,0,0,.08)' : 'none';
+      }, { passive: true });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us | WorkRedesign</title>
+<style>
+:root {
+      /* ── WorkRedesign brand gradient ─────────────────────────────── */
+      --color-brand-gradient: linear-gradient(135deg, #22b8cf 0%, #3b5bdb 50%, #7950f2 100%);
+      --color-violet:         #7950f2;
+      --color-violet-soft:    rgba(121,80,242,.08);
+      --color-violet-border:  rgba(121,80,242,.20);
+      /* ── WorkRedesign accent tokens ──────────────────────────────── */
+      --color-accent:       #22b8cf;
+      --color-accent-dark:  #0e9ab5;
+      --color-accent-soft:  rgba(34,184,207,.08);
+      --color-accent-border:rgba(34,184,207,.20);
+      --color-navy:         #0f172a;
+      --shadow-cyan:        0 8px 24px rgba(34,184,207,.25);
+      --surface-warm:       #f5f0eb;
+  --clr-ink: #0f172a;
+  --clr-ink-2: #334155;
+  --clr-ink-3: #64748b;
+  --clr-surface: #ffffff;
+  --clr-surface-2: #f8fafc;
+  --clr-surface-3: #f1f5f9;
+  --clr-border: #e2e8f0;
+  --clr-primary: #6c3af5;
+  --clr-primary-light: rgba(108,58,245,0.08);
+  --clr-accent: #22d3ee;
+  --radius-card: 16px;
+  --shadow-card: 0 2px 16px rgba(15,23,42,0.07);
+  --section-pad: 96px;
+  --container: 1160px;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); color: var(--clr-ink); background: var(--clr-surface); line-height: 1.6; }
+body.menu-open { overflow: hidden; }
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 32px; }
+
+/* ---- NAV ---- */
+.nav { position: sticky; top: 0; z-index: 100; background: transparent; border-bottom: 1px solid transparent;
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+    .nav.scrolled {
+      background: rgba(255,255,255,.94) !important;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border, #e2e8f0) !important;
+      box-shadow: 0 2px 16px rgba(0,0,0,.07);
+    }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 32px; }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 20px;
+      letter-spacing: -0.02em; margin-right: 8px;
+      white-space: nowrap; display: flex; align-items: center; gap: 0;
+      text-decoration: none;
+    }
+    .nav-logo-work {
+      color: var(--color-navy, #0f172a);
+    }
+    .nav-logo-redesign {
+      background: var(--color-brand-gradient, linear-gradient(135deg, #3b5bdb, #7950f2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+.nav-links { display: flex; align-items: center; gap: 4px; flex: 1; }
+.nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 0.9rem; color: var(--clr-ink-2); font-weight: 500; transition: background 0.15s, color 0.15s; }
+.nav-links a:hover, .nav-links a.active { background: var(--clr-surface-3); color: var(--clr-ink); }
+.nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.btn-ghost-sm { padding: 8px 18px; border-radius: 9px; border: 1.5px solid var(--clr-border); font-size: 0.875rem; font-weight: 600; color: var(--clr-ink-2); background: transparent; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
+.btn-ghost-sm:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.btn-primary-sm { padding: 8px 20px; border-radius: 9px; background: var(--color-accent); color: #fff; font-size: 0.875rem; font-weight: 700; cursor: pointer; border: none; transition: opacity 0.15s; }
+.btn-primary-sm:hover { opacity: 0.88; }
+.hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 4px; border-radius: 8px; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--clr-ink); border-radius: 2px; transition: all 0.22s; transform-origin: center; }
+
+/* ---- MOBILE MENU ---- */
+.mobile-menu { display: none; position: fixed; inset: 0; background: #fff; z-index: 200; flex-direction: column; padding: 24px 28px 40px; overflow-y: auto; }
+.mobile-menu.is-open { display: flex; }
+.mobile-menu-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+.mobile-menu-logo { font-size: 1.2rem; font-weight: 800; color: var(--color-accent); }
+.mobile-close { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: none; background: var(--clr-surface-3); border-radius: 8px; font-size: 1.3rem; cursor: pointer; }
+.mobile-nav-links { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.mobile-nav-links a { display: block; padding: 14px 12px; font-size: 1.1rem; font-weight: 600; color: var(--clr-ink-2); border-radius: 10px; }
+.mobile-nav-links a:hover { background: var(--clr-surface-3); color: var(--clr-ink); }
+.mobile-nav-links a.active { color: var(--color-accent); background: var(--color-accent-soft); }
+.mobile-cta { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+.mobile-cta a { display: block; padding: 14px 20px; border-radius: 12px; text-align: center; font-weight: 700; font-size: 1rem; }
+.mobile-cta .m-signin { border: 1.5px solid var(--clr-border); color: var(--clr-ink-2); }
+.mobile-cta .m-book { background: var(--color-accent); color: #fff; }
+
+/* ---- HERO ---- */
+.about-hero { padding: var(--section-pad) 0 80px; background: linear-gradient(160deg, #faf7ff 0%, #f1f5f9 100%); }
+.about-hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--color-accent-soft); color: var(--color-accent); font-size: 0.8rem; font-weight: 700; padding: 6px 14px; border-radius: 99px; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 24px; }
+.about-hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.1; color: var(--clr-ink); margin-bottom: 24px; }
+.about-hero h1 span { color: var(--color-accent); }
+.about-hero p { font-size: 1.1rem; color: var(--clr-ink-2); line-height: 1.7; max-width: 500px; }
+.hero-visual { border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(15,23,42,0.14); aspect-ratio: 4/3; }
+.hero-visual img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- MISSION ---- */
+.mission { padding: var(--section-pad) 0; background: var(--clr-surface); }
+.mission-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+.section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 16px; }
+.mission h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; color: var(--clr-ink); margin-bottom: 28px; }
+.mission-quote { border-left: 4px solid var(--color-accent); background: var(--color-accent-soft); border-radius: 0 12px 12px 0; padding: 28px 32px; text-align: left; margin: 36px 0; }
+.mission-quote p { font-size: 1.2rem; font-style: italic; color: var(--clr-ink); line-height: 1.6; font-weight: 500; }
+.mission p { font-size: 1.05rem; color: var(--clr-ink-2); line-height: 1.75; margin-bottom: 20px; }
+
+/* ---- ORIGIN STORY ---- */
+.origin { padding: var(--section-pad) 0; background: var(--clr-surface-2); }
+.origin .container { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+.origin-image { border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-card); aspect-ratio: 3/4; }
+.origin-image img { width: 100%; height: 100%; object-fit: cover; }
+.origin-text { padding-top: 8px; }
+.origin-text h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 24px; color: var(--clr-ink); }
+.origin-text p { font-size: 1rem; color: var(--clr-ink-2); line-height: 1.75; margin-bottom: 18px; }
+.origin-callout { background: var(--clr-surface-3); border-radius: 14px; padding: 24px 28px; margin-top: 28px; }
+.origin-callout strong { display: block; font-size: 1.5rem; font-weight: 900; color: var(--color-accent); margin-bottom: 4px; }
+.origin-callout span { font-size: 0.9rem; color: var(--clr-ink-3); }
+
+/* ---- VALUES ---- */
+.values { padding: var(--section-pad) 0; background: var(--clr-surface); }
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-header h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; color: var(--clr-ink); margin-bottom: 16px; }
+.section-header p { font-size: 1.05rem; color: var(--clr-ink-2); max-width: 580px; margin: 0 auto; }
+.values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.value-card { background: var(--clr-surface-2); border: 1px solid var(--clr-border); border-radius: var(--radius-card); padding: 32px 28px; }
+.value-icon { width: 48px; height: 48px; background: var(--color-accent-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 20px; }
+.value-card h3 { font-size: 1.05rem; font-weight: 800; color: var(--clr-ink); margin-bottom: 10px; letter-spacing: -0.01em; }
+.value-card p { font-size: 0.9rem; color: var(--clr-ink-3); line-height: 1.65; }
+
+/* ---- TEAM ---- */
+.team { padding: var(--section-pad) 0; background: var(--clr-surface-2); }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 16px; }
+.team-card { background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-card); }
+.team-photo { aspect-ratio: 4/3; overflow: hidden; }
+.team-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+.team-card:hover .team-photo img { transform: scale(1.04); }
+.team-info { padding: 24px 24px 28px; }
+.team-name { font-size: 1.1rem; font-weight: 800; color: var(--clr-ink); margin-bottom: 4px; }
+.team-role { font-size: 0.85rem; color: var(--color-accent); font-weight: 600; margin-bottom: 12px; }
+.team-bio { font-size: 0.875rem; color: var(--clr-ink-3); line-height: 1.6; }
+.team-linkedin { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 0.8rem; font-weight: 600; color: var(--clr-ink-3); border: 1px solid var(--clr-border); border-radius: 6px; padding: 5px 10px; transition: border-color 0.15s, color 0.15s; }
+.team-linkedin:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+/* ---- ADVISORS ---- */
+.advisors { padding: var(--section-pad) 0; background: var(--clr-surface); }
+.advisors-row { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+.advisor-card { display: flex; align-items: center; gap: 16px; background: var(--clr-surface-2); border: 1px solid var(--clr-border); border-radius: var(--radius-card); padding: 20px 24px; max-width: 380px; flex: 1 1 320px; }
+.advisor-avatar { width: 56px; height: 56px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+.advisor-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.advisor-name { font-size: 0.95rem; font-weight: 800; color: var(--clr-ink); }
+.advisor-role { font-size: 0.8rem; color: var(--clr-ink-3); margin-top: 2px; }
+
+/* ---- APPROACH ---- */
+.approach { padding: var(--section-pad) 0; background: var(--clr-surface-2); }
+.approach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.approach-card { background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-card); padding: 32px 28px; display: flex; gap: 20px; align-items: flex-start; }
+.approach-num { font-size: 2rem; font-weight: 900; color: var(--color-accent); opacity: 0.25; line-height: 1; flex-shrink: 0; width: 40px; }
+.approach-body h3 { font-size: 1.05rem; font-weight: 800; color: var(--clr-ink); margin-bottom: 8px; }
+.approach-body p { font-size: 0.9rem; color: var(--clr-ink-3); line-height: 1.65; }
+
+/* ---- CTA ---- */
+.about-cta { padding: var(--section-pad) 0; background: var(--clr-surface); border-top: 1px solid var(--clr-border); }
+.cta-box { background: linear-gradient(135deg, #6c3af5 0%, #4f46e5 100%); border-radius: 24px; padding: 64px 56px; text-align: center; color: #fff; }
+.cta-box h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 16px; }
+.cta-box p { font-size: 1.1rem; opacity: 0.85; max-width: 520px; margin: 0 auto 36px; line-height: 1.65; }
+.cta-box-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.btn-cta-white { padding: 14px 32px; background: #fff; color: var(--color-accent); border-radius: 12px; font-weight: 800; font-size: 1rem; border: none; cursor: pointer; transition: opacity 0.15s; }
+.btn-cta-white:hover { opacity: 0.9; }
+.btn-cta-ghost { padding: 14px 28px; background: rgba(255,255,255,0.12); color: #fff; border-radius: 12px; font-weight: 700; font-size: 0.95rem; border: 1.5px solid rgba(255,255,255,0.3); cursor: pointer; transition: background 0.15s; }
+.btn-cta-ghost:hover { background: rgba(255,255,255,0.2); }
+
+/* ---- FOOTER ---- */
+.footer { background: var(--clr-ink); color: rgba(255,255,255,0.5); padding: 64px 0 36px; }
+.footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer-brand p { font-size: 0.875rem; line-height: 1.7; max-width: 280px; margin-top: 12px; }
+.footer-logo { font-size: 1.2rem; font-weight: 800; color: #fff; }
+.footer-col h4 { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 16px; }
+.footer-col a { display: block; font-size: 0.875rem; color: rgba(255,255,255,0.55); padding: 4px 0; transition: color 0.15s; }
+.footer-col a:hover { color: #fff; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 1000px) {
+  :root { --section-pad: 64px; }
+  .about-hero .container { grid-template-columns: 1fr; gap: 40px; }
+  .hero-visual { order: -1; max-height: 320px; }
+  .origin .container { grid-template-columns: 1fr; }
+  .origin-image { max-height: 300px; aspect-ratio: 16/7; }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .values-grid { grid-template-columns: repeat(2, 1fr); }
+  .approach-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+
+@media (max-width: 768px) {
+  .nav-links, .nav-actions .btn-ghost-sm, .nav-actions .btn-primary-sm { display: none; }
+  .hamburger { display: flex; }
+  .container { padding: 0 20px; }
+  .cta-box { padding: 44px 28px; }
+}
+
+@media (max-width: 680px) {
+  :root { --section-pad: 52px; }
+  .team-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
+  .approach-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  :root { --section-pad: 44px; }
+  .about-hero h1 { font-size: 1.9rem; }
+  .cta-box h2 { font-size: 1.7rem; }
+  .cta-box-actions { flex-direction: column; }
+  .btn-cta-white, .btn-cta-ghost { width: 100%; text-align: center; }
+}
+
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (solution pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .oi-icon, .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .oi-icon svg, .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="home.html" class="nav-logo"><span class="nav-logo-work">work</span><span class="nav-logo-redesign">redesign</span></a>
+    <div class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="howitworks.html">How It Works</a>
+      <a href="home.html#solutions">Solutions</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html" class="active">About</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-ghost-sm">Sign in</button>
+      <button class="btn-primary-sm">Book a Discovery Call</button>
+    </div>
+    <button class="hamburger" onclick="toggleMobileMenu(this)" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-head">
+    <span class="mobile-menu-logo">WorkRedesign</span>
+    <button class="mobile-close" onclick="closeMobileMenu()">&#x2715;</button>
+  </div>
+  <div class="mobile-nav-links">
+    <a href="home.html">Home</a>
+    <a href="howitworks.html">How It Works</a>
+    <a href="home.html#solutions">Solutions</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html" class="active">About</a>
+  </div>
+  <div class="mobile-cta">
+    <a href="#" class="m-signin">Sign in</a>
+    <a href="engage.html" class="m-book">Book a Discovery Call</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="container">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Our story</div>
+      <h1>Built by people who have <span>lived the problem</span></h1>
+      <p>WorkRedesign was founded by HR practitioners and workforce strategists who spent years watching organisations buy skills technology they could not actually use. We decided to build something different: a structured, human-led process that turns skills theory into operational reality.</p>
+    </div>
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop&crop=center" alt="Team collaborating around a table" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission">
+  <div class="container">
+    <div class="mission-inner">
+      <div class="section-label">Our mission</div>
+      <h2>Skills clarity should be the starting point, not the end goal</h2>
+      <div class="mission-quote">
+        <p>"Most organisations do not have a skills strategy problem. They have a skills truth problem. Nobody knows what their people can actually do right now."</p>
+      </div>
+      <p>We exist to solve that. Not by selling you a tag library or a taxonomy licence, but by doing the work: mapping what your people can do, validating it against evidence, and turning that into something your HR leadership, your line managers, and your board can act on.</p>
+      <p>The AI disruption is forcing every organisation to answer a question they have never had to answer before with this level of precision: what is our actual human capability, and what should we do with it? We help you answer that question in 90 days.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ORIGIN STORY -->
+<section class="origin">
+  <div class="container">
+    <div class="origin-image">
+      <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=800&fit=crop&crop=top" alt="Strategy session in progress" loading="lazy">
+    </div>
+    <div class="origin-text">
+      <div class="section-label">How we got here</div>
+      <h2>The problem we could not stop thinking about</h2>
+      <p>Our founders spent over a decade in workforce strategy, people analytics, and organisational design roles at organisations going through significant transformation. In every engagement, the same thing happened: HR would commission a skills initiative, consultants would deliver a framework, and six months later the data would be incomplete, untrusted, or abandoned.</p>
+      <p>The technology was not the problem. The process was. Nobody had defined how to actually gather skills evidence at scale, reconcile conflicts between systems, and get line manager buy-in without adding to their workload.</p>
+      <p>We built WorkRedesign to solve exactly that. A structured 90-day process, supported by purpose-built tooling, that delivers a validated skills foundation your organisation can actually use.</p>
+      <div class="origin-callout">
+        <strong>90 days</strong>
+        <span>from first conversation to a board-ready skills foundation your whole organisation trusts</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">What we believe</div>
+      <h2>The principles that shape how we work</h2>
+      <p>Every decision we make, from how we structure engagements to how we build our platform, comes back to these commitments.</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Human judgment in the loop</h3>
+        <p>AI accelerates the work. Humans validate it. Every skills inference we make is reviewed and adjudicated by a real person before it enters your system of record. We will never automate away that accountability.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <h3>Evidence over assertion</h3>
+        <p>A skills tag with no evidence behind it is worse than no tag at all. We link every skill to verifiable sources: completed learning, manager confirmation, demonstrated output, or role history.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <h3>Governance from the start</h3>
+        <p>Skills data degrades without governance. We build refresh protocols, owner assignments, and audit trails into the foundation rather than bolting them on after the fact.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <h3>Consulting-led, not just software</h3>
+        <p>Software alone does not transform organisations. We embed experienced practitioners into every engagement to make sure the process is designed for your context, not a generic template.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg></div>
+        <h3>Start small, prove value</h3>
+        <p>We do not ask for a multi-year commitment before you have seen results. Our 90-day Proof of Concept is designed to demonstrate measurable impact before you scale.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+        <h3>Transparent about limits</h3>
+        <p>We will tell you what WorkRedesign cannot do. If your challenge needs a different solution, we will say so. Our reputation depends on outcomes, not on closing every deal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">The team</div>
+      <h2>Practitioners, not just builders</h2>
+      <p>Every person on our team has worked inside HR, people analytics, or workforce strategy before building technology for it.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-photo">
+          <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=450&fit=crop&crop=top" alt="Sarah Chen, Co-founder and CEO" loading="lazy">
+        </div>
+        <div class="team-info">
+          <div class="team-name">Sarah Chen</div>
+          <div class="team-role">Co-founder and CEO</div>
+          <p class="team-bio">15 years in workforce strategy and people analytics, including CHRO advisory work at two FTSE 100 transformations. Led the skills framework design at a 40,000-person professional services firm.</p>
+          <a href="#" class="team-linkedin">LinkedIn</a>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=450&fit=crop&crop=top" alt="Marcus Webb, Co-founder and CPO" loading="lazy">
+        </div>
+        <div class="team-info">
+          <div class="team-name">Marcus Webb</div>
+          <div class="team-role">Co-founder and CPO</div>
+          <p class="team-bio">Former Head of People Systems at a global technology company with 80,000 employees. Built and decommissioned three HRIS platforms. Now designs the tooling that makes skills reconciliation possible at scale.</p>
+          <a href="#" class="team-linkedin">LinkedIn</a>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo">
+          <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&h=450&fit=crop&crop=top" alt="Priya Sharma, Head of Delivery" loading="lazy">
+        </div>
+        <div class="team-info">
+          <div class="team-name">Priya Sharma</div>
+          <div class="team-role">Head of Delivery</div>
+          <p class="team-bio">10 years leading large-scale HR transformation programmes across financial services and public sector. Designed the 90-day engagement model that WorkRedesign engagements are built on.</p>
+          <a href="#" class="team-linkedin">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVISORS -->
+<section class="advisors">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Advisory board</div>
+      <h2>Guided by people who have led at scale</h2>
+    </div>
+    <div class="advisors-row">
+      <div class="advisor-card">
+        <div class="advisor-avatar">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=112&h=112&fit=crop&crop=faces" alt="James Okafor, Advisory Board" loading="lazy">
+        </div>
+        <div>
+          <div class="advisor-name">James Okafor</div>
+          <div class="advisor-role">Former CHRO, Pan-African Financial Group. 30+ years in enterprise people leadership.</div>
+        </div>
+      </div>
+      <div class="advisor-card">
+        <div class="advisor-avatar">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=112&h=112&fit=crop&crop=faces" alt="Dr. Amara Osei, Advisory Board" loading="lazy">
+        </div>
+        <div>
+          <div class="advisor-name">Dr. Amara Osei</div>
+          <div class="advisor-role">Professor of Organisational Behaviour, leading researcher on skills-based talent systems.</div>
+        </div>
+      </div>
+      <div class="advisor-card">
+        <div class="advisor-avatar">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=112&h=112&fit=crop&crop=faces" alt="Tom Rafter, Advisory Board" loading="lazy">
+        </div>
+        <div>
+          <div class="advisor-name">Tom Rafter</div>
+          <div class="advisor-role">Ex-CTO, enterprise HR software. Advisor to three workforce analytics startups.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE APPROACH ENGAGEMENTS -->
+<section class="approach">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">How we work</div>
+      <h2>Principles that shape every engagement</h2>
+      <p>We are not a SaaS vendor. We are a structured delivery partner. Here is what that means in practice.</p>
+    </div>
+    <div class="approach-grid">
+      <div class="approach-card">
+        <div class="approach-num">01</div>
+        <div class="approach-body">
+          <h3>We start with your problem, not our product</h3>
+          <p>The Discovery Call is not a sales pitch. It is a working session to understand your workforce challenge, your current data landscape, and whether a WorkRedesign engagement is the right fit right now.</p>
+        </div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">02</div>
+        <div class="approach-body">
+          <h3>We scope a Proof of Concept before anything else</h3>
+          <p>We do not ask for enterprise commitment before you have seen results. Our 90-day POC is scoped to a defined population with clear success criteria agreed before we start.</p>
+        </div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">03</div>
+        <div class="approach-body">
+          <h3>We embed alongside your team, not on top of them</h3>
+          <p>Our delivery team works with your HR Ops, your line managers, and your HRIS team. We design every step to build your internal capability, not create dependency on us.</p>
+        </div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">04</div>
+        <div class="approach-body">
+          <h3>We leave you with something that runs without us</h3>
+          <p>At the end of every engagement, you own the process, the governance model, and the data. Our job is to give you a foundation that your team can maintain and build on independently.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="about-cta">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Start with a conversation</h2>
+      <p>A 30-minute call with one of our founders. No pitch deck, no product demo. Just an honest conversation about what you are trying to solve and whether we are the right fit.</p>
+      <div class="cta-box-actions">
+        <a href="engage.html"><button class="btn-cta-white">Book a Discovery Call</button></a>
+        <a href="howitworks.html"><button class="btn-cta-ghost">See How It Works</button></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">WorkRedesign</div>
+        <p>A structured, 90-day skills foundation for organisations navigating the AI transition. Human-led. Evidence-based. Board-ready.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="howitworks.html">How It Works</a>
+        <a href="home.html#solutions">Solutions</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="security.html">Security</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About</a>
+        <a href="engage.html">How We Engage</a>
+        <a href="blog.html">Blog</a>
+        <a href="careers.html">Careers</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get Started</h4>
+        <a href="engage.html">Book a Discovery Call</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&#169; 2026 WorkRedesign. All rights reserved.</span>
+      <span>Privacy Policy &nbsp;&middot;&nbsp; Terms of Service</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMobileMenu(btn) {
+  var menu = document.getElementById('mobileMenu');
+  var isOpen = menu.classList.contains('is-open');
+  if (isOpen) {
+    menu.classList.remove('is-open');
+    document.body.classList.remove('menu-open');
+    btn.setAttribute('aria-expanded', 'false');
+  } else {
+    menu.classList.add('is-open');
+    document.body.classList.add('menu-open');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+function closeMobileMenu() {
+  var menu = document.getElementById('mobileMenu');
+  var btn = document.querySelector('.hamburger');
+  menu.classList.remove('is-open');
+  document.body.classList.remove('menu-open');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMobileMenu(); });
+    // ---- Nav scroll glassmorphism ----
+    (function() {
+      var nav = document.querySelector('.nav');
+      if (!nav) return;
+      function onScroll() {
+        if (window.scrollY > 24) { nav.classList.add('scrolled'); }
+        else { nav.classList.remove('scrolled'); }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+</body>
+</html>

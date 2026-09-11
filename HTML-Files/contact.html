@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact - WorkRedesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+      /* ── WorkRedesign brand gradient ─────────────────────────────── */
+      --color-brand-gradient: linear-gradient(135deg, #22b8cf 0%, #3b5bdb 50%, #7950f2 100%);
+      --color-violet:         #7950f2;
+      --color-violet-soft:    rgba(121,80,242,.08);
+      --color-violet-border:  rgba(121,80,242,.20);
+      /* ── WorkRedesign accent tokens ──────────────────────────────── */
+      --color-accent:       #22b8cf;
+      --color-accent-dark:  #0e9ab5;
+      --color-accent-soft:  rgba(34,184,207,.08);
+      --color-accent-border:rgba(34,184,207,.20);
+      --color-navy:         #0f172a;
+      --shadow-cyan:        0 8px 24px rgba(34,184,207,.25);
+      --surface-warm:       #f5f0eb;
+  --blue:#3b5bdb;--violet:#7950f2;--green:#40c057;--cyan:#22b8cf;
+  --red:#fa5252;--yellow:#fab005;--orange:#fd7e14;
+  --ink:#0f172a;--muted:#64748b;--border:#e2e8f0;
+  --surface:#f8fafc;--white:#ffffff;
+  --nav-h:60px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--white);
+  line-height:1.6;padding-top:var(--nav-h)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  display:flex;align-items:center;justify-content:space-between;padding:0 40px
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+    .nav.scrolled {
+      background: rgba(255,255,255,.94) !important;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border, #e2e8f0) !important;
+      box-shadow: 0 2px 16px rgba(0,0,0,.07);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 20px;
+      letter-spacing: -0.02em; margin-right: 8px;
+      white-space: nowrap; display: flex; align-items: center; gap: 0;
+      text-decoration: none;
+    }
+    .nav-logo-work {
+      color: var(--color-navy, #0f172a);
+    }
+    .nav-logo-redesign {
+      background: var(--color-brand-gradient, linear-gradient(135deg, #3b5bdb, #7950f2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+.nav-links{display:flex;align-items:stretch;height:100%;gap:0;list-style:none}
+.nav-links a{display:flex;align-items:center;font-size:14px;font-weight:500;
+  color:var(--muted);padding:0 16px;text-decoration:none;
+  border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.nav-links a:hover{color:var(--ink)}
+.nav-actions{display:flex;align-items:center;gap:12px}
+.btn-ghost{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;
+  color:var(--muted);background:none;border:1.5px solid var(--border);
+  border-radius:8px;padding:7px 18px;cursor:pointer;text-decoration:none;transition:all .15s}
+.btn-ghost:hover{color:var(--ink);border-color:var(--ink)}
+.btn-primary{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;
+  color:#fff;background:var(--color-accent),var(--violet));
+  border:none;border-radius:8px;padding:8px 20px;cursor:pointer;text-decoration:none;transition:opacity .15s}
+.btn-primary:hover{background: var(--color-accent-dark);
+  padding:64px 40px 56px;text-align:center}
+.contact-hero .eyebrow{display:inline-block;font-size:11px;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--blue);
+  background:#e0e7ff;border-radius:20px;padding:4px 14px;margin-bottom:18px}
+.contact-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,44px);
+  font-weight:800;line-height:1.12;color:var(--ink);margin-bottom:14px}
+.contact-hero h1 span{background:linear-gradient(135deg,var(--blue),var(--violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.contact-hero p{font-size:16px;color:var(--muted);max-width:480px;margin:0 auto}
+
+/* CONTACT ROUTES */
+.routes-section{max-width:1100px;margin:0 auto;padding:56px 40px 0}
+.routes-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.route-card{border:1.5px solid var(--border);border-radius:16px;padding:24px 22px;
+  background:var(--white);transition:box-shadow .2s,border-color .2s,transform .18s;
+  cursor:pointer;text-decoration:none;display:block}
+.route-card:hover{box-shadow:0 6px 24px var(--color-accent-soft);
+  border-color:#bfdbfe;transform:translateY(-2px)}
+.route-icon{width:44px;height:44px;border-radius:11px;display:flex;
+  align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+.route-card h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;
+  color:var(--ink);margin-bottom:6px}
+.route-card p{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px}
+.route-link{font-size:13px;font-weight:600;color:var(--blue)}
+
+/* MAIN GRID */
+.contact-body{max-width:1100px;margin:0 auto;padding:48px 40px 80px;
+  display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:start}
+
+/* FORM */
+.contact-form-wrap{}
+.form-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;
+  color:var(--ink);margin-bottom:6px}
+.form-sub{font-size:14px;color:var(--muted);margin-bottom:28px}
+
+/* reason tabs */
+.reason-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.reason-tab{font-family:'Inter',sans-serif;font-size:13px;font-weight:500;
+  padding:7px 14px;border:1.5px solid var(--border);border-radius:20px;
+  cursor:pointer;color:var(--muted);background:var(--white);transition:all .15s;
+  user-select:none}
+.reason-tab:hover{border-color:var(--blue);color:var(--blue)}
+.reason-tab.active{background:#eef2ff;border-color:var(--blue);color:var(--blue);font-weight:600}
+
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.form-group label{font-size:13px;font-weight:600;color:var(--ink)}
+.form-group label .req{color:var(--red);margin-left:2px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:0}
+.form-row .form-group{margin-bottom:0}
+
+input[type=text],input[type=email],select,textarea{
+  font-family:'Inter',sans-serif;font-size:14px;color:var(--ink);
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:9px;padding:10px 14px;width:100%;outline:none;
+  -webkit-appearance:none;appearance:none;
+  transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--blue);box-shadow:0 0 0 3px var(--color-accent-border)}
+input::placeholder,textarea::placeholder{color:#94a3b8}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+  padding-right:36px;cursor:pointer}
+textarea{resize:vertical;min-height:110px}
+.form-group.has-error input,.form-group.has-error select,.form-group.has-error textarea{border-color:var(--red)}
+.error-msg{font-size:12px;color:var(--red);display:none}
+.form-group.has-error .error-msg{display:block}
+
+.submit-btn{width:100%;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;
+  color:#fff;background:linear-gradient(135deg,var(--blue),var(--violet));
+  border:none;border-radius:10px;padding:13px;cursor:pointer;margin-top:8px;
+  transition:opacity .15s}
+.submit-btn:hover{opacity:.88}
+.submit-btn:disabled{opacity:.55;cursor:not-allowed}
+.form-note{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+
+/* thanks */
+#form-thanks{display:none;text-align:center;padding:40px 0}
+.thanks-icon{font-size:52px;margin-bottom:16px}
+#form-thanks h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;margin-bottom:8px}
+#form-thanks p{font-size:15px;color:var(--muted);line-height:1.65}
+
+/* RIGHT SIDEBAR */
+.contact-sidebar{display:flex;flex-direction:column;gap:20px}
+
+/* office card */
+.office-card{background:var(--surface);border:1.5px solid var(--border);
+  border-radius:16px;padding:24px}
+.office-card h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;
+  color:var(--ink);margin-bottom:16px}
+.office-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.office-item:last-child{margin-bottom:0}
+.oi-icon{width:32px;height:32px;border-radius:8px;background:#eef2ff;
+  color:var(--blue);display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;margin-top:2px}
+.oi-text strong{display:block;font-size:13px;font-weight:600;color:var(--ink)}
+.oi-text span{font-size:13px;color:var(--muted)}
+
+/* response card */
+.response-card{background:linear-gradient(145deg,#eef2ff,#ede9fe);
+  border:1.5px solid #c7d2fe;border-radius:16px;padding:24px}
+.response-card h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;
+  color:var(--ink);margin-bottom:14px}
+.response-item{display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;padding:8px 0;border-bottom:1px solid #c7d2fe}
+.response-item:last-child{border-bottom:none;padding-bottom:0}
+.response-item .ri-label{color:var(--muted)}
+.response-item .ri-val{font-weight:600;color:var(--ink)}
+
+/* social links */
+.social-card{background:var(--white);border:1.5px solid var(--border);
+  border-radius:16px;padding:20px 24px}
+.social-card h3{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;
+  color:var(--ink);margin-bottom:14px}
+.social-links{display:flex;flex-direction:column;gap:8px}
+.social-link{display:flex;align-items:center;gap:10px;text-decoration:none;
+  font-size:14px;color:var(--muted);padding:8px 10px;border-radius:8px;
+  transition:background .15s,color .15s}
+.social-link:hover{background:var(--surface);color:var(--ink)}
+.sl-icon{width:28px;height:28px;border-radius:7px;display:flex;
+  align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+
+/* MAP PLACEHOLDER */
+.map-section{background:var(--surface);border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border)}
+.map-inner{max-width:1100px;margin:0 auto;padding:48px 40px;
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.map-placeholder{height:240px;background:linear-gradient(145deg,#eef2ff,#f5f3ff);
+  border:1.5px solid var(--border);border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:8px;color:var(--muted)}
+.map-placeholder .map-pin{font-size:36px}
+.map-placeholder span{font-size:13px}
+.map-info h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;
+  color:var(--ink);margin-bottom:12px}
+.map-info p{font-size:15px;color:var(--muted);line-height:1.65;margin-bottom:20px}
+.offices-list{display:flex;flex-direction:column;gap:12px}
+.office-row{display:flex;align-items:center;gap:12px;font-size:14px}
+.office-flag{font-size:20px;width:28px;text-align:center}
+.office-details strong{display:block;font-weight:600;color:var(--ink)}
+.office-details span{color:var(--muted);font-size:13px}
+
+/* FOOTER */
+footer{background:var(--ink);color:#94a3b8;padding:48px 40px 28px}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .logo{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:18px;
+  background:linear-gradient(135deg,#818cf8,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.footer-brand p{font-size:13px;line-height:1.6;max-width:220px;color:#64748b}
+.footer-col h4{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:#e2e8f0;margin-bottom:14px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-col ul a{font-size:13px;color:#64748b;text-decoration:none;transition:color .15s}
+.footer-col ul a:hover{color:#e2e8f0}
+.footer-bottom{border-top:1px solid #1e293b;padding-top:24px;display:flex;
+  align-items:center;justify-content:space-between;font-size:12px}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s}
+.reveal.visible{opacity:1;transform:none}
+
+/* ── MOBILE NAV ── */
+body.menu-open{overflow:hidden}
+.hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;background:none;border:none;cursor:pointer;padding:4px;border-radius:8px}
+.hamburger span{display:block;width:22px;height:2px;background:#0f172a;border-radius:2px}
+.mobile-menu{display:none;position:fixed;inset:0;background:#fff;z-index:300;flex-direction:column;padding:24px 28px 40px;overflow-y:auto}
+.mobile-menu.is-open{display:flex}
+.mobile-menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+.mobile-menu-logo{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:800;background:linear-gradient(135deg,#3b5bdb,#7950f2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.mobile-close{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:none;background:#f1f5f9;border-radius:8px;font-size:1.3rem;cursor:pointer;color:#0f172a}
+.mobile-nav-links{display:flex;flex-direction:column;gap:4px;flex:1}
+.mobile-nav-links a{display:block;padding:14px 12px;font-size:1.1rem;font-weight:600;color:#334155;border-radius:10px;text-decoration:none}
+.mobile-nav-links a:hover,.mobile-nav-links a.active{background:#f1f5f9;color:#3b5bdb}
+.mobile-cta{margin-top:24px;display:flex;flex-direction:column;gap:10px}
+.mobile-cta a{display:block;padding:14px 20px;border-radius:12px;text-align:center;font-weight:700;font-size:1rem;text-decoration:none}
+.mobile-cta .m-signin{border:1.5px solid #e2e8f0;color:#64748b}
+.mobile-cta .m-book{background:linear-gradient(135deg,#3b5bdb,#7950f2);color:#fff}
+/* ── RESPONSIVE ── */
+@media(max-width:1000px){section{padding:64px 0!important}.container{padding:0 24px!important}}
+@media(max-width:768px){
+  .nav-links,.nav-actions{display:none!important}
+  .hamburger{display:flex!important}
+  .nav{padding:0 16px!important}
+  .nav-inner{padding:0 16px!important;max-width:100%!important}
+  .container{padding:0 16px!important}
+  [class*="-grid"]{grid-template-columns:1fr!important}
+  [class*="-inner"]:not(.nav-inner){grid-template-columns:1fr!important}
+}
+@media(max-width:680px){section{padding:48px 0!important}}
+@media(max-width:480px){section{padding:44px 0!important}}
+
+
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (solution pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .oi-icon, .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .oi-icon svg, .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="home.html" class="nav-logo"><span class="nav-logo-work">work</span><span class="nav-logo-redesign">redesign</span></a>
+  <ul class="nav-links">
+    <li><a href="home.html">Platform</a></li>
+    <li><a href="howitworks.html">How It Works</a></li>
+    <li><a href="#" onclick="return false">Solutions</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#" class="btn-ghost">Sign in</a>
+    <a href="engage.html" class="btn-primary">Book a Discovery Call</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="contact-hero">
+  <div class="eyebrow">Contact</div>
+  <h1>We're easy to<br/><span>reach - pick your route</span></h1>
+  <p>Sales questions, support requests, security disclosures, or just a general enquiry. We'll get back to you quickly.</p>
+</section>
+
+<!-- ROUTES -->
+<div class="routes-section reveal">
+  <div class="routes-grid">
+    <a href="engage.html" class="route-card">
+      <div class="route-icon" style="background:#e0e7ff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <h3>Book a demo</h3>
+      <p>See WorkRedesign live with your specific data challenges in focus. 30 minutes.</p>
+      <div class="route-link">Schedule now &rarr;</div>
+    </a>
+    <a href="mailto:sales@workredesign.org" class="route-card">
+      <div class="route-icon" style="background:#dcfce7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+      <h3>Sales enquiry</h3>
+      <p>Pricing, procurement, or a custom Enterprise proposal. We respond same day.</p>
+      <div class="route-link">sales@workredesign.org</div>
+    </a>
+    <a href="mailto:support@workredesign.org" class="route-card">
+      <div class="route-icon" style="background:#cffafe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+      <h3>Customer support</h3>
+      <p>Existing customer with a technical issue or question about your account.</p>
+      <div class="route-link">support@workredesign.org</div>
+    </a>
+    <a href="mailto:security@workredesign.org" class="route-card">
+      <div class="route-icon" style="background:#ede9fe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+      <h3>Security team</h3>
+      <p>Vulnerability reports, security questionnaires, or to request our SOC 2 report.</p>
+      <div class="route-link">security@workredesign.org</div>
+    </a>
+  </div>
+</div>
+
+<!-- MAIN BODY -->
+<div class="contact-body">
+
+  <!-- FORM -->
+  <div>
+    <div class="form-title">Send us a message</div>
+    <div class="form-sub">Not sure which team you need? Fill this in and we'll route it correctly.</div>
+
+    <div class="reason-tabs" id="reasonTabs">
+      <div class="reason-tab active" data-reason="general">General enquiry</div>
+      <div class="reason-tab" data-reason="sales">Sales / pricing</div>
+      <div class="reason-tab" data-reason="support">Support</div>
+      <div class="reason-tab" data-reason="press">Press / analyst</div>
+      <div class="reason-tab" data-reason="partnership">Partnership</div>
+    </div>
+
+    <div id="contact-form-wrap">
+      <form id="contactForm" novalidate>
+        <div class="form-row" style="margin-bottom:16px">
+          <div class="form-group" id="g-name">
+            <label>Full name <span class="req">*</span></label>
+            <input type="text" id="c-name" placeholder="Your name"/>
+            <span class="error-msg">Required</span>
+          </div>
+          <div class="form-group" id="g-email">
+            <label>Work email <span class="req">*</span></label>
+            <input type="email" id="c-email" placeholder="you@company.com"/>
+            <span class="error-msg">Enter a valid work email</span>
+          </div>
+        </div>
+        <div class="form-row" style="margin-bottom:16px">
+          <div class="form-group">
+            <label>Company</label>
+            <input type="text" id="c-company" placeholder="Acme Corp"/>
+          </div>
+          <div class="form-group">
+            <label>Company size</label>
+            <select id="c-size">
+              <option value="" disabled selected>Select...</option>
+              <option>Under 500</option>
+              <option>500 - 2,000</option>
+              <option>2,000 - 10,000</option>
+              <option>10,000+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" id="g-msg">
+          <label>Message <span class="req">*</span></label>
+          <textarea id="c-msg" placeholder="Tell us what you're working on or what you need..."></textarea>
+          <span class="error-msg">Required</span>
+        </div>
+        <button type="submit" class="submit-btn" id="c-submit">Send message &rarr;</button>
+        <p class="form-note">We typically respond within one business day.</p>
+      </form>
+    </div>
+
+    <div id="form-thanks">
+      <div class="thanks-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <h2>Message sent</h2>
+      <p>Thanks for reaching out. We'll review your message and get back to you at <strong id="thanks-email-display"></strong> within one business day.</p>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="contact-sidebar reveal">
+
+    <div class="response-card">
+      <h3>Typical response times</h3>
+      <div class="response-item">
+        <span class="ri-label">Demo requests</span>
+        <span class="ri-val">Same day</span>
+      </div>
+      <div class="response-item">
+        <span class="ri-label">Sales enquiries</span>
+        <span class="ri-val">&lt; 4 hours</span>
+      </div>
+      <div class="response-item">
+        <span class="ri-label">Support (Scale)</span>
+        <span class="ri-val">Priority queue</span>
+      </div>
+      <div class="response-item">
+        <span class="ri-label">Support (Enterprise)</span>
+        <span class="ri-val">24/7 dedicated</span>
+      </div>
+      <div class="response-item">
+        <span class="ri-label">Security reports</span>
+        <span class="ri-val">48 hours</span>
+      </div>
+      <div class="response-item">
+        <span class="ri-label">General enquiries</span>
+        <span class="ri-val">1 business day</span>
+      </div>
+    </div>
+
+    <div class="office-card">
+      <h3>Our offices</h3>
+      <div class="office-item">
+        <div class="oi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="oi-text">
+          <strong>London (HQ)</strong>
+          <span>14 Finsbury Square, EC2A 1BR<br/>United Kingdom</span>
+        </div>
+      </div>
+      <div class="office-item">
+        <div class="oi-icon">&#127482;&#127480;</div>
+        <div class="oi-text">
+          <strong>San Francisco</strong>
+          <span>340 Pine Street, Suite 800<br/>CA 94104</span>
+        </div>
+      </div>
+      <div class="office-item">
+        <div class="oi-icon">&#127465;&#127466;</div>
+        <div class="oi-text">
+          <strong>Berlin (Engineering)</strong>
+          <span>Schönhauser Allee 36<br/>10435 Berlin</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="social-card">
+      <h3>Follow us</h3>
+      <div class="social-links">
+        <a href="#" class="social-link">
+          <div class="sl-icon" style="background:#dbeafe;color:var(--blue)">in</div>
+          LinkedIn - WorkRedesign
+        </a>
+        <a href="#" class="social-link">
+          <div class="sl-icon" style="background:#f0f9ff;color:#0369a1">&#120143;</div>
+          @corecatalyst
+        </a>
+        <a href="#" class="social-link">
+          <div class="sl-icon" style="background:#f0fdf4;color:var(--green)">&#9671;</div>
+          Status page
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /sidebar -->
+</div><!-- /contact-body -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">WorkRedesign</div>
+        <p>The skills reconciliation engine for the modern enterprise. Powered by yourskills.ai</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="home.html">Overview</a></li>
+          <li><a href="howitworks.html">How It Works</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="solutions-chro.html">For CHROs</a></li>
+          <li><a href="solutions-managers.html">For Managers</a></li>
+          <li><a href="solutions-hrops.html">For HR Ops</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 WorkRedesign. Built on yourskills.ai</span>
+      <span>Privacy &bull; <a href="security.html" style="color:#64748b;text-decoration:none">Security</a> &bull; <a href="contact.html" style="color:#64748b;text-decoration:none">Contact</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Reason tabs
+document.querySelectorAll('.reason-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.reason-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+
+// Form validation + submit
+function isWorkEmail(v) {
+  const blocked = ['gmail','yahoo','hotmail','outlook','icloud','aol','proton'];
+  const domain = v.split('@')[1] || '';
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) && !blocked.some(d => domain.startsWith(d));
+}
+
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  let ok = true;
+
+  const name = document.getElementById('c-name').value.trim();
+  document.getElementById('g-name').classList.toggle('has-error', !name);
+  if (!name) ok = false;
+
+  const email = document.getElementById('c-email').value.trim();
+  const emailOk = isWorkEmail(email);
+  document.getElementById('g-email').classList.toggle('has-error', !emailOk);
+  if (!emailOk) ok = false;
+
+  const msg = document.getElementById('c-msg').value.trim();
+  document.getElementById('g-msg').classList.toggle('has-error', !msg);
+  if (!msg) ok = false;
+
+  if (!ok) return;
+
+  const btn = document.getElementById('c-submit');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  setTimeout(() => {
+    document.getElementById('contact-form-wrap').style.display = 'none';
+    document.querySelector('.reason-tabs').style.display = 'none';
+    document.querySelector('.form-title').style.display = 'none';
+    document.querySelector('.form-sub').style.display = 'none';
+    document.getElementById('thanks-email-display').textContent = email;
+    document.getElementById('form-thanks').style.display = 'block';
+  }, 700);
+});
+
+// Clear errors on input
+document.querySelectorAll('input,select,textarea').forEach(el => {
+  el.addEventListener('input', () => el.closest('.form-group')?.classList.remove('has-error'));
+  el.addEventListener('change', () => el.closest('.form-group')?.classList.remove('has-error'));
+});
+
+// Reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+
+<script>
+function toggleMobileMenu(btn){var menu=document.getElementById('mobileMenu');var isOpen=menu.classList.contains('is-open');if(isOpen){menu.classList.remove('is-open');document.body.classList.remove('menu-open');}else{menu.classList.add('is-open');document.body.classList.add('menu-open');}}
+function closeMobileMenu(){var menu=document.getElementById('mobileMenu');if(menu){menu.classList.remove('is-open');document.body.classList.remove('menu-open');}}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMobileMenu();});
+</script>
+
+</body>
+</html>

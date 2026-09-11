@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorkRedesign for Line Managers - Make Your Team's Skills Visible</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* ── WorkRedesign brand gradient ─────────────────────────────── */
+      --color-brand-gradient: linear-gradient(135deg, #22b8cf 0%, #3b5bdb 50%, #7950f2 100%);
+      --color-violet:         #7950f2;
+      --color-violet-soft:    rgba(121,80,242,.08);
+      --color-violet-border:  rgba(121,80,242,.20);
+      /* ── WorkRedesign accent tokens ──────────────────────────────── */
+      --color-accent:       #22b8cf;
+      --color-accent-dark:  #0e9ab5;
+      --color-accent-soft:  rgba(34,184,207,.08);
+      --color-accent-border:rgba(34,184,207,.20);
+      --color-navy:         #0f172a;
+      --shadow-cyan:        0 8px 24px rgba(34,184,207,.25);
+      --surface-warm:       #f5f0eb;
+      --blue: #3b5bdb; --violet: #7950f2; --green: #40c057; --cyan: #22b8cf;
+      --red: #fa5252; --orange: #fd7e14;
+      --grad-primary: linear-gradient(135deg, #3b5bdb 0%, #7950f2 100%);
+      --grad-hero: linear-gradient(145deg, #eef2ff 0%, #f5f3ff 45%, #faf5ff 100%);
+      --grad-green-soft: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      --text-primary: #0f172a; --text-secondary: #475569; --text-muted: #94a3b8;
+      --surface: #ffffff; --surface-2: #f8fafc; --border: #e2e8f0;
+      --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px;
+      --radius-xl: 24px; --radius-2xl: 32px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
+      --shadow-lg: 0 12px 32px rgba(0,0,0,.10), 0 4px 12px rgba(0,0,0,.06);
+      --shadow-blue: 0 8px 24px var(--color-accent-border);
+      --nav-h: 68px; --max-w: 1200px; --section-pad: 96px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { font-family: 'Inter', sans-serif; color: var(--text-primary); background: var(--surface); line-height: 1.6; overflow-x: hidden; }
+    body.menu-open { overflow: hidden; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2; }
+    .display-xl { font-size: clamp(32px, 5vw, 58px); font-weight: 800; letter-spacing: -0.02em; }
+    .display-lg { font-size: clamp(28px, 4vw, 46px); font-weight: 700; letter-spacing: -0.02em; }
+    .display-md { font-size: clamp(22px, 3vw, 34px); font-weight: 700; letter-spacing: -0.01em; }
+    .container { width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+    .text-gradient { background: var(--grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* Buttons */
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--color-accent); color: #fff; padding: 10px 20px; border-radius: 10px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 15px; transition: opacity .2s, transform .2s; white-space: nowrap; min-height: 44px; }
+    .btn-primary:hover { background: var(--color-accent-dark); transform: translateY(-1px); }
+    .btn-ghost-sm { display: inline-flex; align-items: center; color: var(--text-secondary); padding: 10px 16px; border-radius: 10px; font-weight: 500; font-size: 15px; transition: background .2s, color .2s; min-height: 44px; }
+    .btn-ghost-sm:hover { background: var(--surface-2); color: var(--text-primary); }
+    .btn-primary-lg { display: inline-flex; align-items: center; gap: 10px; background: var(--color-accent); color: #fff; padding: 16px 32px; border-radius: 14px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 17px; box-shadow: var(--shadow-cyan); white-space: nowrap; min-height: 54px; transition: opacity .2s, transform .2s; }
+    .btn-primary-lg:hover { background: var(--color-accent-dark); transform: translateY(-2px); }
+    .btn-ghost-lg { display: inline-flex; align-items: center; gap: 8px; color: var(--color-accent); border: 2px solid var(--border); padding: 14px 28px; border-radius: 14px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 16px; transition: border-color .2s, background .2s; min-height: 54px; }
+    .btn-ghost-lg:hover { border-color: var(--color-accent); background: var(--color-accent-soft); }
+    .btn-text-lg { display: inline-flex; align-items: center; gap: 6px; color: var(--color-accent); font-weight: 600; font-size: 16px; transition: gap .2s; padding: 8px 4px; min-height: 44px; }
+    .btn-text-lg:hover { gap: 10px; }
+
+    /* Nav */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); background: transparent; border-bottom: 1px solid transparent;
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+    .nav.scrolled {
+      background: rgba(255,255,255,.94) !important;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border, #e2e8f0) !important;
+      box-shadow: 0 2px 16px rgba(0,0,0,.07);
+    }
+    .nav-inner { display: flex; align-items: center; gap: 8px; height: var(--nav-h); max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+        .nav-logo {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 20px;
+      letter-spacing: -0.02em; margin-right: 8px;
+      white-space: nowrap; display: flex; align-items: center; gap: 0;
+      text-decoration: none;
+    }
+    .nav-logo-work {
+      color: var(--color-navy, #0f172a);
+    }
+    .nav-logo-redesign {
+      background: var(--color-brand-gradient, linear-gradient(135deg, #3b5bdb, #7950f2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; }
+    .nav-links a { padding: 8px 12px; border-radius: 8px; font-size: 15px; font-weight: 500; color: var(--text-secondary); transition: background .2s, color .2s; white-space: nowrap; }
+    .nav-links a:hover, .nav-links a.active { background: var(--surface-2); color: var(--text-primary); }
+    .nav-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+    .nav-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 8px; color: var(--text-primary); margin-left: auto; transition: background .2s; }
+    .nav-hamburger:hover { background: var(--surface-2); }
+    .nav-hamburger svg { width: 22px; height: 22px; }
+    .mobile-menu { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(255,255,255,.98); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); flex-direction: column; padding: calc(var(--nav-h) + 24px) 24px 40px; overflow-y: auto; }
+    .mobile-menu.is-open { display: flex; }
+    .mobile-menu-links { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .mobile-menu-links a { padding: 14px 16px; border-radius: 12px; font-size: 18px; font-weight: 500; color: var(--text-secondary); transition: background .2s, color .2s; border-bottom: 1px solid var(--border); }
+    .mobile-menu-links a:hover { background: var(--surface-2); color: var(--text-primary); }
+    .mobile-menu-ctas { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
+    .mobile-menu-ctas .btn-primary-lg { justify-content: center; width: 100%; }
+    .mobile-menu-ctas .btn-ghost-lg { justify-content: center; width: 100%; }
+
+    /* Sections */
+    .section { padding: var(--section-pad) 0; }
+    .section-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--color-accent-soft); border: 1px solid var(--color-accent-border); color: var(--color-accent); padding: 5px 12px; border-radius: 100px; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 16px; }
+    .section-header { text-align: center; max-width: 720px; margin: 0 auto 56px; }
+    .section-header p { color: var(--text-secondary); margin-top: 14px; font-size: 17px; line-height: 1.65; }
+
+    /* Hero */
+    .page-hero { padding-top: calc(var(--nav-h) + 80px); padding-bottom: 80px; background: var(--grad-hero); }
+    .page-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .persona-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(64,192,87,.10); border: 1px solid rgba(64,192,87,.20); color: var(--green); padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 600; margin-bottom: 20px; }
+    .persona-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--green); display: block; }
+    .page-hero h1 { margin-bottom: 20px; }
+    .hero-quote { margin: 20px 0 28px; padding: 18px 20px; border-left: 3px solid var(--green); background: rgba(64,192,87,.05); border-radius: 0 10px 10px 0; }
+    .hero-quote p { font-size: 17px; font-style: italic; color: var(--text-secondary); line-height: 1.65; }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .page-hero-visual { position: relative; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+    .page-hero-visual img { width: 100%; height: 460px; object-fit: cover; }
+    .hero-stat-badge { position: absolute; bottom: 20px; left: 20px; right: 20px; background: rgba(255,255,255,.96); backdrop-filter: blur(8px); border-radius: 12px; padding: 14px 16px; display: flex; gap: 12px; align-items: center; box-shadow: var(--shadow-md); }
+    .hero-badge-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--grad-green-soft); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .hero-badge-text strong { display: block; font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .hero-badge-text span { font-size: 12px; color: var(--text-secondary); }
+
+    /* Manager problems */
+    .problems-section { background: var(--surface-2); }
+    .problems-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .problem-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; }
+    .problem-icon { font-size: 28px; margin-bottom: 14px; }
+    .problem-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+    .problem-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+    .problem-before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+    .before-box, .after-box { border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5; }
+    .before-box { background: rgba(250,82,82,.05); border: 1px solid rgba(250,82,82,.15); color: var(--text-secondary); }
+    .before-box strong, .after-box strong { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .before-box strong { color: var(--red); }
+    .after-box { background: rgba(64,192,87,.05); border: 1px solid rgba(64,192,87,.15); color: var(--text-secondary); }
+    .after-box strong { color: var(--green); }
+
+    /* How it works for managers */
+    .manager-flow-section { background: var(--surface); }
+    .flow-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .flow-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 32px; }
+    .flow-step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--grad-primary); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; margin-bottom: 16px; }
+    .flow-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .flow-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.65; }
+    .flow-time { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 5px 12px; border-radius: 8px; background: var(--color-accent-soft); border: 1px solid var(--color-accent-border); font-size: 13px; color: var(--color-accent); font-weight: 500; }
+
+    /* Outcomes */
+    .outcomes-section { background: var(--surface-2); }
+    .outcomes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .outcome-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; transition: box-shadow .2s, transform .2s; }
+    .outcome-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .outcome-icon { font-size: 28px; margin-bottom: 14px; }
+    .outcome-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .outcome-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+
+    /* Adjudication widget */
+    .widget-section { background: var(--surface); }
+    .widget-card { max-width: 680px; margin: 0 auto; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-2xl); padding: 40px; box-shadow: var(--shadow-md); }
+    .widget-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .widget-avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .widget-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .widget-header-text strong { display: block; font-size: 16px; font-weight: 700; }
+    .widget-header-text span { font-size: 13px; color: var(--text-secondary); }
+    .widget-label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+    .skill-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 16px; flex-wrap: wrap; }
+    .skill-row:last-child { border-bottom: none; }
+    .skill-name { font-size: 15px; font-weight: 600; }
+    .skill-source { font-size: 12px; color: var(--text-muted); }
+    .skill-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .skill-btn { padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; transition: all .15s; cursor: pointer; border: none; min-height: 36px; }
+    .skill-btn.accept { background: rgba(64,192,87,.12); color: var(--green); border: 1px solid rgba(64,192,87,.25); }
+    .skill-btn.accept:hover { background: rgba(64,192,87,.20); }
+    .skill-btn.escalate { background: rgba(250,82,82,.08); color: var(--red); border: 1px solid rgba(250,82,82,.20); }
+    .skill-btn.escalate:hover { background: rgba(250,82,82,.15); }
+    .skill-btn.add-evidence { background: var(--color-accent-soft); color: var(--color-accent); border: 1px solid var(--color-accent-border); }
+    .skill-btn.add-evidence:hover { background: var(--color-accent-border); }
+    .widget-footer { margin-top: 20px; padding: 14px 16px; background: rgba(64,192,87,.06); border: 1px solid rgba(64,192,87,.15); border-radius: 10px; font-size: 13px; color: var(--text-secondary); }
+    .widget-footer strong { color: var(--green); }
+
+    /* Testimonial */
+    .testimonial-section { background: var(--surface-2); }
+    .testimonial-card { max-width: 760px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-2xl); padding: 48px; box-shadow: var(--shadow-md); }
+    .testimonial-stars { font-size: 22px; margin-bottom: 24px; }
+    .testimonial-quote { font-size: 20px; line-height: 1.65; color: var(--text-primary); font-style: italic; margin-bottom: 32px; }
+    .testimonial-author { display: flex; align-items: center; gap: 16px; }
+    .author-avatar { width: 52px; height: 52px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-name { font-weight: 700; font-size: 16px; }
+    .author-title { font-size: 14px; color: var(--text-secondary); margin-top: 2px; }
+
+    /* CTA */
+    .cta-section { background: var(--grad-hero); border-top: 1px solid var(--border); }
+    .cta-inner { text-align: center; max-width: 680px; margin: 0 auto; }
+    .cta-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--color-accent-soft); border: 1px solid var(--color-accent-border); color: var(--color-accent); padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 24px; }
+    .cta-inner h2 { margin-bottom: 16px; }
+    .cta-inner p { color: var(--text-secondary); font-size: 17px; line-height: 1.65; margin-bottom: 36px; }
+    .cta-buttons { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+    .cta-note { margin-top: 20px; font-size: 13px; color: var(--text-muted); }
+
+    /* Footer */
+    .footer { background: var(--surface); border-top: 1px solid var(--border); padding: 64px 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 20px; background: var(--grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px; display: block; }
+    .footer-brand p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; max-width: 280px; }
+    .footer-col-title { font-size: 13px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 14px; color: var(--text-secondary); transition: color .2s; }
+    .footer-links a:hover { color: var(--color-accent); }
+    .footer-bottom { border-top: 1px solid var(--border); padding: 24px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 13px; color: var(--text-muted); }
+    .footer-bottom-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-bottom-links a { font-size: 13px; color: var(--text-muted); transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--text-secondary); }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      :root { --section-pad: 64px; }
+      .page-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .page-hero-visual { max-width: 540px; margin: 0 auto; }
+      .problems-grid { grid-template-columns: 1fr 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-actions { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+    @media (max-width: 680px) {
+      :root { --section-pad: 48px; }
+      .page-hero { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 48px; }
+      .page-hero-visual img { height: 260px; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; }
+      .problems-grid { grid-template-columns: 1fr; }
+      .problem-before-after { grid-template-columns: 1fr; }
+      .flow-grid { grid-template-columns: 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .widget-card { padding: 28px 20px; }
+      .skill-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .testimonial-card { padding: 32px 24px; }
+      .testimonial-quote { font-size: 17px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 480px) {
+      :root { --section-pad: 44px; }
+      .container { padding: 0 16px; }
+      .nav-inner { padding: 0 16px; }
+      .display-xl { font-size: 28px; }
+      .display-lg { font-size: 24px; }
+      .btn-primary-lg { padding: 14px 24px; font-size: 15px; width: 100%; justify-content: center; }
+      .btn-ghost-lg { width: 100%; justify-content: center; }
+      .cta-buttons { flex-direction: column; }
+      .cta-buttons .btn-primary-lg, .cta-buttons .btn-ghost-lg { width: 100%; justify-content: center; }
+      .testimonial-card { padding: 24px 16px; }
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (solution pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .oi-icon, .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .oi-icon svg, .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="home.html" class="nav-logo"><span class="nav-logo-work">work</span><span class="nav-logo-redesign">redesign</span></a>
+      <div class="nav-links" role="menubar">
+        <a href="home.html">Home</a>
+        <a href="howitworks.html">How It Works</a>
+        <a href="solutionschro.html" class="active">Solutions</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="nav-actions">
+        <a href="signin.html" class="btn-ghost-sm">Sign in</a>
+        <a href="engage.html" class="btn-primary">Book a Discovery Call</a>
+      </div>
+      <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" onclick="toggleMobileMenu(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <nav class="mobile-menu-links">
+      <a href="home.html" onclick="closeMobileMenu()">Home</a>
+      <a href="howitworks.html" onclick="closeMobileMenu()">How It Works</a>
+      <a href="solutionschro.html" onclick="closeMobileMenu()">Solutions</a>
+      <a href="pricing.html" onclick="closeMobileMenu()">Pricing</a>
+      <a href="about.html" onclick="closeMobileMenu()">About</a>
+    </nav>
+    <div class="mobile-menu-ctas">
+      <a href="engage.html" class="btn-primary-lg" onclick="closeMobileMenu()">Book a Discovery Call</a>
+      <a href="howitworks.html" class="btn-ghost-lg" onclick="closeMobileMenu()">See How It Works</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="page-hero" aria-labelledby="mgr-headline">
+    <div class="container">
+      <div class="page-hero-inner">
+        <div>
+          <div class="persona-eyebrow"><span></span> For Line Managers</div>
+          <h1 class="display-xl" id="mgr-headline">
+            Your knowledge of your team is the
+            <span class="text-gradient">most valuable data we have.</span>
+          </h1>
+          <div class="hero-quote">
+            <p>"I know what my team can do. I have just never had a structured way to say it - or prove it when it matters."</p>
+          </div>
+          <p style="color:var(--text-secondary);font-size:17px;line-height:1.65;margin-bottom:28px;">WorkRedesign gives managers a structured, evidence-backed way to put that knowledge on the record. Not to replace your judgement - to make it auditable and actionable.</p>
+          <div class="hero-ctas">
+            <a href="engage.html" class="btn-primary-lg">Book a Discovery Call</a>
+            <a href="howitworks.html" class="btn-text-lg">See How It Works &#8594;</a>
+          </div>
+        </div>
+        <div class="page-hero-visual">
+          <img
+            src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&h=600&fit=crop&crop=center"
+            alt="Manager running a team meeting with colleagues gathered around a table"
+            width="800" height="600" loading="eager"
+          />
+          <div class="hero-stat-badge">
+            <div class="hero-badge-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div class="hero-badge-text">
+              <strong>Manager adjudication built in</strong>
+              <span>Your knowledge shapes the record - not just the algorithm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE MANAGER PROBLEMS -->
+  <section class="section problems-section" aria-labelledby="problems-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">The Real Friction</div>
+        <h2 class="display-md" id="problems-headline">What managers tell us gets in the way</h2>
+        <p>Before and after - what changes when skills intelligence is grounded in manager knowledge, not just system data.</p>
+      </div>
+      <div class="problems-grid">
+        <div class="problem-card">
+          <div class="problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h3>Visibility of team capability</h3>
+          <p>Your instinct about who can do what is right most of the time. But it is invisible to anyone above you - and inaccessible when you need to make a case for someone.</p>
+          <div class="problem-before-after">
+            <div class="before-box"><strong>Before</strong>Capability known only to you. No record, no proof.</div>
+            <div class="after-box"><strong>After</strong>Validated profile for every team member, with your evidence attached.</div>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <h3>Spotting gaps before they hurt delivery</h3>
+          <p>Most skill gaps are obvious in hindsight. The problem is that there is no structured way to see them coming - until a project is already at risk.</p>
+          <div class="problem-before-after">
+            <div class="before-box"><strong>Before</strong>Gaps surface at delivery time. Reactive, expensive.</div>
+            <div class="after-box"><strong>After</strong>Role-gap view updated as your skills record evolves. Proactive.</div>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+          <h3>Finding internal candidates for roles</h3>
+          <p>When a role opens up, the default is to go external. Internal candidates with the right skills are missed because there is no way to find them quickly.</p>
+          <div class="problem-before-after">
+            <div class="before-box"><strong>Before</strong>External hire by default. Internal talent stays invisible.</div>
+            <div class="after-box"><strong>After</strong>Career lattices show who is ready for what - across your function and beyond.</div>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>Career development conversations</h3>
+          <p>Annual reviews are backward-looking. Development conversations happen without a clear picture of where someone's skills could take them next - so the conversation defaults to "keep doing what you're doing."</p>
+          <div class="problem-before-after">
+            <div class="before-box"><strong>Before</strong>Generic development plans. No data on realistic next steps.</div>
+            <div class="after-box"><strong>After</strong>Career lattices show specific pathways based on verified skills.</div>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <h3>Promotion and grading decisions</h3>
+          <p>Making a case for someone's promotion relies on your advocacy and your memory. There is rarely a structured evidence trail to back it up - which makes the conversation harder and the outcome less certain.</p>
+          <div class="problem-before-after">
+            <div class="before-box"><strong>Before</strong>Promotion cases built on advocacy and anecdote.</div>
+            <div class="after-box"><strong>After</strong>Validated skills record with evidence trail supports the case.</div>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <h3>Time cost of HR processes</h3>
+          <p>Skills and performance processes are often designed for HR, not managers. They take too long, return too little, and feel disconnected from the actual work of managing a team.</p>
+          <div class="problem-before-after">
+            <div class="before-box"><strong>Before</strong>Hours of admin. Results sit in a system nobody reads.</div>
+            <div class="after-box"><strong>After</strong>20-30 mins per employee. Output you actually use in planning decisions.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS FOR MANAGERS -->
+  <section class="section manager-flow-section" aria-labelledby="flow-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">How It Works</div>
+        <h2 class="display-md" id="flow-headline">Designed to fit into how you already manage</h2>
+        <p>The adjudication process is built around manager workflows - not bolted on top of them. It takes minutes per employee, not hours.</p>
+      </div>
+      <div class="flow-grid">
+        <div class="flow-card">
+          <div class="flow-step-num">1</div>
+          <h3>Review AI-generated skill profiles for your team</h3>
+          <p>WorkRedesign pre-populates profiles for each of your reports based on data from your HRIS, LMS, and performance systems. You see a first-pass view that already captures much of what you know - and you tell us where it is right and where it is not.</p>
+          <span class="flow-time">&#128337; Typically 5-10 minutes per employee</span>
+        </div>
+        <div class="flow-card">
+          <div class="flow-step-num">2</div>
+          <h3>Accept, add evidence, or flag disputes</h3>
+          <p>For each skill claim, you can accept it with a note, add evidence that supports it (a project outcome, a peer observation, a specific piece of work), or flag it for review if you disagree. No skill enters the record without your sign-off.</p>
+          <span class="flow-time">&#128274; Every decision is audit-logged with your name and rationale</span>
+        </div>
+        <div class="flow-card">
+          <div class="flow-step-num">3</div>
+          <h3>See the validated view of your team</h3>
+          <p>Once the adjudication is complete, you get a clean, validated view of your team's capabilities - which you can use immediately in planning, development conversations, and internal mobility decisions. It is your knowledge, made searchable and shareable.</p>
+          <span class="flow-time">&#127775; Role-gap view and career lattices generated automatically</span>
+        </div>
+        <div class="flow-card">
+          <div class="flow-step-num">4</div>
+          <h3>Keep it current as your team evolves</h3>
+          <p>Skills records are not a one-time exercise. WorkRedesign is configured to surface update prompts at the right moments - after a project completes, after a performance review, when someone moves roles. You stay in control without a constant admin burden.</p>
+          <span class="flow-time">&#128200; Configurable update cadence that fits your review rhythm</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE WIDGET PREVIEW -->
+  <section class="section widget-section" aria-labelledby="widget-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">The Adjudication Interface</div>
+        <h2 class="display-md" id="widget-headline">What the manager workflow looks like</h2>
+        <p>A preview of the adjudication interface - the structured workflow where managers validate and enrich AI-generated skill profiles for their team.</p>
+      </div>
+      <div class="widget-card">
+        <div class="widget-header">
+          <div class="widget-avatar">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=96&h=96&fit=crop&crop=faces" alt="Employee profile" width="48" height="48" loading="lazy" />
+          </div>
+          <div class="widget-header-text">
+            <strong>James Okafor</strong>
+            <span>Senior Analyst - Finance Operations | Procurement Support &mdash; 4 skills awaiting review</span>
+          </div>
+        </div>
+        <div class="widget-label">Skills pending adjudication</div>
+        <div class="skill-row">
+          <div>
+            <div class="skill-name">Accounts Payable Processing</div>
+            <div class="skill-source">Source: SAP transaction logs + LMS course completion (AP Fundamentals)</div>
+          </div>
+          <div class="skill-actions">
+            <button class="skill-btn accept">&#10003; Accept</button>
+            <button class="skill-btn add-evidence">+ Add evidence</button>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div>
+            <div class="skill-name">Vendor Relationship Management</div>
+            <div class="skill-source">Source: Self-assessment &mdash; not yet verified by manager</div>
+          </div>
+          <div class="skill-actions">
+            <button class="skill-btn accept">&#10003; Accept</button>
+            <button class="skill-btn add-evidence">+ Add evidence</button>
+            <button class="skill-btn escalate">&#9888; Dispute</button>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div>
+            <div class="skill-name">Purchase Order Management</div>
+            <div class="skill-source">Source: ERP activity records &mdash; 312 POs processed YTD across 14 supplier categories</div>
+          </div>
+          <div class="skill-actions">
+            <button class="skill-btn accept">&#10003; Accept</button>
+            <button class="skill-btn add-evidence">+ Add evidence</button>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div>
+            <div class="skill-name">Supplier Risk Assessment</div>
+            <div class="skill-source">Source: AI inference from role description &mdash; no direct evidence yet linked</div>
+          </div>
+          <div class="skill-actions">
+            <button class="skill-btn accept">&#10003; Accept</button>
+            <button class="skill-btn add-evidence">+ Add evidence</button>
+            <button class="skill-btn escalate">&#9888; Dispute</button>
+          </div>
+        </div>
+        <div class="widget-footer">
+          <strong>Your decisions are saved automatically.</strong> All adjudications are audit-logged with your name and timestamp. You can revisit and update at any time.
+        </div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">Works across every function - not just knowledge workers</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span style="font-size:12px;font-weight:600;padding:4px 12px;background:var(--color-accent-soft);color:var(--blue);border-radius:99px;">Finance &amp; Accounting</span>
+            <span style="font-size:12px;font-weight:600;padding:4px 12px;background:rgba(64,192,87,.07);color:var(--green);border-radius:99px;">Procurement &amp; SCM</span>
+            <span style="font-size:12px;font-weight:600;padding:4px 12px;background:rgba(34,184,207,.07);color:var(--cyan);border-radius:99px;">HR &amp; People Ops</span>
+            <span style="font-size:12px;font-weight:600;padding:4px 12px;background:rgba(250,131,5,.07);color:var(--orange);border-radius:99px;">Logistics &amp; Operations</span>
+            <span style="font-size:12px;font-weight:600;padding:4px 12px;background:rgba(122,90,244,.07);color:var(--violet);border-radius:99px;">Customer Service</span>
+            <span style="font-size:12px;font-weight:600;padding:4px 12px;background:rgba(250,82,82,.07);color:var(--red);border-radius:99px;">Warehouse &amp; Frontline</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOMES FOR MANAGERS -->
+  <section class="section outcomes-section" aria-labelledby="outcomes-headline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">What You Get</div>
+        <h2 class="display-md" id="outcomes-headline">What changes when your team's skills are on the record</h2>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-card">
+          <div class="outcome-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <h3>A validated view of your team's capabilities</h3>
+          <p>A clean, auditable skills record for every report - built from your knowledge and system data, verified by you, and ready to use in any people decision.</p>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <h3>Skills gap visibility before it hurts delivery</h3>
+          <p>A role-gap view that shows exactly where your team's skills fall short of what the work requires - giving you time to address it before it becomes a delivery problem.</p>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+          <h3>Internal mobility paths for every team member</h3>
+          <p>Career lattices showing where each person could go next - horizontal, vertical, and cross-functional - based on their verified skills. Conversations grounded in data, not just aspiration.</p>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>Stronger development conversations</h3>
+          <p>Development plans built on a clear picture of where someone's skills sit today, what gaps exist, and what realistic next steps look like. Not annual review theatre - actual career planning.</p>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+          <h3>Evidence-backed promotion cases</h3>
+          <p>When you make the case for someone, you have a provenance-tracked skills record and an evidence trail to back it up. Your advocacy is supported by data - not just your memory.</p>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
+          <h3>Recognition for knowledge you already have</h3>
+          <p>The adjudication process surfaces and records what you know about your team. That knowledge becomes part of the organisation's record - attributed to you as the validating manager.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="section testimonial-section" aria-label="Manager testimonial">
+    <div class="container">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</div>
+        <blockquote class="testimonial-quote">
+          "I was sceptical at first - another HR process to complete. But the adjudication interface was genuinely fast. I did my whole team in under two hours, across a few sessions. And the output was actually useful. I used the career lattices in three development conversations the same week. That has never happened with an HR tool before."
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&crop=faces" alt="Marcus Webb, Operations Manager" width="52" height="52" loading="lazy" />
+          </div>
+          <div>
+            <div class="author-name">Marcus Webb</div>
+            <div class="author-title">Operations Manager - Global Logistics Group</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section" aria-labelledby="cta-headline">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-eyebrow">Start the Conversation</div>
+        <h2 class="display-lg" id="cta-headline">Make your team's skills impossible to ignore.</h2>
+        <p>WorkRedesign gives managers the structured, evidence-backed way to put what they know on the record. Start with a discovery call - we will show you what the adjudication process looks like for your organisation.</p>
+        <div class="cta-buttons">
+          <a href="engage.html" class="btn-primary-lg">Book a Discovery Call</a>
+          <a href="engage.html" class="btn-ghost-lg">Talk to the Team</a>
+        </div>
+        <p class="cta-note">No commitment. No sales pitch. Just an honest conversation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-brand-logo">WorkRedesign</span>
+          <p>Skills intelligence that is human-engineered, not just AI-generated - trustworthy enough to act on at board level.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Platform</div>
+          <div class="footer-links">
+            <a href="howitworks.html">How It Works</a>
+            <a href="solutionschro.html">Solutions</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="security.html">Security</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Company</div>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="blog.html">Blog</a>
+            <a href="careers.html">Careers</a>
+            <a href="engage.html">How We Engage</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Resources</div>
+          <div class="footer-links">
+            <a href="blog.html">Insights</a>
+            <a href="security.html">Security and Compliance</a>
+            <a href="engage.html">Book a Discovery Call</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&#169; 2026 WorkRedesign. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="cookies.html">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu(btn) {
+      var menu = document.getElementById('mobileMenu');
+      var isOpen = menu.classList.contains('is-open');
+      if (isOpen) {
+        menu.classList.remove('is-open'); document.body.classList.remove('menu-open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      } else {
+        menu.classList.add('is-open'); document.body.classList.add('menu-open');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+      }
+    }
+    function closeMobileMenu() {
+      var menu = document.getElementById('mobileMenu');
+      var btn = document.querySelector('.nav-hamburger');
+      menu.classList.remove('is-open'); document.body.classList.remove('menu-open');
+      if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>'; }
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMobileMenu(); });
+    (function() {
+      var nav = document.querySelector('.nav');
+      window.addEventListener('scroll', function() { nav.style.boxShadow = window.scrollY > 20 ? '0 2px 12px rgba(0,0,0,.08)' : 'none'; }, { passive: true });
+    })();
+  </script>
+</body>
+</html>

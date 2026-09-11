@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How We Engage | WorkRedesign</title>
+<style>
+:root {
+      /* ── WorkRedesign brand gradient ─────────────────────────────── */
+      --color-brand-gradient: linear-gradient(135deg, #22b8cf 0%, #3b5bdb 50%, #7950f2 100%);
+      --color-violet:         #7950f2;
+      --color-violet-soft:    rgba(121,80,242,.08);
+      --color-violet-border:  rgba(121,80,242,.20);
+      /* ── WorkRedesign accent tokens ──────────────────────────────── */
+      --color-accent:       #22b8cf;
+      --color-accent-dark:  #0e9ab5;
+      --color-accent-soft:  rgba(34,184,207,.08);
+      --color-accent-border:rgba(34,184,207,.20);
+      --color-navy:         #0f172a;
+      --shadow-cyan:        0 8px 24px rgba(34,184,207,.25);
+      --surface-warm:       #f5f0eb;
+  --clr-ink: #0f172a;
+  --clr-ink-2: #334155;
+  --clr-ink-3: #64748b;
+  --clr-surface: #ffffff;
+  --clr-surface-2: #f8fafc;
+  --clr-surface-3: #f1f5f9;
+  --clr-border: #e2e8f0;
+  --clr-primary: #6c3af5;
+  --clr-primary-light: rgba(108,58,245,0.08);
+  --clr-green: #22c55e;
+  --radius-card: 16px;
+  --shadow-card: 0 2px 16px rgba(15,23,42,0.07);
+  --section-pad: 96px;
+  --container: 1160px;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); color: var(--clr-ink); background: var(--clr-surface); line-height: 1.6; }
+body.menu-open { overflow: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 32px; }
+
+/* ---- NAV ---- */
+.nav { position: sticky; top: 0; z-index: 100; background: transparent; border-bottom: 1px solid transparent;
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+    .nav.scrolled {
+      background: rgba(255,255,255,.94) !important;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border, #e2e8f0) !important;
+      box-shadow: 0 2px 16px rgba(0,0,0,.07);
+    }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 32px; }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 20px;
+      letter-spacing: -0.02em; margin-right: 8px;
+      white-space: nowrap; display: flex; align-items: center; gap: 0;
+      text-decoration: none;
+    }
+    .nav-logo-work {
+      color: var(--color-navy, #0f172a);
+    }
+    .nav-logo-redesign {
+      background: var(--color-brand-gradient, linear-gradient(135deg, #3b5bdb, #7950f2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+.nav-links { display: flex; align-items: center; gap: 4px; flex: 1; }
+.nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 0.9rem; color: var(--clr-ink-2); font-weight: 500; transition: background 0.15s, color 0.15s; }
+.nav-links a:hover { background: var(--clr-surface-3); color: var(--clr-ink); }
+.nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.btn-ghost-sm { padding: 8px 18px; border-radius: 9px; border: 1.5px solid var(--clr-border); font-size: 0.875rem; font-weight: 600; color: var(--clr-ink-2); background: transparent; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
+.btn-ghost-sm:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.btn-primary-sm { padding: 8px 20px; border-radius: 9px; background: var(--color-accent); color: #fff; font-size: 0.875rem; font-weight: 700; cursor: pointer; border: none; transition: opacity 0.15s; }
+.btn-primary-sm:hover { opacity: 0.88; }
+.hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 4px; border-radius: 8px; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--clr-ink); border-radius: 2px; }
+
+/* ---- MOBILE MENU ---- */
+.mobile-menu { display: none; position: fixed; inset: 0; background: #fff; z-index: 200; flex-direction: column; padding: 24px 28px 40px; overflow-y: auto; }
+.mobile-menu.is-open { display: flex; }
+.mobile-menu-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+.mobile-menu-logo { font-size: 1.2rem; font-weight: 800; color: var(--color-accent); }
+.mobile-close { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: none; background: var(--clr-surface-3); border-radius: 8px; font-size: 1.3rem; cursor: pointer; }
+.mobile-nav-links { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.mobile-nav-links a { display: block; padding: 14px 12px; font-size: 1.1rem; font-weight: 600; color: var(--clr-ink-2); border-radius: 10px; }
+.mobile-nav-links a:hover { background: var(--clr-surface-3); color: var(--clr-ink); }
+.mobile-cta { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+.mobile-cta a { display: block; padding: 14px 20px; border-radius: 12px; text-align: center; font-weight: 700; font-size: 1rem; }
+.mobile-cta .m-signin { border: 1.5px solid var(--clr-border); color: var(--clr-ink-2); }
+.mobile-cta .m-book { background: var(--color-accent); color: #fff; }
+
+/* ---- HERO ---- */
+.engage-hero { padding: var(--section-pad) 0 80px; background: linear-gradient(160deg, #faf7ff 0%, #f1f5f9 100%); }
+.engage-hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--color-accent-soft); color: var(--color-accent); font-size: 0.8rem; font-weight: 700; padding: 6px 14px; border-radius: 99px; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 24px; }
+.engage-hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.1; color: var(--clr-ink); margin-bottom: 24px; }
+.engage-hero h1 span { color: var(--color-accent); }
+.engage-hero p { font-size: 1.05rem; color: var(--clr-ink-2); line-height: 1.7; margin-bottom: 16px; max-width: 500px; }
+.hero-promise { border-left: 4px solid var(--color-accent); background: var(--color-accent-soft); border-radius: 0 12px 12px 0; padding: 18px 22px; margin-top: 28px; font-size: 0.95rem; font-weight: 500; color: var(--clr-ink); }
+.hero-visual { border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(15,23,42,0.14); aspect-ratio: 4/3; }
+.hero-visual img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- WHAT TO EXPECT ---- */
+.what-to-expect { padding: var(--section-pad) 0; background: var(--clr-surface); }
+.section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 16px; }
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-header h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; color: var(--clr-ink); margin-bottom: 16px; }
+.section-header p { font-size: 1.05rem; color: var(--clr-ink-2); max-width: 600px; margin: 0 auto; }
+.expect-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.expect-card { border: 1px solid var(--clr-border); border-radius: var(--radius-card); padding: 28px 24px; background: var(--clr-surface-2); }
+.expect-num { font-size: 2.4rem; font-weight: 900; color: var(--color-accent); opacity: 0.2; line-height: 1; margin-bottom: 12px; }
+.expect-card h3 { font-size: 1rem; font-weight: 800; color: var(--clr-ink); margin-bottom: 8px; }
+.expect-card p { font-size: 0.875rem; color: var(--clr-ink-3); line-height: 1.65; }
+
+/* ---- JOURNEY ---- */
+.journey { padding: var(--section-pad) 0; background: var(--clr-surface-2); }
+.journey-steps { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; }
+.journey-step { display: grid; grid-template-columns: 56px 1fr; gap: 24px; padding: 32px 0; border-bottom: 1px solid var(--clr-border); }
+.journey-step:last-child { border-bottom: none; }
+.step-marker { display: flex; flex-direction: column; align-items: center; }
+.step-dot { width: 40px; height: 40px; border-radius: 50%; background: var(--color-accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; flex-shrink: 0; }
+.step-line { width: 2px; background: var(--clr-border); flex: 1; margin-top: 8px; min-height: 40px; }
+.journey-step:last-child .step-line { display: none; }
+.step-content { padding-top: 8px; }
+.step-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 6px; }
+.step-content h3 { font-size: 1.1rem; font-weight: 800; color: var(--clr-ink); margin-bottom: 10px; }
+.step-content p { font-size: 0.9rem; color: var(--clr-ink-2); line-height: 1.7; margin-bottom: 10px; }
+.step-detail { background: var(--clr-surface-3); border-radius: 10px; padding: 14px 18px; margin-top: 8px; }
+.step-detail ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.step-detail li { font-size: 0.85rem; color: var(--clr-ink-2); padding-left: 18px; position: relative; }
+.step-detail li::before { content: '&#10003;'; position: absolute; left: 0; color: var(--clr-green); font-weight: 700; }
+
+/* ---- NOT FOR EVERYONE ---- */
+.not-for { padding: var(--section-pad) 0; background: var(--clr-surface); }
+.not-for .container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.nf-card { border-radius: var(--radius-card); padding: 32px 28px; }
+.nf-card.good { background: var(--clr-green-light, rgba(34,197,94,0.07)); border: 1.5px solid rgba(34,197,94,0.25); }
+.nf-card.bad { background: rgba(239,68,68,0.05); border: 1.5px solid rgba(239,68,68,0.15); }
+.nf-card h3 { font-size: 1rem; font-weight: 800; color: var(--clr-ink); margin-bottom: 18px; }
+.nf-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.nf-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9rem; color: var(--clr-ink-2); line-height: 1.55; }
+.nf-tick { font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.nf-tick.green { color: var(--clr-green); }
+.nf-tick.red { color: #ef4444; }
+
+/* ---- BOOKING ---- */
+.booking { padding: var(--section-pad) 0; background: var(--clr-surface-2); }
+.booking .container { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.booking-text h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; color: var(--clr-ink); margin-bottom: 20px; }
+.booking-text p { font-size: 1rem; color: var(--clr-ink-2); line-height: 1.75; margin-bottom: 16px; }
+.booking-guarantees { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+.guarantee { display: flex; gap: 12px; align-items: flex-start; }
+.g-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+.g-text { font-size: 0.9rem; color: var(--clr-ink-2); }
+.g-text strong { color: var(--clr-ink); display: block; margin-bottom: 2px; font-weight: 700; }
+.booking-form-card { background: var(--clr-surface); border: 1.5px solid var(--clr-border); border-radius: 20px; padding: 40px 36px; box-shadow: var(--shadow-card); }
+.form-title { font-size: 1.2rem; font-weight: 800; color: var(--clr-ink); margin-bottom: 6px; }
+.form-sub { font-size: 0.875rem; color: var(--clr-ink-3); margin-bottom: 28px; }
+.form-group { margin-bottom: 18px; }
+.form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--clr-ink-2); margin-bottom: 6px; letter-spacing: 0.02em; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 14px; border: 1.5px solid var(--clr-border); border-radius: 10px; font-size: 0.9rem; font-family: var(--font); color: var(--clr-ink); background: var(--clr-surface); transition: border-color 0.15s; outline: none; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--color-accent); }
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-submit { width: 100%; padding: 15px 20px; background: var(--color-accent); color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: 800; cursor: pointer; margin-top: 8px; transition: opacity 0.15s; }
+.form-submit:hover { opacity: 0.88; }
+.form-note { text-align: center; font-size: 0.78rem; color: var(--clr-ink-3); margin-top: 12px; }
+
+/* ---- FOOTER ---- */
+.footer { background: var(--clr-ink); color: rgba(255,255,255,0.5); padding: 64px 0 36px; }
+.footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer-brand p { font-size: 0.875rem; line-height: 1.7; max-width: 280px; margin-top: 12px; }
+.footer-logo { font-size: 1.2rem; font-weight: 800; color: #fff; }
+.footer-col h4 { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 16px; }
+.footer-col a { display: block; font-size: 0.875rem; color: rgba(255,255,255,0.55); padding: 4px 0; transition: color 0.15s; }
+.footer-col a:hover { color: #fff; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 1000px) {
+  :root { --section-pad: 64px; }
+  .engage-hero .container { grid-template-columns: 1fr; gap: 40px; }
+  .hero-visual { order: -1; max-height: 300px; }
+  .expect-grid { grid-template-columns: repeat(2, 1fr); }
+  .not-for .container { grid-template-columns: 1fr; }
+  .booking .container { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+
+@media (max-width: 768px) {
+  .nav-links, .nav-actions .btn-ghost-sm, .nav-actions .btn-primary-sm { display: none; }
+  .hamburger { display: flex; }
+  .container { padding: 0 20px; }
+}
+
+@media (max-width: 680px) {
+  :root { --section-pad: 52px; }
+  .expect-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  :root { --section-pad: 44px; }
+  .engage-hero h1 { font-size: 1.9rem; }
+  .booking-form-card { padding: 28px 22px; }
+  .journey-step { grid-template-columns: 40px 1fr; gap: 16px; }
+  .step-dot { width: 32px; height: 32px; font-size: 0.75rem; }
+}
+
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (solution pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .oi-icon, .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .oi-icon svg, .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="home.html" class="nav-logo"><span class="nav-logo-work">work</span><span class="nav-logo-redesign">redesign</span></a>
+    <div class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="howitworks.html">How It Works</a>
+      <a href="home.html#solutions">Solutions</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-ghost-sm">Sign in</button>
+      <button class="btn-primary-sm">Book a Discovery Call</button>
+    </div>
+    <button class="hamburger" onclick="toggleMobileMenu(this)" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-head">
+    <span class="mobile-menu-logo">WorkRedesign</span>
+    <button class="mobile-close" onclick="closeMobileMenu()">&#x2715;</button>
+  </div>
+  <div class="mobile-nav-links">
+    <a href="home.html">Home</a>
+    <a href="howitworks.html">How It Works</a>
+    <a href="home.html#solutions">Solutions</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+  </div>
+  <div class="mobile-cta">
+    <a href="#" class="m-signin">Sign in</a>
+    <a href="engage.html" class="m-book">Book a Discovery Call</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="engage-hero">
+  <div class="container">
+    <div class="hero-text">
+      <div class="hero-eyebrow">How we work together</div>
+      <h1>Start with a <span>conversation</span>, not a contract</h1>
+      <p>We do not ask you to watch a demo, fill out a lead form, or go through a sales process before we talk. The first step is a direct conversation with a WorkRedesign founder about what you are trying to solve.</p>
+      <p>If we are the right fit, we will tell you. If we are not, we will tell you that too.</p>
+      <div class="hero-promise">We do not follow up with automated emails. After the Discovery Call, you will hear from the same person you spoke to.</div>
+    </div>
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=600&fit=crop&crop=center" alt="One-to-one consultation in a professional setting" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- WHAT TO EXPECT ON THE CALL -->
+<section class="what-to-expect">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">The discovery call</div>
+      <h2>What the 30 minutes looks like</h2>
+      <p>No slides. No product tour. A structured conversation covering the three things we need to understand before we can tell you whether WorkRedesign is right for you.</p>
+    </div>
+    <div class="expect-grid">
+      <div class="expect-card">
+        <div class="expect-num">01</div>
+        <h3>Your workforce challenge</h3>
+        <p>We start by understanding what is driving this conversation. Is it board pressure around AI readiness? A restructure that exposed gaps in your skills data? An HRIS migration that stalled because nobody trusted the underlying data? The shape of the challenge determines everything else.</p>
+      </div>
+      <div class="expect-card">
+        <div class="expect-num">02</div>
+        <h3>Your current data landscape</h3>
+        <p>Where does skills data live today? What systems are in scope, what condition is the data in, and how much line manager engagement can you realistically get? This tells us whether a 90-day engagement is feasible or whether there is remediation work needed first.</p>
+      </div>
+      <div class="expect-card">
+        <div class="expect-num">03</div>
+        <h3>Fit and next steps</h3>
+        <p>We give you a frank assessment. If this is a good fit, we describe what the scoping workshop would look like and what a Proof of Concept engagement could cover. If it is not, we say so and, if possible, suggest a better starting point.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FULL ENGAGEMENT JOURNEY -->
+<section class="journey">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">The full journey</div>
+      <h2>From first call to operational foundation</h2>
+      <p>Here is every step from the Discovery Call through to a delivered, governed skills foundation your organisation can run independently.</p>
+    </div>
+    <div class="journey-steps">
+      <div class="journey-step">
+        <div class="step-marker">
+          <div class="step-dot">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Week 0</div>
+          <h3>Discovery Call (30 minutes, free)</h3>
+          <p>A direct conversation with a WorkRedesign founder. We cover your challenge, your data landscape, and whether the timing is right. You walk away with a clear sense of fit and, if relevant, what the next step would look like.</p>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="step-marker">
+          <div class="step-dot">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Week 1-2</div>
+          <h3>Scoping workshop</h3>
+          <p>A half-day working session with your HR leadership team. We map the population you want to cover, the source systems we need to connect, and the specific outcomes your organisation is trying to achieve. This session produces the inputs for the fixed-price proposal.</p>
+          <div class="step-detail">
+            <ul>
+              <li>Population sizing and function selection</li>
+              <li>Source system inventory and data quality assessment</li>
+              <li>Success criteria definition with your team</li>
+              <li>Risk and readiness assessment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="step-marker">
+          <div class="step-dot">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Week 2-3</div>
+          <h3>Statement of Work</h3>
+          <p>We send you a fixed-price proposal covering the full engagement: scope, deliverables, milestones, team, and price. Nothing is hidden. You review it, challenge it, and when you are satisfied, you sign it. We do not start work until you have.</p>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="step-marker">
+          <div class="step-dot">4</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Weeks 4-8</div>
+          <h3>Data ingestion and reconciliation</h3>
+          <p>We connect to your source systems, ingest the skills-adjacent data across your LMS, performance system, HRIS, and job architecture, and begin the reconciliation process. Our platform surfaces conflicts, gaps, and duplicates for human review.</p>
+          <div class="step-detail">
+            <ul>
+              <li>Automated ingestion from all in-scope systems</li>
+              <li>Conflict detection and flagging</li>
+              <li>Initial skills map against your catalogue</li>
+              <li>Gap analysis by role and function</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="step-marker">
+          <div class="step-dot">5</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Weeks 6-10</div>
+          <h3>Manager adjudication</h3>
+          <p>Line managers review the inferred skills for their direct reports. They accept, dispute, or add evidence through a structured interface designed to take less than 20 minutes per person. Our team facilitates the rollout and handles escalations.</p>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="step-marker">
+          <div class="step-dot">6</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Weeks 10-12</div>
+          <h3>Output delivery</h3>
+          <p>We deliver the full output package: validated skills map, redefined job descriptions, career lattice, automation charter, and board-ready summary. Data is exported into your HRIS in your preferred format.</p>
+          <div class="step-detail">
+            <ul>
+              <li>Validated skills map with evidence links</li>
+              <li>Updated job descriptions for all in-scope roles</li>
+              <li>Career lattice showing internal mobility pathways</li>
+              <li>Automation exposure charter by role family</li>
+              <li>Board-ready skills and capability summary</li>
+              <li>HRIS-ready export in your format</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="step-marker">
+          <div class="step-dot">7</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Post-delivery</div>
+          <h3>Governance handover</h3>
+          <p>We hand over the governance model, refresh schedule, and owner assignments that keep your skills data current. Your team can run this independently. If you want ongoing support, the Advisory Retainer is available. If not, the foundation is yours to build on.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOOD FIT / NOT A GOOD FIT -->
+<section class="not-for">
+  <div class="container">
+    <div>
+      <div class="section-label">Good fit</div>
+      <h2 style="font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:900;letter-spacing:-0.03em;line-height:1.15;color:var(--clr-ink);margin-bottom:24px;">WorkRedesign works well when</h2>
+      <div class="nf-card good">
+        <ul class="nf-list">
+          <li><span class="nf-tick green">&#10003;</span>You have a workforce of 500 or more employees and meaningful variation in roles across functions</li>
+          <li><span class="nf-tick green">&#10003;</span>Skills data currently lives in at least two separate systems that do not speak to each other</li>
+          <li><span class="nf-tick green">&#10003;</span>HR leadership has executive sponsorship for this work and can bring line managers into the process</li>
+          <li><span class="nf-tick green">&#10003;</span>You want a validated, governed output rather than another taxonomy or tagging exercise</li>
+          <li><span class="nf-tick green">&#10003;</span>The board or executive team has asked a question about AI readiness or workforce capability that HR cannot currently answer</li>
+          <li><span class="nf-tick green">&#10003;</span>You need something that is HRIS-agnostic and works with your existing stack rather than replacing it</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="section-label" style="color:#ef4444;">Not the right fit</div>
+      <h2 style="font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:900;letter-spacing:-0.03em;line-height:1.15;color:var(--clr-ink);margin-bottom:24px;">We are probably not the answer if</h2>
+      <div class="nf-card bad">
+        <ul class="nf-list">
+          <li><span class="nf-tick red">&#10007;</span>You are looking for a skills tagging tool your team self-configures without external support</li>
+          <li><span class="nf-tick red">&#10007;</span>Your organisation has fewer than 200 employees, where the value of a full reconciliation process is hard to justify</li>
+          <li><span class="nf-tick red">&#10007;</span>The initiative does not have senior HR or business sponsorship and line managers are unlikely to engage</li>
+          <li><span class="nf-tick red">&#10007;</span>You need an immediate, this-quarter solution, and 90 days is too long to wait for the deliverable</li>
+          <li><span class="nf-tick red">&#10007;</span>You have already invested in a skills platform and need help using it, rather than building the data layer underneath it</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section class="booking" id="book">
+  <div class="container">
+    <div class="booking-text">
+      <div class="section-label">Book your call</div>
+      <h2>Ready to start the conversation?</h2>
+      <p>Fill in the short form and a WorkRedesign founder will be in touch within one business day to confirm a time. We will read what you have written before the call, so we are not starting from scratch when we meet.</p>
+      <p>If you would rather not fill in a form, you can also reach us directly at <strong>hello@workredesign.org</strong></p>
+      <div class="booking-guarantees">
+        <div class="guarantee">
+          <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          <div class="g-text"><strong>No automated follow-up</strong>Your details are not added to a marketing sequence. You will hear from a human.</div>
+        </div>
+        <div class="guarantee">
+          <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+          <div class="g-text"><strong>30 minutes, no longer</strong>We respect your calendar. The call ends when the time is up unless you want to continue.</div>
+        </div>
+        <div class="guarantee">
+          <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
+          <div class="g-text"><strong>No commitment required</strong>The Discovery Call is completely free and carries no obligation on either side.</div>
+        </div>
+      </div>
+    </div>
+    <div class="booking-form-card">
+      <div class="form-title">Book a Discovery Call</div>
+      <div class="form-sub">We will confirm a time within one business day.</div>
+      <form onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First name</label>
+            <input type="text" id="fname" name="fname" placeholder="Sarah" required>
+          </div>
+          <div class="form-group">
+            <label for="lname">Last name</label>
+            <input type="text" id="lname" name="lname" placeholder="Chen" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Work email</label>
+          <input type="email" id="email" name="email" placeholder="sarah@yourcompany.com" required>
+        </div>
+        <div class="form-group">
+          <label for="org">Organisation</label>
+          <input type="text" id="org" name="org" placeholder="Company name" required>
+        </div>
+        <div class="form-group">
+          <label for="role">Your role</label>
+          <select id="role" name="role">
+            <option value="">Select your role</option>
+            <option>CHRO / Chief People Officer</option>
+            <option>VP / Head of HR</option>
+            <option>HR Director</option>
+            <option>Head of HR Operations</option>
+            <option>People Analytics Lead</option>
+            <option>HR Business Partner</option>
+            <option>Line Manager / Business Leader</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="size">Approximate workforce size</label>
+          <select id="size" name="size">
+            <option value="">Select workforce size</option>
+            <option>200-500 employees</option>
+            <option>500-1,500 employees</option>
+            <option>1,500-5,000 employees</option>
+            <option>5,000-20,000 employees</option>
+            <option>20,000+ employees</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="challenge">What are you trying to solve? (optional)</label>
+          <textarea id="challenge" name="challenge" placeholder="A short description of your challenge helps us prepare for the call. There is no right or wrong answer here."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Request a Discovery Call</button>
+        <p class="form-note">By submitting this form you agree to us contacting you about your enquiry. We do not share your data with third parties or add you to marketing lists.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">WorkRedesign</div>
+        <p>A structured, 90-day skills foundation for organisations navigating the AI transition. Human-led. Evidence-based. Board-ready.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="howitworks.html">How It Works</a>
+        <a href="home.html#solutions">Solutions</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="security.html">Security</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About</a>
+        <a href="engage.html">How We Engage</a>
+        <a href="blog.html">Blog</a>
+        <a href="careers.html">Careers</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get Started</h4>
+        <a href="engage.html">Book a Discovery Call</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&#169; 2026 WorkRedesign. All rights reserved.</span>
+      <span>Privacy Policy &nbsp;&middot;&nbsp; Terms of Service</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMobileMenu(btn) {
+  var menu = document.getElementById('mobileMenu');
+  var isOpen = menu.classList.contains('is-open');
+  if (isOpen) {
+    menu.classList.remove('is-open');
+    document.body.classList.remove('menu-open');
+    btn.setAttribute('aria-expanded', 'false');
+  } else {
+    menu.classList.add('is-open');
+    document.body.classList.add('menu-open');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+function closeMobileMenu() {
+  var menu = document.getElementById('mobileMenu');
+  var btn = document.querySelector('.hamburger');
+  menu.classList.remove('is-open');
+  document.body.classList.remove('menu-open');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMobileMenu(); });
+
+function handleSubmit(e) {
+  e.preventDefault();
+  var btn = e.target.querySelector('.form-submit');
+  btn.textContent = 'Request sent! We will be in touch within one business day.';
+  btn.style.background = '#22c55e';
+  btn.disabled = true;
+}
+    // ---- Nav scroll glassmorphism ----
+    (function() {
+      var nav = document.querySelector('.nav');
+      if (!nav) return;
+      function onScroll() {
+        if (window.scrollY > 24) { nav.classList.add('scrolled'); }
+        else { nav.classList.remove('scrolled'); }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+</body>
+</html>

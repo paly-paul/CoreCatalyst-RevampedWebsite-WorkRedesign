@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing | WorkRedesign</title>
+<style>
+:root {
+      /* ── WorkRedesign brand gradient ─────────────────────────────── */
+      --color-brand-gradient: linear-gradient(135deg, #22b8cf 0%, #3b5bdb 50%, #7950f2 100%);
+      --color-violet:         #7950f2;
+      --color-violet-soft:    rgba(121,80,242,.08);
+      --color-violet-border:  rgba(121,80,242,.20);
+      /* ── WorkRedesign accent tokens ──────────────────────────────── */
+      --color-accent:       #22b8cf;
+      --color-accent-dark:  #0e9ab5;
+      --color-accent-soft:  rgba(34,184,207,.08);
+      --color-accent-border:rgba(34,184,207,.20);
+      --color-navy:         #0f172a;
+      --shadow-cyan:        0 8px 24px rgba(34,184,207,.25);
+      --surface-warm:       #f5f0eb;
+  --clr-ink: #0f172a;
+  --clr-ink-2: #334155;
+  --clr-ink-3: #64748b;
+  --clr-surface: #ffffff;
+  --clr-surface-2: #f8fafc;
+  --clr-surface-3: #f1f5f9;
+  --clr-border: #e2e8f0;
+  --clr-primary: #6c3af5;
+  --clr-primary-light: rgba(108,58,245,0.08);
+  --clr-green: #22c55e;
+  --clr-green-light: rgba(34,197,94,0.08);
+  --radius-card: 16px;
+  --shadow-card: 0 2px 16px rgba(15,23,42,0.07);
+  --section-pad: 96px;
+  --container: 1160px;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); color: var(--clr-ink); background: var(--clr-surface); line-height: 1.6; }
+body.menu-open { overflow: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 32px; }
+
+/* ---- NAV ---- */
+.nav { position: sticky; top: 0; z-index: 100; background: transparent; border-bottom: 1px solid transparent;
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+    .nav.scrolled {
+      background: rgba(255,255,255,.94) !important;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border, #e2e8f0) !important;
+      box-shadow: 0 2px 16px rgba(0,0,0,.07);
+    }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 32px; }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 20px;
+      letter-spacing: -0.02em; margin-right: 8px;
+      white-space: nowrap; display: flex; align-items: center; gap: 0;
+      text-decoration: none;
+    }
+    .nav-logo-work {
+      color: var(--color-navy, #0f172a);
+    }
+    .nav-logo-redesign {
+      background: var(--color-brand-gradient, linear-gradient(135deg, #3b5bdb, #7950f2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+.nav-links { display: flex; align-items: center; gap: 4px; flex: 1; }
+.nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 0.9rem; color: var(--clr-ink-2); font-weight: 500; transition: background 0.15s, color 0.15s; }
+.nav-links a:hover, .nav-links a.active { background: var(--clr-surface-3); color: var(--clr-ink); }
+.nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.btn-ghost-sm { padding: 8px 18px; border-radius: 9px; border: 1.5px solid var(--clr-border); font-size: 0.875rem; font-weight: 600; color: var(--clr-ink-2); background: transparent; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
+.btn-ghost-sm:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.btn-primary-sm { padding: 8px 20px; border-radius: 9px; background: var(--color-accent); color: #fff; font-size: 0.875rem; font-weight: 700; cursor: pointer; border: none; transition: opacity 0.15s; }
+.btn-primary-sm:hover { opacity: 0.88; }
+.hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 4px; border-radius: 8px; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--clr-ink); border-radius: 2px; transition: all 0.22s; }
+
+/* ---- MOBILE MENU ---- */
+.mobile-menu { display: none; position: fixed; inset: 0; background: #fff; z-index: 200; flex-direction: column; padding: 24px 28px 40px; overflow-y: auto; }
+.mobile-menu.is-open { display: flex; }
+.mobile-menu-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+.mobile-menu-logo { font-size: 1.2rem; font-weight: 800; color: var(--color-accent); }
+.mobile-close { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: none; background: var(--clr-surface-3); border-radius: 8px; font-size: 1.3rem; cursor: pointer; }
+.mobile-nav-links { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.mobile-nav-links a { display: block; padding: 14px 12px; font-size: 1.1rem; font-weight: 600; color: var(--clr-ink-2); border-radius: 10px; }
+.mobile-nav-links a:hover { background: var(--clr-surface-3); color: var(--clr-ink); }
+.mobile-nav-links a.active { color: var(--color-accent); background: var(--color-accent-soft); }
+.mobile-cta { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+.mobile-cta a { display: block; padding: 14px 20px; border-radius: 12px; text-align: center; font-weight: 700; font-size: 1rem; }
+.mobile-cta .m-signin { border: 1.5px solid var(--clr-border); color: var(--clr-ink-2); }
+.mobile-cta .m-book { background: var(--color-accent); color: #fff; }
+
+/* ---- HERO ---- */
+.pricing-hero { padding: var(--section-pad) 0 72px; background: linear-gradient(160deg, #faf7ff 0%, #f1f5f9 100%); text-align: center; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--color-accent-soft); color: var(--color-accent); font-size: 0.8rem; font-weight: 700; padding: 6px 14px; border-radius: 99px; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 24px; }
+.pricing-hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.1; color: var(--clr-ink); max-width: 740px; margin: 0 auto 24px; }
+.pricing-hero h1 span { color: var(--color-accent); }
+.pricing-hero p { font-size: 1.1rem; color: var(--clr-ink-2); max-width: 580px; margin: 0 auto 12px; line-height: 1.7; }
+.hero-caveat { font-size: 0.875rem; color: var(--clr-ink-3); font-style: italic; }
+
+/* ---- MODEL EXPLAINER ---- */
+.model-explainer { padding: var(--section-pad) 0; background: var(--clr-surface); }
+.section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 16px; }
+.model-explainer .container { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.model-text h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; color: var(--clr-ink); margin-bottom: 24px; }
+.model-text p { font-size: 1rem; color: var(--clr-ink-2); line-height: 1.75; margin-bottom: 18px; }
+.model-callout { background: var(--color-accent-soft); border-left: 4px solid var(--color-accent); border-radius: 0 12px 12px 0; padding: 20px 24px; margin-top: 28px; }
+.model-callout p { font-size: 0.95rem; color: var(--clr-ink); font-weight: 500; margin: 0; }
+.model-visual { display: flex; flex-direction: column; gap: 16px; }
+.model-step { background: var(--clr-surface-2); border: 1px solid var(--clr-border); border-radius: 14px; padding: 24px 24px; display: flex; gap: 16px; align-items: flex-start; }
+.model-step-num { background: var(--color-accent); color: #fff; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; flex-shrink: 0; }
+.model-step h3 { font-size: 0.95rem; font-weight: 700; color: var(--clr-ink); margin-bottom: 4px; }
+.model-step p { font-size: 0.875rem; color: var(--clr-ink-3); margin: 0; }
+
+/* ---- ENGAGEMENT TIERS ---- */
+.engagements { padding: var(--section-pad) 0; background: var(--clr-surface-2); }
+.section-header { text-align: center; margin-bottom: 52px; }
+.section-header h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; color: var(--clr-ink); margin-bottom: 16px; }
+.section-header p { font-size: 1.05rem; color: var(--clr-ink-2); max-width: 600px; margin: 0 auto; }
+.engagement-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start; }
+.engagement-card { background: var(--clr-surface); border: 1.5px solid var(--clr-border); border-radius: 20px; padding: 36px 32px 40px; display: flex; flex-direction: column; box-shadow: var(--shadow-card); }
+.engagement-card.featured { border-color: var(--color-accent); box-shadow: 0 4px 32px rgba(108,58,245,0.14); }
+.card-badge { display: inline-block; background: var(--color-accent); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 99px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 16px; }
+.card-badge.green { background: var(--clr-green); }
+.engagement-name { font-size: 1.2rem; font-weight: 800; color: var(--clr-ink); margin-bottom: 8px; }
+.engagement-desc { font-size: 0.9rem; color: var(--clr-ink-3); line-height: 1.6; margin-bottom: 24px; }
+.engagement-price-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--clr-ink-3); margin-bottom: 6px; }
+.engagement-price { font-size: 1.6rem; font-weight: 900; color: var(--clr-ink); letter-spacing: -0.03em; margin-bottom: 4px; }
+.engagement-price span { font-size: 0.95rem; font-weight: 600; color: var(--clr-ink-3); }
+.engagement-price-note { font-size: 0.8rem; color: var(--clr-ink-3); margin-bottom: 28px; }
+.engagement-divider { border: none; border-top: 1px solid var(--clr-border); margin: 0 0 24px; }
+.engagement-includes { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--clr-ink-3); margin-bottom: 16px; }
+.engagement-features { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 32px; }
+.engagement-features li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.875rem; color: var(--clr-ink-2); }
+.feat-tick { color: var(--clr-green); font-size: 0.9rem; flex-shrink: 0; margin-top: 1px; font-weight: 700; }
+.engagement-cta { display: block; text-align: center; padding: 14px 20px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: opacity 0.15s; border: none; }
+.engagement-cta.primary { background: var(--color-accent); color: #fff; }
+.engagement-cta.secondary { background: var(--clr-surface-3); color: var(--clr-ink); }
+.engagement-cta:hover { opacity: 0.85; }
+
+/* ---- WHAT'S ALWAYS INCLUDED ---- */
+.always-included { padding: var(--section-pad) 0; background: var(--clr-surface); }
+.included-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.included-card { border: 1px solid var(--clr-border); border-radius: var(--radius-card); padding: 24px 20px; background: var(--clr-surface-2); }
+.included-icon { font-size: 1.6rem; margin-bottom: 14px; }
+.included-card h3 { font-size: 0.95rem; font-weight: 800; color: var(--clr-ink); margin-bottom: 8px; }
+.included-card p { font-size: 0.85rem; color: var(--clr-ink-3); line-height: 1.6; }
+
+/* ---- FAQ ---- */
+.faq { padding: var(--section-pad) 0; background: var(--clr-surface-2); }
+.faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+.faq-item { background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: 14px; overflow: hidden; }
+.faq-q { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; cursor: pointer; gap: 16px; }
+.faq-q span { font-size: 0.975rem; font-weight: 700; color: var(--clr-ink); }
+.faq-chevron { font-size: 0.8rem; color: var(--clr-ink-3); transition: transform 0.2s; flex-shrink: 0; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-a { display: none; padding: 0 24px 20px; font-size: 0.9rem; color: var(--clr-ink-2); line-height: 1.7; border-top: 1px solid var(--clr-border); padding-top: 16px; }
+.faq-item.open .faq-a { display: block; }
+
+/* ---- CTA ---- */
+.pricing-cta { padding: var(--section-pad) 0; background: var(--clr-surface); border-top: 1px solid var(--clr-border); }
+.cta-box { background: linear-gradient(135deg, #6c3af5 0%, #4f46e5 100%); border-radius: 24px; padding: 64px 56px; text-align: center; color: #fff; }
+.cta-box h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 16px; }
+.cta-box p { font-size: 1.05rem; opacity: 0.85; max-width: 520px; margin: 0 auto 36px; line-height: 1.65; }
+.cta-box-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.btn-cta-white { padding: 14px 32px; background: #fff; color: var(--color-accent); border-radius: 12px; font-weight: 800; font-size: 1rem; border: none; cursor: pointer; }
+.btn-cta-white:hover { opacity: 0.9; }
+.btn-cta-ghost { padding: 14px 28px; background: rgba(255,255,255,0.12); color: #fff; border-radius: 12px; font-weight: 700; font-size: 0.95rem; border: 1.5px solid rgba(255,255,255,0.3); cursor: pointer; }
+.btn-cta-ghost:hover { background: rgba(255,255,255,0.2); }
+
+/* ---- FOOTER ---- */
+.footer { background: var(--clr-ink); color: rgba(255,255,255,0.5); padding: 64px 0 36px; }
+.footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer-brand p { font-size: 0.875rem; line-height: 1.7; max-width: 280px; margin-top: 12px; }
+.footer-logo { font-size: 1.2rem; font-weight: 800; color: #fff; }
+.footer-col h4 { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 16px; }
+.footer-col a { display: block; font-size: 0.875rem; color: rgba(255,255,255,0.55); padding: 4px 0; transition: color 0.15s; }
+.footer-col a:hover { color: #fff; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 1000px) {
+  :root { --section-pad: 64px; }
+  .model-explainer .container { grid-template-columns: 1fr; gap: 40px; }
+  .engagement-grid { grid-template-columns: 1fr; max-width: 540px; margin: 0 auto; }
+  .included-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+
+@media (max-width: 768px) {
+  .nav-links, .nav-actions .btn-ghost-sm, .nav-actions .btn-primary-sm { display: none; }
+  .hamburger { display: flex; }
+  .container { padding: 0 20px; }
+  .cta-box { padding: 44px 28px; }
+}
+
+@media (max-width: 680px) {
+  :root { --section-pad: 52px; }
+  .included-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  :root { --section-pad: 44px; }
+  .pricing-hero h1 { font-size: 1.9rem; }
+  .engagement-card { padding: 28px 22px 32px; }
+  .cta-box { padding: 40px 22px; }
+  .cta-box-actions { flex-direction: column; }
+  .btn-cta-white, .btn-cta-ghost { width: 100%; text-align: center; }
+}
+
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (solution pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .oi-icon, .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .oi-icon svg, .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  
+    /* ── Icon pill system ─────────────────────────────────────────── */
+    .icon-pill {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 20px; flex-shrink: 0;
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .icon-pill svg { width: 22px; height: 22px; }
+    .icon-pill-sm {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf); flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+    .icon-pill-sm svg { width: 18px; height: 18px; }
+
+    /* Icon container upgrades (all pages) */
+    .outcome-card-icon, .deliverable-icon, .anxiety-card-icon,
+    .outcome-icon, .integration-icon, .problem-icon,
+    .value-icon, .g-icon, .benefit-icon, .why-icon, .snap-icon,
+    .fi-icon, .cert-icon, .oi-icon, .sl-icon, .route-icon,
+    .thanks-icon, .ns-icon, .trust-icon,
+    .conn-icon, .engine-icon, .diag-source-icon, .step-point-icon,
+    .card-thumb-icon, .included-icon, .hero-badge-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--color-accent-soft, rgba(34,184,207,.08));
+      border: 1px solid var(--color-accent-border, rgba(34,184,207,.20));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent, #22b8cf);
+      margin-bottom: 16px; flex-shrink: 0;
+      font-size: 0; /* hide any residual emoji text */
+      transition: background .2s, box-shadow .2s, color .2s;
+    }
+    .outcome-card-icon svg, .deliverable-icon svg, .anxiety-card-icon svg,
+    .outcome-icon svg, .integration-icon svg, .problem-icon svg,
+    .value-icon svg, .g-icon svg, .benefit-icon svg, .why-icon svg, .snap-icon svg,
+    .fi-icon svg, .cert-icon svg, .oi-icon svg, .sl-icon svg, .route-icon svg,
+    .thanks-icon svg, .ns-icon svg, .trust-icon svg,
+    .conn-icon svg, .engine-icon svg, .diag-source-icon svg, .step-point-icon svg,
+    .card-thumb-icon svg, .included-icon svg, .hero-badge-icon svg {
+      width: 22px; height: 22px;
+    }
+
+    /* Card hover micro-interactions */
+    [class*="-card"]:not(.persona-tab):not(.pricing-card) {
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    [class*="-card"]:not(.persona-tab):not(.pricing-card):hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      transform: translateY(-3px);
+      border-color: var(--color-accent-border, rgba(34,184,207,.20));
+    }
+    [class*="-card"]:hover .outcome-card-icon,
+    [class*="-card"]:hover .deliverable-icon,
+    [class*="-card"]:hover .anxiety-card-icon,
+    [class*="-card"]:hover .outcome-icon,
+    [class*="-card"]:hover .integration-icon,
+    [class*="-card"]:hover .problem-icon,
+    [class*="-card"]:hover .value-icon,
+    [class*="-card"]:hover .g-icon,
+    [class*="-card"]:hover .benefit-icon,
+    [class*="-card"]:hover .why-icon,
+    [class*="-card"]:hover .fi-icon,
+    [class*="-card"]:hover .cert-icon,
+    [class*="-card"]:hover .ns-icon,
+    [class*="-card"]:hover .trust-icon,
+    [class*="-card"]:hover .conn-icon,
+    [class*="-card"]:hover .card-thumb-icon,
+    [class*="-card"]:hover .included-icon {
+      background: var(--color-accent, #22b8cf);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(34,184,207,.30);
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="home.html" class="nav-logo"><span class="nav-logo-work">work</span><span class="nav-logo-redesign">redesign</span></a>
+    <div class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="howitworks.html">How It Works</a>
+      <a href="home.html#solutions">Solutions</a>
+      <a href="pricing.html" class="active">Pricing</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-ghost-sm">Sign in</button>
+      <button class="btn-primary-sm">Book a Discovery Call</button>
+    </div>
+    <button class="hamburger" onclick="toggleMobileMenu(this)" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-head">
+    <span class="mobile-menu-logo">WorkRedesign</span>
+    <button class="mobile-close" onclick="closeMobileMenu()">&#x2715;</button>
+  </div>
+  <div class="mobile-nav-links">
+    <a href="home.html">Home</a>
+    <a href="howitworks.html">How It Works</a>
+    <a href="home.html#solutions">Solutions</a>
+    <a href="pricing.html" class="active">Pricing</a>
+    <a href="about.html">About</a>
+  </div>
+  <div class="mobile-cta">
+    <a href="#" class="m-signin">Sign in</a>
+    <a href="engage.html" class="m-book">Book a Discovery Call</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="pricing-hero">
+  <div class="container">
+    <div class="hero-eyebrow">Engagement model</div>
+    <h1>Scoped to your organisation. <span>Priced on outcomes.</span></h1>
+    <p>WorkRedesign is not a software subscription. It is a structured engagement with a defined scope, clear deliverables, and pricing agreed before work begins. No seat licences. No annual lock-in before you have seen results.</p>
+    <p class="hero-caveat">All engagements start with a complimentary Discovery Call to confirm fit and scope.</p>
+  </div>
+</section>
+
+<!-- HOW THE MODEL WORKS -->
+<section class="model-explainer">
+  <div class="container">
+    <div class="model-text">
+      <div class="section-label">How pricing works</div>
+      <h2>Fixed-scope. Fixed-price. No surprises.</h2>
+      <p>We price every engagement based on the population size you want to cover, the number of source systems we need to integrate, and the complexity of your job architecture. Those three variables determine the scope, and the scope determines the price.</p>
+      <p>That figure is agreed and documented in a Statement of Work before we start. You will not receive an invoice for anything not in that document.</p>
+      <p>We do not charge per user, per skill tag, or per API call. Our incentive is to deliver a clean, governed skills foundation as efficiently as possible, not to run up a bill.</p>
+      <div class="model-callout">
+        <p>The Discovery Call is free. We will not ask for a commitment until you have seen a scoped proposal and had the chance to pressure-test it with your team.</p>
+      </div>
+    </div>
+    <div class="model-visual">
+      <div class="model-step">
+        <div class="model-step-num">1</div>
+        <div>
+          <h3>Discovery Call (free)</h3>
+          <p>30 minutes with a WorkRedesign founder. We understand your challenge, your current data landscape, and your timeline. No pitch deck.</p>
+        </div>
+      </div>
+      <div class="model-step">
+        <div class="model-step-num">2</div>
+        <div>
+          <h3>Scoping workshop</h3>
+          <p>A structured half-day session with your HR leadership team. We map your population, your source systems, and your success criteria.</p>
+        </div>
+      </div>
+      <div class="model-step">
+        <div class="model-step-num">3</div>
+        <div>
+          <h3>Fixed-price proposal</h3>
+          <p>We send a Statement of Work with a single fixed price covering the full engagement. You review, negotiate if needed, and decide.</p>
+        </div>
+      </div>
+      <div class="model-step">
+        <div class="model-step-num">4</div>
+        <div>
+          <h3>90-day delivery</h3>
+          <p>We start work. Weekly checkpoints, no scope creep, and a clear milestone structure so you always know where we are.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGAGEMENT TYPES -->
+<section class="engagements">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Engagement types</div>
+      <h2>Three ways to start</h2>
+      <p>Organisations vary in size, urgency, and readiness. We offer three engagement structures to match where you are.</p>
+    </div>
+    <div class="engagement-grid">
+
+      <div class="engagement-card">
+        <div class="card-badge green">Best first step</div>
+        <div class="engagement-name">Proof of Concept</div>
+        <div class="engagement-desc">A single business unit or function. Defined population, defined scope, demonstrable results in 90 days. Designed to build internal confidence before you scale.</div>
+        <div class="engagement-price-label">Indicative investment</div>
+        <div class="engagement-price">From &pound;45k <span>fixed</span></div>
+        <div class="engagement-price-note">Typically covers 200-500 employees across one function. Final price confirmed after scoping.</div>
+        <hr class="engagement-divider">
+        <div class="engagement-includes">What is included</div>
+        <ul class="engagement-features">
+          <li><span class="feat-tick">&#10003;</span>Up to 3 source system integrations</li>
+          <li><span class="feat-tick">&#10003;</span>Validated skills map for scoped population</li>
+          <li><span class="feat-tick">&#10003;</span>Adjudication workshops with line managers</li>
+          <li><span class="feat-tick">&#10003;</span>Redefined job descriptions for all roles in scope</li>
+          <li><span class="feat-tick">&#10003;</span>Board-ready summary with automation exposure analysis</li>
+          <li><span class="feat-tick">&#10003;</span>Governance model and refresh protocol</li>
+          <li><span class="feat-tick">&#10003;</span>HRIS-ready data export</li>
+          <li><span class="feat-tick">&#10003;</span>Scale recommendation for Phase 2</li>
+        </ul>
+        <a href="engage.html" class="engagement-cta secondary">Book a Discovery Call</a>
+      </div>
+
+      <div class="engagement-card featured">
+        <div class="card-badge">Most common</div>
+        <div class="engagement-name">Enterprise Foundation</div>
+        <div class="engagement-desc">Organisation-wide skills foundation covering multiple functions, full job architecture, and a governed platform your whole HR team can operate.</div>
+        <div class="engagement-price-label">Indicative investment</div>
+        <div class="engagement-price">From &pound;120k <span>fixed</span></div>
+        <div class="engagement-price-note">Typically covers 1,500-5,000 employees across 3-6 functions. Phased delivery with milestones.</div>
+        <hr class="engagement-divider">
+        <div class="engagement-includes">Everything in POC, plus</div>
+        <ul class="engagement-features">
+          <li><span class="feat-tick">&#10003;</span>Up to 8 source system integrations</li>
+          <li><span class="feat-tick">&#10003;</span>Full job architecture rationalisation</li>
+          <li><span class="feat-tick">&#10003;</span>Enterprise career lattice design</li>
+          <li><span class="feat-tick">&#10003;</span>Automation charter covering all functions in scope</li>
+          <li><span class="feat-tick">&#10003;</span>HR Ops pipeline configuration and handover</li>
+          <li><span class="feat-tick">&#10003;</span>Line manager training programme</li>
+          <li><span class="feat-tick">&#10003;</span>Ongoing governance support for 6 months post-delivery</li>
+        </ul>
+        <a href="engage.html" class="engagement-cta primary">Book a Discovery Call</a>
+      </div>
+
+      <div class="engagement-card">
+        <div class="card-badge green">Strategic advisory</div>
+        <div class="engagement-name">CHRO Advisory Retainer</div>
+        <div class="engagement-desc">For HR leaders who need an ongoing strategic partner. We work alongside your team as the skills strategy evolves, without running a full engagement.</div>
+        <div class="engagement-price-label">Monthly retainer</div>
+        <div class="engagement-price">From &pound;8k <span>per month</span></div>
+        <div class="engagement-price-note">Minimum 3-month commitment. Often used post-POC to maintain momentum.</div>
+        <hr class="engagement-divider">
+        <div class="engagement-includes">What is included</div>
+        <ul class="engagement-features">
+          <li><span class="feat-tick">&#10003;</span>Monthly CHRO strategy session (half day)</li>
+          <li><span class="feat-tick">&#10003;</span>Ongoing access to WorkRedesign platform and data</li>
+          <li><span class="feat-tick">&#10003;</span>Ad hoc analysis and board preparation support</li>
+          <li><span class="feat-tick">&#10003;</span>Skills data refresh and governance review</li>
+          <li><span class="feat-tick">&#10003;</span>Priority access for any follow-on scoped work</li>
+        </ul>
+        <a href="engage.html" class="engagement-cta secondary">Book a Discovery Call</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ALWAYS INCLUDED -->
+<section class="always-included">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Every engagement</div>
+      <h2>What you always get</h2>
+      <p>Regardless of which engagement type you choose, these commitments are non-negotiable.</p>
+    </div>
+    <div class="included-grid">
+      <div class="included-card">
+        <div class="included-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <h3>Fixed Statement of Work</h3>
+        <p>Scope, deliverables, milestones, and price locked before work begins. No ambiguity, no change orders for in-scope work.</p>
+      </div>
+      <div class="included-card">
+        <div class="included-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Named delivery team</h3>
+        <p>You know who is doing the work before you sign. We do not hand off to junior consultants after the sale is closed.</p>
+      </div>
+      <div class="included-card">
+        <div class="included-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <h3>Weekly progress reports</h3>
+        <p>A concise written update every Friday covering what was completed, what is next, and any decisions needed from your team.</p>
+      </div>
+      <div class="included-card">
+        <div class="included-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <h3>Data you own completely</h3>
+        <p>Your skills data is yours. At project close you receive a full export in your preferred format. We retain nothing without explicit permission.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Common questions</div>
+      <h2>What people ask before they commit</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Why do you not publish exact prices on the website?</span>
+          <span class="faq-chevron">&#9650;</span>
+        </div>
+        <div class="faq-a">Because the scope varies significantly between organisations. A POC covering 200 employees in a single function is a materially different piece of work to one covering 800 employees across five functions with six source systems. Publishing a single number would either mislead you or anchor you to the wrong expectation. What we can tell you is that the indicative ranges on this page are genuine, and the Discovery Call is the fastest way to get an accurate scoped estimate.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Can we start with a smaller pilot before committing to the full POC?</span>
+          <span class="faq-chevron">&#9650;</span>
+        </div>
+        <div class="faq-a">Yes. If your organisation needs to demonstrate internal value before committing to a full 90-day engagement, we can design a shorter diagnostic sprint focused on a single team or role family. This is priced separately and separately scoped. It is not a free trial, but it is a lower-commitment starting point. Ask about this option on the Discovery Call.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Is there an ongoing software subscription after the engagement ends?</span>
+          <span class="faq-chevron">&#9650;</span>
+        </div>
+        <div class="faq-a">The platform access included during an engagement continues for the duration of that engagement and for a handover period after. Beyond that, continued platform access is available as part of the Advisory Retainer, or as a standalone licence arrangement agreed separately. We do not automatically roll you into a subscription at project close. You choose what ongoing access, if any, makes sense for your organisation.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>What happens if the scope changes during the engagement?</span>
+          <span class="faq-chevron">&#9650;</span>
+        </div>
+        <div class="faq-a">In-scope changes, such as a department being restructured mid-engagement, are handled as part of normal delivery. Out-of-scope additions, such as adding a new function you did not include in the original agreement, are discussed transparently and quoted separately if they represent a material increase in work. We flag scope questions as they arise rather than presenting a surprise invoice at project end.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Do you work with organisations outside the UK?</span>
+          <span class="faq-chevron">&#9650;</span>
+        </div>
+        <div class="faq-a">Yes. We have delivered engagements across Europe, the Middle East, and sub-Saharan Africa. For organisations with multi-jurisdiction workforces, data residency and compliance requirements are scoped explicitly as part of the engagement design. Pricing for non-UK engagements is quoted in the relevant currency and adjusted for local compliance complexity.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pricing-cta">
+  <div class="container">
+    <div class="cta-box">
+      <h2>The next step is a conversation</h2>
+      <p>Book a 30-minute call with one of our founders. We will tell you whether WorkRedesign is the right fit for where you are right now, and what a scoped engagement would look like for your organisation.</p>
+      <div class="cta-box-actions">
+        <a href="engage.html"><button class="btn-cta-white">Book a Discovery Call</button></a>
+        <a href="howitworks.html"><button class="btn-cta-ghost">See How It Works</button></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">WorkRedesign</div>
+        <p>A structured, 90-day skills foundation for organisations navigating the AI transition. Human-led. Evidence-based. Board-ready.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="howitworks.html">How It Works</a>
+        <a href="home.html#solutions">Solutions</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="security.html">Security</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About</a>
+        <a href="engage.html">How We Engage</a>
+        <a href="blog.html">Blog</a>
+        <a href="careers.html">Careers</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get Started</h4>
+        <a href="engage.html">Book a Discovery Call</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&#169; 2026 WorkRedesign. All rights reserved.</span>
+      <span>Privacy Policy &nbsp;&middot;&nbsp; Terms of Service</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMobileMenu(btn) {
+  var menu = document.getElementById('mobileMenu');
+  var isOpen = menu.classList.contains('is-open');
+  if (isOpen) {
+    menu.classList.remove('is-open');
+    document.body.classList.remove('menu-open');
+    btn.setAttribute('aria-expanded', 'false');
+  } else {
+    menu.classList.add('is-open');
+    document.body.classList.add('menu-open');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+function closeMobileMenu() {
+  var menu = document.getElementById('mobileMenu');
+  var btn = document.querySelector('.hamburger');
+  menu.classList.remove('is-open');
+  document.body.classList.remove('menu-open');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMobileMenu(); });
+
+function toggleFaq(el) {
+  var item = el.parentElement;
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(i) { i.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
+}
+    // ---- Nav scroll glassmorphism ----
+    (function() {
+      var nav = document.querySelector('.nav');
+      if (!nav) return;
+      function onScroll() {
+        if (window.scrollY > 24) { nav.classList.add('scrolled'); }
+        else { nav.classList.remove('scrolled'); }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+</body>
+</html>
